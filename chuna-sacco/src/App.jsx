@@ -22,11 +22,11 @@ import MembershipPage from './pages/MembershipPage'
 import DepartmentsPage from './pages/DepartmentsPage'
 
 // Admin components
-import Login from './pages/auth/Login'
+import Login from './pages/admin/auth/Login'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import AdminLayout from './components/layout/Layout'
-import Dashboard from './pages/Dashboard'
-import Sliders from './pages/sliders/Sliders'
+import Dashboard from './pages/admin/Dashboard'
+import Sliders from './pages/admin/slider/Sliders'
 
 // Placeholder admin pages (we'll build these next)
 const News = () => <div className="card">News Page - Coming Soon</div>
