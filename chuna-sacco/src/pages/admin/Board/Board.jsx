@@ -156,9 +156,9 @@ const Board = () => {
             <div key={member.id} className="card group relative overflow-hidden">
               {/* Photo */}
               <div className="flex justify-center mb-4">
-                {member.photo_url ? (
+                {member.image_url ? (
                   <img
-                    src={`http://localhost:5000${member.photo_url}`}
+                    src={`http://localhost:5000${member.image_url}`}
                     alt={member.full_name}
                     className="w-24 h-24 rounded-full object-cover border-4 border-primary-100"
                   />
@@ -244,23 +244,22 @@ const Board = () => {
             name="full_name"
             value={formData.full_name}
             onChange={handleInputChange}
+            required={!editingMember}
+
             placeholder="Enter board member name"
           />
 
           {/* Position */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Position
-            </label>
-            <textarea
+          
+            <Input
+              label={"Position"}
               name="position"
               value={formData.position}
               onChange={handleInputChange}
-              rows={3}
-              className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              required={!editingMember}
+
               placeholder="Enter board member position"
             />
-          </div>
 
 
           {/* Is Active */}
