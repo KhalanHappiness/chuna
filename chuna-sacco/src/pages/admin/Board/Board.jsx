@@ -7,13 +7,13 @@ import Modal from '../../../components/common/Modal';
 import Input from '../../../components/common/Input';
 import FileUpload from '../../../components/common/FileUpload';
 
-const Sliders = () => {
+const Board = () => {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingMember, setEditingMember] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
+    full_name: '',
     position: '',
     display_order: 0,
     is_active: true,
@@ -21,38 +21,36 @@ const Sliders = () => {
   });
 
   useEffect(() => {
-    fetchSliders();
+    fetchMembers();
   }, []);
 
-  const fetchSliders = async () => {
+  const fetchMembers = async () => {
     try {
-      const response = await adminAPI.getSliders();
-      setSliders(response.data);
+      const response = await adminAPI.getBoard();
+      setMembers(response.data);
     } catch (error) {
-      toast.error('Failed to load sliders');
+      toast.error('Failed to load board members');
       console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleOpenModal = (slider = null) => {
-    if (slider) {
-      setEditingSlider(slider);
+  const handleOpenModal = (member = null) => {
+    if (member) {
+      setEditingMember(member);
       setFormData({
-        title: slider.title || '',
-        subtitle: slider.subtitle || '',
-        link_url: slider.link_url || '',
-        display_order: slider.display_order || 0,
-        is_active: slider.is_active,
+        full_name: member.full_name || '',
+        position: member.position || '',
+        display_order: member.display_order || 0,
+        is_active: member.is_active,
         image: null,
       });
     } else {
-      setEditingSlider(null);
+      setEditingMember(null);
       setFormData({
-        title: '',
-        subtitle: '',
-        link_url: '',
+        full_name: '',
+        position: '',
         display_order: 0,
         is_active: true,
         image: null,
@@ -63,11 +61,10 @@ const Sliders = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setEditingSlider(null);
+    setEditingMember(null);
     setFormData({
-      title: '',
-      subtitle: '',
-      link_url: '',
+      full_name: '',
+      position: '',
       display_order: 0,
       is_active: true,
       image: null,
@@ -90,9 +87,8 @@ const Sliders = () => {
     e.preventDefault();
     
     const data = new FormData();
-    data.append('title', formData.title);
-    data.append('subtitle', formData.subtitle);
-    data.append('link_url', formData.link_url);
+    data.append('full_name', formData.full_name);
+    data.append('position', formData.position);
     data.append('display_order', formData.display_order);
     data.append('is_active', formData.is_active);
     
@@ -101,16 +97,16 @@ const Sliders = () => {
     }
 
     try {
-      if (editingSlider) {
-        await adminAPI.updateSlider(editingSlider.id, data);
-        toast.success('Slider updated successfully');
+      if (editingMember) {
+        await adminAPI.updateBoardMember(editingMember.id, data);
+        toast.success('Board member updated successfully');
       } else {
-        await adminAPI.createSlider(data);
-        toast.success('Slider created successfully');
+        await adminAPI.createBoardMember(data);
+        toast.success('Board member created successfully');
       }
       
       handleCloseModal();
-      fetchSliders();
+      fetchMembers()
     } catch (error) {
       toast.error(error.response?.data?.message || 'Operation failed');
       console.error(error);
@@ -118,16 +114,16 @@ const Sliders = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this slider?')) {
+    if (!window.confirm('Are you sure you want to delete this board member?')) {
       return;
     }
 
     try {
-      await adminAPI.deleteSlider(id);
-      toast.success('Slider deleted successfully');
-      fetchSliders();
+      await adminAPI.deleteBoardMember(id);
+      toast.success('Board Member deleted successfully');
+      fetchMembers()
     } catch (error) {
-      toast.error('Failed to delete slider');
+      toast.error('Failed to delete board member');
       console.error(error);
     }
   };
@@ -145,72 +141,56 @@ const Sliders = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Slider Images</h1>
-          <p className="text-gray-600 mt-1">Manage homepage slider images</p>
+          <h1 className="text-2xl font-bold text-gray-900">Board Members</h1>
+          <p className="text-gray-600 mt-1">Manage board members</p>
         </div>
         <Button onClick={() => handleOpenModal()} icon={Plus}>
-          Add Slider
+          Add Member
         </Button>
       </div>
 
-      {/* Sliders Grid */}
-      {sliders.length > 0 ? (
+      {/* Member Grid */}
+      {members.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sliders.map((slider) => (
-            <div key={slider.id} className="card group relative overflow-hidden">
-              {/* Image */}
-              <div className="relative h-48 bg-gray-100 rounded-lg overflow-hidden mb-4">
-                <img
-                  src={`http://localhost:5000${slider.image_url}`}
-                  alt={slider.title}
-                  className="w-full h-full object-cover"
-                />
-                
-                {/* Status Badge */}
-                <div className="absolute top-2 right-2">
-                  {slider.is_active ? (
-                    <span className="flex items-center px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
-                      <Eye className="w-3 h-3 mr-1" />
-                      Active
+          {members.map((member) => (
+            <div key={member.id} className="card group relative overflow-hidden">
+              {/* Photo */}
+              <div className="flex justify-center mb-4">
+                {member.photo_url ? (
+                  <img
+                    src={`http://localhost:5000${member.photo_url}`}
+                    alt={member.full_name}
+                    className="w-24 h-24 rounded-full object-cover border-4 border-primary-100"
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center border-4 border-primary-100">
+                    <span className="text-2xl font-semibold text-gray-500">
+                      {member.full_name?.charAt(0)}
                     </span>
-                  ) : (
-                    <span className="flex items-center px-2 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full">
-                      <EyeOff className="w-3 h-3 mr-1" />
-                      Inactive
-                    </span>
-                  )}
-                </div>
-
-                {/* Order Badge */}
-                <div className="absolute top-2 left-2">
-                  <span className="px-2 py-1 bg-black bg-opacity-50 text-white text-xs font-medium rounded">
-                    Order: {slider.display_order}
-                  </span>
-                </div>
+                  </div>
+                )}
               </div>
+
+              
 
               {/* Content */}
               <div className="space-y-2">
                 <h3 className="font-semibold text-gray-900 line-clamp-1">
-                  {slider.title || 'Untitled'}
+                  {member.full_name || 'Untitled'}
                 </h3>
-                {slider.subtitle && (
+                {member.position && (
                   <p className="text-sm text-gray-600 line-clamp-2">
-                    {slider.subtitle}
+                    {member.position}
                   </p>
                 )}
-                {slider.link_url && (
-                  <p className="text-xs text-primary-600 truncate">
-                    Link: {slider.link_url}
-                  </p>
-                )}
+                
               </div>
 
               {/* Actions */}
               <div className="flex items-center space-x-2 mt-4">
                 <Button
                   variant="secondary"
-                  onClick={() => handleOpenModal(slider)}
+                  onClick={() => handleOpenModal(member)}
                   className="flex-1"
                   icon={Edit}
                 >
@@ -218,7 +198,7 @@ const Sliders = () => {
                 </Button>
                 <Button
                   variant="danger"
-                  onClick={() => handleDelete(slider.id)}
+                  onClick={() => handleDelete(member.id)}
                   icon={Trash2}
                 >
                   <span className="sr-only">Delete</span>
@@ -232,10 +212,10 @@ const Sliders = () => {
           <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Plus className="w-8 h-8 text-gray-400" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No sliders yet</h3>
-          <p className="text-gray-600 mb-4">Get started by creating your first slider image</p>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No board members yet</h3>
+          <p className="text-gray-600 mb-4">Get started by creating your first board member</p>
           <Button onClick={() => handleOpenModal()} icon={Plus}>
-            Add Slider
+            Add Board Member
           </Button>
         </div>
       )}
@@ -244,63 +224,44 @@ const Sliders = () => {
       <Modal
         isOpen={showModal}
         onClose={handleCloseModal}
-        title={editingSlider ? 'Edit Slider' : 'Add New Slider'}
+        title={editingMember ? 'Edit Board Member' : 'Add New Board Member'}
         size="lg"
       >
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Image Upload */}
           <FileUpload
-            label="Slider Image"
+            label="Board Member Photo"
             name="image"
             onChange={handleInputChange}
             accept="image/*"
-            required={!editingSlider}
-            currentImage={editingSlider ? `http://localhost:5000${editingSlider.image_url}` : null}
+            required={!editingMember}
+            currentImage={editingMember ? `http://localhost:5000${editingMember.image_url}` : null}
           />
 
-          {/* Title */}
+          {/* Name */}
           <Input
-            label="Title"
-            name="title"
-            value={formData.title}
+            label="Full Name"
+            name="full_name"
+            value={formData.full_name}
             onChange={handleInputChange}
-            placeholder="Enter slider title"
+            placeholder="Enter board member name"
           />
 
-          {/* Subtitle */}
+          {/* Position */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Subtitle
+              Position
             </label>
             <textarea
-              name="subtitle"
-              value={formData.subtitle}
+              name="position"
+              value={formData.position}
               onChange={handleInputChange}
               rows={3}
               className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder="Enter slider subtitle"
+              placeholder="Enter board member position"
             />
           </div>
 
-          {/* Link URL */}
-          <Input
-            label="Link URL"
-            name="link_url"
-            type="url"
-            value={formData.link_url}
-            onChange={handleInputChange}
-            placeholder="/about-us"
-          />
-
-          {/* Display Order */}
-          <Input
-            label="Display Order"
-            name="display_order"
-            type="number"
-            value={formData.display_order}
-            onChange={handleInputChange}
-            placeholder="0"
-          />
 
           {/* Is Active */}
           <div className="flex items-center">
@@ -327,7 +288,7 @@ const Sliders = () => {
               Cancel
             </Button>
             <Button type="submit">
-              {editingSlider ? 'Update Slider' : 'Create Slider'}
+              {editingMember ? 'Update Board Member' : 'Create Board Member'}
             </Button>
           </div>
         </form>
@@ -336,4 +297,4 @@ const Sliders = () => {
   );
 };
 
-export default Sliders;
+export default Board;
