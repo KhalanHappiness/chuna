@@ -27,9 +27,10 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 import AdminLayout from './components/layout/Layout'
 import Dashboard from './pages/admin/Dashboard'
 import Sliders from './pages/admin/slider/Sliders'
+import News from './pages/admin/news/News'
 
 // Placeholder admin pages (we'll build these next)
-const News = () => <div className="card">News Page - Coming Soon</div>
+// const News = () => <div className="card">News Page - Coming Soon</div>
 const Departments = () => <div className="card">Departments Page - Coming Soon</div>
 const Staff = () => <div className="card">Staff Page - Coming Soon</div>
 const Board = () => <div className="card">Board Page - Coming Soon</div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
     setLoading(false);
 
     if (result.success) {
-      navigate('/dashboard');
+      navigate('/admin/dashboard');
     }
   };
 

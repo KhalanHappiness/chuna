@@ -20,17 +20,17 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const menuItems = [
-    { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { name: 'Sliders', icon: Image, path: '/sliders' },
-    { name: 'News & Updates', icon: Newspaper, path: '/news' },
-    { name: 'Departments', icon: Building2, path: '/departments' },
-    { name: 'Staff Members', icon: Users, path: '/staff' },
-    { name: 'Board Members', icon: UserSquare2, path: '/board' },
-    { name: 'Products', icon: Package, path: '/products' },
-    { name: 'Downloadable Forms', icon: FileText, path: '/forms' },
-    { name: 'About Content', icon: Info, path: '/about' },
-    { name: 'Core Values', icon: Heart, path: '/values' },
-    { name: 'Awards', icon: Award, path: '/awards' },
+    { name: 'Dashboard', icon: LayoutDashboard, path: '/admin/dashboard' },
+    { name: 'Sliders', icon: Image, path: '/admin/sliders' },
+    { name: 'News & Updates', icon: Newspaper, path: '/admin/news' },
+    { name: 'Departments', icon: Building2, path: '/admin/departments' },
+    { name: 'Staff Members', icon: Users, path: '/admin/staff' },
+    { name: 'Board Members', icon: UserSquare2, path: '/admin/board' },
+    { name: 'Products', icon: Package, path: '/admin/products' },
+    { name: 'Downloadable Forms', icon: FileText, path: '/admin/forms' },
+    { name: 'About Content', icon: Info, path: '/admin/about' },
+    { name: 'Core Values', icon: Heart, path: '/admin/values' },
+    { name: 'Awards', icon: Award, path: '/admin/awards' },
   ];
 
   return (

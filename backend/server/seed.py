@@ -26,14 +26,14 @@ with app.app_context():
     print("🖼️ Adding Slider Images...")
     sliders = [
         SliderImage(
-            image_url="/static/images/slider1.jpg",
+            image_url="http://localhost:5173/src/assets/chuna%20mkting%20post%20copy.jpg",
             title="Welcome to Our Cooperative",
             subtitle="Empowering communities through savings and loans",
             link_url="/about-us",
             display_order=1
         ),
         SliderImage(
-            image_url="/static/images/slider2.jpg",
+            image_url="http://localhost:5173/src/assets/chuna%20mkting%20post%20copy.jpg",
             title="Join Our Family",
             subtitle="Building financial freedom together",
             link_url="/join",

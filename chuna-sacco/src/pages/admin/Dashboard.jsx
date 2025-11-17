@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { adminAPI } from '../api/axios';
+import { adminAPI } from '../../api/axios';
 import { 
   Users, 
   Building2, 
