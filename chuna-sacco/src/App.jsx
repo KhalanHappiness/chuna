@@ -33,6 +33,8 @@ import Staff from './pages/admin/staff/Staff'
 import Board from './pages/admin/Board/Board'
 import Products from './pages/admin/products/Products'
 import Forms from './pages/admin/forms/Forms'
+import AboutContent from './pages/admin/about/AboutContent'
+import Values from './pages/admin/values/Values'
 
 // Placeholder admin pages (we'll build these next)
 // const News = () => <div className="card">News Page - Coming Soon</div>
@@ -41,8 +43,8 @@ import Forms from './pages/admin/forms/Forms'
 // const Board = () => <div className="card">Board Page - Coming Soon</div>
 // const Products = () => <div className="card">Products Page - Coming Soon</div>
 // const Forms = () => <div className="card">Forms Page - Coming Soon</div>
-const About = () => <div className="card">About Page - Coming Soon</div>
-const Values = () => <div className="card">Values Page - Coming Soon</div>
+// const About = () => <div className="card">About Page - Coming Soon</div>
+// const Values = () => <div className="card">Values Page - Coming Soon</div>
 const Awards = () => <div className="card">Awards Page - Coming Soon</div>
 
 // Public Layout wrapper component
@@ -140,7 +142,7 @@ function App() {
                 <Route path="board" element={<Board />} />
                 <Route path="products" element={<Products />} />
                 <Route path="forms" element={<Forms />} />
-                <Route path="about" element={<About />} />
+                <Route path="about" element={<AboutContent />} />
                 <Route path="values" element={<Values />} />
                 <Route path="awards" element={<Awards />} />
               </Route>
