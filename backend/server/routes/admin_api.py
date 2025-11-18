@@ -643,7 +643,6 @@ def delete_staff(id):
         db.session.rollback()
         return jsonify({'message': 'Failed to delete staff member', 'error': str(e)}), 500
 
-# Continue in next message...
 
 # ==================== BOARD MEMBERS MANAGEMENT ====================
 

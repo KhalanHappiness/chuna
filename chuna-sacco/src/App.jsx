@@ -31,14 +31,16 @@ import News from './pages/admin/news/News'
 import Departments from './pages/admin/departments/Departments'
 import Staff from './pages/admin/staff/Staff'
 import Board from './pages/admin/Board/Board'
+import Products from './pages/admin/products/Products'
+import Forms from './pages/admin/forms/Forms'
 
 // Placeholder admin pages (we'll build these next)
 // const News = () => <div className="card">News Page - Coming Soon</div>
 // const Departments = () => <div className="card">Departments Page - Coming Soon</div>
 // const Staff = () => <div className="card">Staff Page - Coming Soon</div>
 // const Board = () => <div className="card">Board Page - Coming Soon</div>
-const Products = () => <div className="card">Products Page - Coming Soon</div>
-const Forms = () => <div className="card">Forms Page - Coming Soon</div>
+// const Products = () => <div className="card">Products Page - Coming Soon</div>
+// const Forms = () => <div className="card">Forms Page - Coming Soon</div>
 const About = () => <div className="card">About Page - Coming Soon</div>
 const Values = () => <div className="card">Values Page - Coming Soon</div>
 const Awards = () => <div className="card">Awards Page - Coming Soon</div>
