@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { adminAPI } from '../../api/axios';
+import { adminAPI } from '../../../api/axios';
 import { Plus, Edit, Trash2, Award } from 'lucide-react';
 import toast from 'react-hot-toast';
-import Button from '../../components/common/Button';
-import Modal from '../../components/common/Modal';
-import Input from '../../components/common/Input';
-import FileUpload from '../../components/common/FileUpload';
+import Button from '../../../components/common/Button';
+import Modal from '../../../components/common/Modal';
+import Input from '../../../components/common/Input';
+import FileUpload from '../../../components/common/FileUpload';
 
 const Awards = () => {
   const [awards, setAwards] = useState([]);
