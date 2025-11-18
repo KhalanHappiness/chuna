@@ -35,17 +35,9 @@ import Products from './pages/admin/products/Products'
 import Forms from './pages/admin/forms/Forms'
 import AboutContent from './pages/admin/about/AboutContent'
 import Values from './pages/admin/values/Values'
+import Awards from './pages/admin/awards/Awards'
 
-// Placeholder admin pages (we'll build these next)
-// const News = () => <div className="card">News Page - Coming Soon</div>
-// const Departments = () => <div className="card">Departments Page - Coming Soon</div>
-// const Staff = () => <div className="card">Staff Page - Coming Soon</div>
-// const Board = () => <div className="card">Board Page - Coming Soon</div>
-// const Products = () => <div className="card">Products Page - Coming Soon</div>
-// const Forms = () => <div className="card">Forms Page - Coming Soon</div>
-// const About = () => <div className="card">About Page - Coming Soon</div>
-// const Values = () => <div className="card">Values Page - Coming Soon</div>
-const Awards = () => <div className="card">Awards Page - Coming Soon</div>
+
 
 // Public Layout wrapper component
 function PublicLayout({ children }) {
