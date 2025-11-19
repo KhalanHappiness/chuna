@@ -25,14 +25,24 @@ def admin_required(fn):
     wrapper.__name__ = fn.__name__
     return wrapper
 
+
 def save_file(file, folder):
     """Save uploaded file and return URL"""
     if file and file.filename:
         filename = secure_filename(file.filename)
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
         filename = timestamp + filename
-        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], folder, filename)
+        
+        # Create the full folder path
+        folder_path = os.path.join(current_app.config['UPLOAD_FOLDER'], folder)
+        
+        # Create directory if it doesn't exist
+        os.makedirs(folder_path, exist_ok=True)
+        
+        # Save the file
+        filepath = os.path.join(folder_path, filename)
         file.save(filepath)
+        
         return f'/static/uploads/{folder}/{filename}'
     return None
 

@@ -8,25 +8,34 @@ const DownloadsPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [downloadingId, setDownloadingId] = useState(null);
   const [downloads, setDownloads] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Load forms from storage on mount
+  const API_BASE_URL = 'http://localhost:5000/api/public';
+  const FLASK_BASE_URL = 'http://localhost:5000';
+
+  // Fetch downloads from API
   useEffect(() => {
     loadDownloads();
   }, []);
 
   const loadDownloads = async () => {
     setLoading(true);
+    setError(null);
     try {
-      const stored = localStorage.getItem('chuna-forms-db');
-      if (stored) {
-        const forms = JSON.parse(stored);
-        setDownloads(forms);
-      } else {
-        setDownloads([]);
+      const response = await fetch(`${API_BASE_URL}/downloads`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch downloads');
       }
+      
+      const data = await response.json();
+      setDownloads(data.forms || []);
+      setCategories(data.categories || []);
     } catch (error) {
-      console.log('No forms found in storage');
+      console.error('Error loading downloads:', error);
+      setError('Failed to load downloads. Please try again later.');
       setDownloads([]);
     } finally {
       setLoading(false);
@@ -35,7 +44,7 @@ const DownloadsPage = () => {
 
   const filteredDownloads = downloads.filter(item =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.categories.some(cat => cat.toLowerCase().includes(searchTerm.toLowerCase()))
+    (item.category && item.category.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const totalPages = Math.ceil(filteredDownloads.length / itemsPerPage);
@@ -43,27 +52,22 @@ const DownloadsPage = () => {
   const endIndex = startIndex + itemsPerPage;
   const currentItems = filteredDownloads.slice(startIndex, endIndex);
 
-  // Update download count and trigger download
+  // Handle download
   const handleDownload = async (item) => {
     setDownloadingId(item.id);
     
     try {
-      // Update download count
-      const updatedDownloads = downloads.map(d => 
-        d.id === item.id ? { ...d, downloads: d.downloads + 1 } : d
-      );
-      
-      // Save to storage
-      localStorage.setItem('chuna-forms-db', JSON.stringify(updatedDownloads));
-      setDownloads(updatedDownloads);
-      
-      // Trigger file download
+      // Open the file in a new tab or trigger download
       const link = document.createElement('a');
-      link.href = item.file.data;
-      link.download = item.file.name;
+      link.href = item.file_url;
+      link.download = item.title;
+      link.target = '_blank';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      
+      // Optional: Track download count on backend
+      // await fetch(`${API_BASE_URL}/downloads/${item.id}/track`, { method: 'POST' });
       
     } catch (error) {
       console.error('Download failed:', error);
@@ -79,6 +83,24 @@ const DownloadsPage = () => {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading downloads...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <FileText className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <p className="text-red-600 text-lg font-semibold mb-2">Error Loading Downloads</p>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={loadDownloads}
+            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+          >
+            Retry
+          </button>
         </div>
       </div>
     );
@@ -104,7 +126,10 @@ const DownloadsPage = () => {
               <label className="text-sm text-gray-600">Display</label>
               <select 
                 value={itemsPerPage}
-                onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                onChange={(e) => {
+                  setItemsPerPage(Number(e.target.value));
+                  setCurrentPage(1);
+                }}
                 className="border border-gray-300 rounded px-3 py-1 text-sm"
               >
                 <option value={10}>10</option>
@@ -121,7 +146,10 @@ const DownloadsPage = () => {
               type="text"
               placeholder="Search..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
               className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             />
           </div>
@@ -137,10 +165,13 @@ const DownloadsPage = () => {
                     Title
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Categories
+                    Category
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Update Date
+                    File Info
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Upload Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Download
@@ -156,21 +187,25 @@ const DownloadsPage = () => {
                           <FileText className="h-8 w-8 text-red-500 mr-3" />
                           <div>
                             <div className="text-sm font-medium text-gray-900">{item.title}</div>
-                            <div className="text-sm text-gray-500">{item.downloads} downloads</div>
+                            {item.download_count > 0 && (
+                              <div className="text-sm text-gray-500">{item.download_count} downloads</div>
+                            )}
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex flex-wrap gap-1">
-                          {item.categories.map((cat, idx) => (
-                            <span key={idx} className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
-                              {cat}
-                            </span>
-                          ))}
-                        </div>
+                        {item.category && (
+                          <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                            {item.category}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{item.file_type || 'PDF'}</div>
+                        <div className="text-sm text-gray-500">{item.file_size || 'N/A'}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {new Date(item.updateDate).toLocaleDateString('en-US', { 
+                        {new Date(item.upload_date).toLocaleDateString('en-US', { 
                           year: 'numeric', 
                           month: 'long', 
                           day: 'numeric' 
@@ -194,10 +229,19 @@ const DownloadsPage = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4" className="px-6 py-12 text-center">
+                    <td colSpan="5" className="px-6 py-12 text-center">
                       <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-500">No downloads available</p>
-                      <p className="text-sm text-gray-400 mt-2">Upload forms from the admin dashboard</p>
+                      <p className="text-gray-500">
+                        {searchTerm ? 'No downloads match your search' : 'No downloads available'}
+                      </p>
+                      {searchTerm && (
+                        <button
+                          onClick={() => setSearchTerm('')}
+                          className="mt-2 text-green-600 hover:text-green-700 text-sm"
+                        >
+                          Clear search
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )}
@@ -217,9 +261,9 @@ const DownloadsPage = () => {
               <button
                 onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 disabled:text-gray-300"
+                className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 disabled:text-gray-300 disabled:cursor-not-allowed"
               >
-                Previous
+                <ChevronLeft className="h-4 w-4" />
               </button>
               
               {[...Array(Math.min(5, totalPages))].map((_, i) => {
@@ -244,9 +288,9 @@ const DownloadsPage = () => {
               <button
                 onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-                className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 disabled:text-gray-300"
+                className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 disabled:text-gray-300 disabled:cursor-not-allowed"
               >
-                Next
+                <ChevronRight className="h-4 w-4" />
               </button>
             </div>
           </div>
