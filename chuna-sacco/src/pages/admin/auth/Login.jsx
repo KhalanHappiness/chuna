@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import chunaLogo from '../../../assets/chuna.png'
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,18 +34,26 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        {/* Logo/Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-full mb-4">
-            <Lock className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900">Chuna SACCO</h1>
-          <p className="text-gray-600 mt-2">Admin Dashboard</p>
-        </div>
+        {/* Logo/Header
+        <div className="flex items-center mb-8">
+          <img 
+            src={chunaLogo} 
+            alt="Chuna DT Sacco Logo" 
+            className="h-8 sm:h-10 lg:h-12 w-auto hover:opacity-90 transition-opacity"
+          />
+        </div> */}
 
         {/* Login Form */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Welcome Back</h2>
+          {/* <h2 className="text-2xl font-semibold text-gray-900 mb-6">Welcome Back</h2> */}
+
+        <div className="flex items-center justify-center mb-8">
+          <img 
+            src={chunaLogo} 
+            alt="Chuna DT Sacco Logo" 
+            className="h-10 sm:h-10 lg:h-14 w-auto hover:opacity-90 transition-opacity"
+          />
+        </div>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Username/Email */}

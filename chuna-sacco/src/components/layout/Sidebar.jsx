@@ -15,6 +15,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { useState } from 'react';
+import chunaLogo from '../../assets/chuna.png'
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -43,14 +44,16 @@ const Sidebar = () => {
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
         {!collapsed && (
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">CS</span>
-            </div>
-            <div>
-              <h2 className="font-bold text-gray-900 text-sm">Chuna SACCO</h2>
-              <p className="text-xs text-gray-500">Admin Panel</p>
-            </div>
+            
+             <img 
+                src={chunaLogo} 
+                alt="Chuna DT Sacco Logo" 
+                className="h-8 sm:h-10 lg:h-12 w-auto hover:opacity-90 transition-opacity"
+              />
+            
+          
           </div>
+          
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}

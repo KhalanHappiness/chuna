@@ -29,9 +29,12 @@ def admin_required(fn):
 def save_file(file, folder):
     """Save uploaded file and return URL"""
     if file and file.filename:
-        filename = secure_filename(file.filename)
+        # Get the original filename and replace spaces with underscores
+        original_filename = secure_filename(file.filename)
+        original_filename = original_filename.replace(' ', '_')
+        
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
-        filename = timestamp + filename
+        filename = timestamp + original_filename
         
         # Create the full folder path
         folder_path = os.path.join(current_app.config['UPLOAD_FOLDER'], folder)
@@ -50,7 +53,6 @@ def save_file(file, folder):
         
         return f'/static/uploads/{folder}/{filename}'
     return None
-
 # ==================== DASHBOARD STATS ====================
 
 @admin_api_bp.route('/dashboard/stats', methods=['GET'])
