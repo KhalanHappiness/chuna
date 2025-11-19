@@ -43,6 +43,11 @@ def save_file(file, folder):
         filepath = os.path.join(folder_path, filename)
         file.save(filepath)
         
+        # Log for debugging
+        print(f"File saved to: {filepath}")
+        print(f"File exists: {os.path.exists(filepath)}")
+        print(f"Returning URL: /static/uploads/{folder}/{filename}")
+        
         return f'/static/uploads/{folder}/{filename}'
     return None
 

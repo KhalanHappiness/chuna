@@ -57,23 +57,73 @@ const DownloadsPage = () => {
     setDownloadingId(item.id);
     
     try {
-      // Open the file in a new tab or trigger download
+      // Log for debugging
+      console.log('Download item:', item);
+      console.log('File URL:', item.file_url);
+      
+      // Construct full URL for the file - properly encode the URL
+      const fileUrl = item.file_url.startsWith('http') 
+        ? item.file_url 
+        : `${FLASK_BASE_URL}${item.file_url}`;
+      
+      // Encode the URL properly to handle spaces and special characters
+      const encodedUrl = fileUrl.split('/').map((part, index) => {
+        // Don't encode the protocol (http://) or domain parts
+        if (index < 3) return part;
+        return encodeURIComponent(part);
+      }).join('/');
+      
+      console.log('Encoded file URL:', encodedUrl);
+      
+      // Fetch as blob to ensure binary download
+      const response = await fetch(encodedUrl);
+      
+      if (!response.ok) {
+        throw new Error(`Server responded with ${response.status}: ${response.statusText}`);
+      }
+      
+      // Get the blob
+      const blob = await response.blob();
+      
+      // Create a download link with the blob
+      const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = item.file_url;
-      link.download = item.title;
-      link.target = '_blank';
+      link.href = blobUrl;
+      link.download = item.title + '.' + (item.file_type || 'pdf').toLowerCase();
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       
-      // Optional: Track download count on backend
-      // await fetch(`${API_BASE_URL}/downloads/${item.id}/track`, { method: 'POST' });
+      // Clean up the blob URL
+      window.URL.revokeObjectURL(blobUrl);
+      
+      // Track download count on backend
+      try {
+        await fetch(`${API_BASE_URL}/downloads/${item.id}/track`, { 
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        // Update local state to reflect new count
+        setDownloads(prevDownloads => 
+          prevDownloads.map(d => 
+            d.id === item.id 
+              ? { ...d, download_count: (d.download_count || 0) + 1 }
+              : d
+          )
+        );
+      } catch (trackError) {
+        console.log('Could not track download:', trackError);
+      }
       
     } catch (error) {
       console.error('Download failed:', error);
-      alert(`Failed to download ${item.title}. Please try again.`);
+      console.error('Error details:', error.message);
+      alert(`Failed to download ${item.title}. Error: ${error.message}`);
     } finally {
-      setDownloadingId(null);
+      setTimeout(() => setDownloadingId(null), 1000);
     }
   };
 
@@ -187,9 +237,9 @@ const DownloadsPage = () => {
                           <FileText className="h-8 w-8 text-red-500 mr-3" />
                           <div>
                             <div className="text-sm font-medium text-gray-900">{item.title}</div>
-                            {item.download_count > 0 && (
-                              <div className="text-sm text-gray-500">{item.download_count} downloads</div>
-                            )}
+                            <div className="text-sm text-gray-500">
+                              {(item.download_count || 0)} downloads
+                            </div>
                           </div>
                         </div>
                       </td>
