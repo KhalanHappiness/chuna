@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from models import db
@@ -17,7 +17,8 @@ app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-secret-key-
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 3600  # 1 hour
 
 # Upload settings
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'static', 'uploads')
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
 
 # Initialize extensions
@@ -31,6 +32,9 @@ CORS(app, resources={
         "origins": ["http://localhost:3000", "http://localhost:5173"],  # React dev servers
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
+    },
+    r"/static/*": {
+        "origins": ["http://localhost:3000", "http://localhost:5173"]
     }
 })
 
@@ -46,6 +50,16 @@ def invalid_token_callback(error):
 @jwt.unauthorized_loader
 def missing_token_callback(error):
     return {'message': 'Authorization token is missing', 'error': 'authorization_required'}, 401
+
+# Serve uploaded files
+@app.route('/static/uploads/<path:folder>/<path:filename>')
+def serve_uploaded_file(folder, filename):
+    """Serve uploaded files from the uploads directory"""
+    try:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], folder)
+        return send_from_directory(file_path, filename)
+    except Exception as e:
+        return {'error': 'File not found', 'message': str(e)}, 404
 
 # Import and register blueprints AFTER app is created
 from routes.auth_api import auth_api_bp
@@ -75,10 +89,12 @@ def create_upload_folders():
     for folder in folders:
         path = os.path.join(app.config['UPLOAD_FOLDER'], folder)
         os.makedirs(path, exist_ok=True)
+        print(f"Created/verified folder: {path}")
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         create_upload_folders()
     
-    app.run(debug=True, port=5000)
+    print(f"\nUpload folder: {app.config['UPLOAD_FOLDER']}")
+    app.run(debug=True, port=5000, host='0.0.0.0')
