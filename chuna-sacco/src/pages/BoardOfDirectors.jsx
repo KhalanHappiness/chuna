@@ -22,7 +22,7 @@ export default function BoardOfDirectors() {
   // Fetch board members from API
   useEffect(() => {
     loadMembers();
-  }, []);
+  }, [])
 
   const loadMembers = async () => {
     setLoading(true);

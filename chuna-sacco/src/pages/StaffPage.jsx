@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 
 // Individual Employee Profile Page
 function EmployeeProfilePage({ employee, department, onBack }) {
@@ -81,9 +81,12 @@ function EmployeeProfilePage({ employee, department, onBack }) {
             
             <div className="absolute -bottom-20 left-8">
               <img
-                src={employee.image || 'https://via.placeholder.com/150'}
-                alt={employee.name}
+                src={employee.photo_url || 'https://via.placeholder.com/150'}
+                alt={employee.full_name}
                 className="w-40 h-40 rounded-full border-4 border-white object-cover shadow-lg"
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/150';
+                }}
               />
               <div className="absolute top-0 left-0 w-8 h-8 bg-green-600 rounded-full"></div>
             </div>
@@ -91,17 +94,12 @@ function EmployeeProfilePage({ employee, department, onBack }) {
 
           <div className="pt-24 px-8 pb-8">
             <div className="mb-6">
-              <h1 className="text-3xl font-bold text-gray-900 mb-1">{employee.name}</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-1">{employee.full_name}</h1>
               <p className="text-xl text-gray-600 mb-3">{employee.position}</p>
               <div className="flex gap-3 mb-4">
                 <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded text-sm font-medium">
                   {department ? department.name : 'Unknown Department'}
                 </span>
-                {employee.staffCategory && (
-                  <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded text-sm font-medium">
-                    {employee.staffCategory}
-                  </span>
-                )}
               </div>
             </div>
 
@@ -145,38 +143,16 @@ function EmployeeProfilePage({ employee, department, onBack }) {
                 )}
               </div>
 
-              {/* Right Column - Bio & Responsibilities */}
+              {/* Right Column - Bio */}
               <div className="lg:col-span-2 space-y-6">
                 {employee.bio && (
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">About</h2>
-                    <p className="text-gray-700 leading-relaxed">{employee.bio}</p>
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-line">{employee.bio}</p>
                   </div>
                 )}
 
-                {employee.responsibilities && (
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                      Key Responsibilities
-                    </h2>
-                    <div className="space-y-6">
-                      {employee.responsibilities.split('\n').filter(r => r.trim()).map((resp, index) => (
-                        <div key={index} className="flex gap-4">
-                          <div className="flex-shrink-0">
-                            <div className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-semibold text-sm">
-                              {index + 1}
-                            </div>
-                          </div>
-                          <div className="flex-1 pt-1">
-                            <p className="text-gray-700 leading-relaxed">{resp.trim()}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {!employee.bio && !employee.responsibilities && (
+                {!employee.bio && (
                   <div className="text-center py-12 text-gray-500">
                     <p>No additional information available</p>
                   </div>
@@ -236,33 +212,68 @@ function EmployeeProfilePage({ employee, department, onBack }) {
 // Main Public Staff Directory Component
 export default function StaffPage() {
   const [departments, setDepartments] = useState([]);
-  const [employees, setEmployees] = useState([]);
+  const [allStaff, setAllStaff] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState('all');
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const API_BASE_URL = 'http://localhost:5000/api/public';
+  const FLASK_BASE_URL = 'http://localhost:5000';
 
   useEffect(() => {
     loadData();
   }, []);
 
-  const loadData = () => {
+  const loadData = async () => {
+    setLoading(true);
+    setError(null);
+    
     try {
-      const storedDepartments = localStorage.getItem('chuna-departments-db');
-      const storedEmployees = localStorage.getItem('chuna-employees-db');
+      // Fetch departments
+      const deptResponse = await fetch(`${API_BASE_URL}/departments`);
+      if (!deptResponse.ok) {
+        throw new Error('Failed to fetch departments');
+      }
+      const deptData = await deptResponse.json();
+      setDepartments(deptData);
+
+      // Fetch staff from all departments
+      const staffPromises = deptData.map(async (dept) => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/departments/${dept.slug}`);
+          if (!response.ok) return [];
+          const data = await response.json();
+          return data.staff || [];
+        } catch (err) {
+          console.error(`Failed to fetch staff for ${dept.name}:`, err);
+          return [];
+        }
+      });
+
+      const staffArrays = await Promise.all(staffPromises);
+      const allStaffData = staffArrays.flat();
       
-      if (storedDepartments) {
-        setDepartments(JSON.parse(storedDepartments));
-      }
-      if (storedEmployees) {
-        setEmployees(JSON.parse(storedEmployees));
-      }
-    } catch (error) {
-      console.error('Failed to load data:', error);
+      // Process image URLs - prepend FLASK_BASE_URL if needed
+      const processedStaff = allStaffData.map(staff => ({
+        ...staff,
+        photo_url: staff.photo_url ? 
+          (staff.photo_url.startsWith('http') ? staff.photo_url : `${FLASK_BASE_URL}${staff.photo_url}`) 
+          : null
+      }));
+
+      setAllStaff(processedStaff);
+      setLoading(false);
+    } catch (err) {
+      console.error('Failed to load data:', err);
+      setError(err.message);
+      setLoading(false);
     }
   };
 
   const filteredEmployees = selectedDepartment === 'all' 
-    ? employees 
-    : employees.filter(emp => Number(emp.departmentId) === Number(selectedDepartment));
+    ? allStaff 
+    : allStaff.filter(emp => Number(emp.department_id) === Number(selectedDepartment));
 
   const getDepartment = (deptId) => {
     return departments.find(d => Number(d.id) === Number(deptId));
@@ -278,7 +289,7 @@ export default function StaffPage() {
 
   // If viewing employee profile
   if (selectedEmployee) {
-    const department = getDepartment(selectedEmployee.departmentId);
+    const department = getDepartment(selectedEmployee.department_id);
     return (
       <EmployeeProfilePage 
         employee={selectedEmployee} 
@@ -288,12 +299,78 @@ export default function StaffPage() {
     );
   }
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 text-green-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Loading staff directory...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg">
+          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-red-600 text-2xl">⚠️</span>
+          </div>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Unable to Load Data</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={loadData}
+            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Green Header Bar */}
-      
+      <div className="bg-green-700 text-white py-2 px-4 text-sm">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex gap-6">
+            <a href="#" className="hover:underline">MEMBERS PORTAL</a>
+            <a href="#" className="hover:underline">BID DATA UPDATE</a>
+            <a href="#" className="hover:underline">NEW MEMBER APPLICATION</a>
+            <a href="#" className="hover:underline">CAREERS</a>
+          </div>
+        </div>
+      </div>
 
-     
+      {/* Main Navigation */}
+      <nav className="bg-white border-b shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-2xl">C</span>
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">CHUNA DT SACCO LTD</h1>
+                <p className="text-xs text-green-600">The University Sacco</p>
+              </div>
+            </div>
+            <div className="flex gap-6 text-sm font-medium">
+              <a href="#" className="text-gray-700 hover:text-green-600">HOME</a>
+              <a href="#" className="text-gray-700 hover:text-green-600">ABOUT</a>
+              <a href="#" className="text-gray-700 hover:text-green-600">PRODUCTS</a>
+              <a href="#" className="text-gray-700 hover:text-green-600">MEMBERSHIP</a>
+              <a href="#" className="text-gray-700 hover:text-green-600">MEDIA CENTRE</a>
+              <a href="#" className="text-gray-700 hover:text-green-600">DOWNLOADS</a>
+              <a href="#" className="text-gray-700 hover:text-green-600">CONTACT US</a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
       {/* Page Header */}
       <div className="bg-green-600 text-white py-12">
@@ -315,19 +392,22 @@ export default function StaffPage() {
             onChange={(e) => setSelectedDepartment(e.target.value)}
             className="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white"
           >
-            <option value="all">All Departments</option>
-            {departments.map(dept => (
-              <option key={dept.id} value={dept.id}>
-                {dept.name}
-              </option>
-            ))}
+            <option value="all">All Departments ({allStaff.length})</option>
+            {departments.map(dept => {
+              const count = allStaff.filter(s => Number(s.department_id) === Number(dept.id)).length;
+              return (
+                <option key={dept.id} value={dept.id}>
+                  {dept.name} ({count})
+                </option>
+              );
+            })}
           </select>
         </div>
 
         {/* Employees Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredEmployees.map((employee) => {
-            const department = getDepartment(employee.departmentId);
+            const department = getDepartment(employee.department_id);
             return (
               <div
                 key={employee.id}
@@ -336,9 +416,12 @@ export default function StaffPage() {
               >
                 <div className="relative h-64 overflow-hidden bg-gradient-to-br from-green-100 via-blue-50 to-green-50">
                   <img
-                    src={employee.image || 'https://via.placeholder.com/300'}
-                    alt={employee.name}
+                    src={employee.photo_url || 'https://via.placeholder.com/300'}
+                    alt={employee.full_name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/300';
+                    }}
                   />
                   {/* Decorative pattern overlay */}
                   <div className="absolute inset-0 opacity-10">
@@ -358,7 +441,7 @@ export default function StaffPage() {
                 </div>
                 <div className="p-5">
                   <h3 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-green-600 transition-colors">
-                    {employee.name}
+                    {employee.full_name}
                   </h3>
                   <p className="text-green-600 text-sm font-medium mb-2">
                     {employee.position}
@@ -389,7 +472,48 @@ export default function StaffPage() {
         )}
       </div>
 
-     
+      {/* Footer */}
+      <footer className="bg-green-800 text-white mt-12">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">RELATED LINKS</h3>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="hover:underline">Sacco Societies Regulatory Authority</a></li>
+                <li><a href="#" className="hover:underline">Kenya Union of Savings and Credit Co-operatives</a></li>
+                <li><a href="#" className="hover:underline">Cooperative Bank</a></li>
+                <li><a href="#" className="hover:underline">University of Nairobi</a></li>
+                <li><a href="#" className="hover:underline">CIC Insurance Group Insurance company</a></li>
+                <li><a href="#" className="hover:underline">ICEA LION Group</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-lg mb-4">QUICK LINKS</h3>
+              <ul className="space-y-2 text-sm">
+                <li><a href="#" className="hover:underline">MCHUNA APPLICATION</a></li>
+                <li><a href="#" className="hover:underline">Help Desk</a></li>
+                <li><a href="#" className="hover:underline">Online Loan Application</a></li>
+                <li><a href="#" className="hover:underline">Asset Financing</a></li>
+                <li><a href="#" className="hover:underline">Group Loan</a></li>
+                <li><a href="#" className="hover:underline">New Member Registration</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-lg mb-4">CONTACT INFO</h3>
+              <div className="text-sm space-y-2">
+                <p>University of Nairobi, Harry Thuku Rd</p>
+                <p>+254 758 111 222</p>
+                <p><a href="#" className="hover:underline">Email Us</a></p>
+                <p className="mt-4">Mon - Fri 8:00 am- 5:00pm</p>
+                <p>Sat-Sun CLOSED</p>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-green-700 mt-8 pt-8 text-center text-sm">
+            <p>© Copyright Chuna Co-operative Savings & Credit Society Ltd 2024. All Rights Reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
