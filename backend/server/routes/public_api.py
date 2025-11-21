@@ -108,6 +108,27 @@ def downloads():
         'categories': [c[0] for c in categories_list if c[0]]
     })
 
+@public_api_bp.route('/downloads/<int:id>/track', methods=['POST'])
+def track_download(id):
+    """Track download count for a form"""
+    try:
+        form = DownloadableForm.query.get(id)
+        if not form:
+            return jsonify({'error': 'Form not found'}), 404
+        
+        # Increment download count
+        form.download_count = (form.download_count or 0) + 1
+        
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'download_count': form.download_count
+        })
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
 @public_api_bp.route('/news')
 def news():
     """Get all news"""
