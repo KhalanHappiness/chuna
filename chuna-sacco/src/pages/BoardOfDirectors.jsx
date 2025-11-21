@@ -199,7 +199,7 @@ function MemberCard({ member, flaskBaseUrl }) {
     ? (member.photo_url.startsWith('http') 
         ? member.photo_url 
         : `${flaskBaseUrl}${member.photo_url}`)
-    : 'https://via.placeholder.com/400x400?text=No+Image';
+    : `https://ui-avatars.com/api/?name=${encodeURIComponent(member.full_name)}&size=400&background=10b981&color=fff`;
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
@@ -210,7 +210,7 @@ function MemberCard({ member, flaskBaseUrl }) {
           alt={member.full_name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x400?text=No+Image';
+            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.full_name)}&size=400&background=10b981&color=fff`;
           }}
         />
         {/* Gradient Overlay */}
