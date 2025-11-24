@@ -107,7 +107,7 @@ const LoanCalculator = () => {
           <input
             type="range"
             min="10000"
-            max="2000000"
+            max="8000000"
             step="10000"
             value={loanAmount}
             onChange={(e) => setLoanAmount(Number(e.target.value))}
@@ -115,7 +115,7 @@ const LoanCalculator = () => {
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
             <span>10K</span>
-            <span>2M</span>
+            <span>8M</span>
           </div>
           <div className="mt-2 text-lg font-bold text-green-600">
             KSh {loanAmount.toLocaleString()}
@@ -130,7 +130,7 @@ const LoanCalculator = () => {
           <input
             type="range"
             min="6"
-            max="60"
+            max="84"
             step="6"
             value={period}
             onChange={(e) => setPeriod(Number(e.target.value))}
@@ -138,7 +138,7 @@ const LoanCalculator = () => {
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
             <span>6M</span>
-            <span>60M</span>
+            <span>84M</span>
           </div>
           <div className="mt-2 text-lg font-bold text-blue-600">
             {period} months

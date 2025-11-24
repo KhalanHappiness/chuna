@@ -148,7 +148,12 @@ const SupervisoryCommittee = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                     
-                    
+                    {/* Committee Badge */}
+                    <div className="absolute top-4 right-4">
+                      <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                        SP
+                      </div>
+                    </div>
                   </div>
 
                   {/* Content */}
