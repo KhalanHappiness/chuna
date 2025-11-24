@@ -1,26 +1,59 @@
 import React, { useState } from 'react';
 import { Download, ChevronRight, Clock, DollarSign, Users, BookOpen, PiggyBank, AlertCircle, CheckCircle2 } from 'lucide-react';
 
-const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon, highlighted = false, image }) => {
+const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon, highlighted = false, image, colorScheme = 'blue' }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const colors = {
+        blue: {
+        border: 'border-[#189CCA33]',            // 20% opacity example
+        borderBottom: 'border-b-[#189CCA]',
+        ring: 'ring-[#189CCA]',
+        gradient: 'from-[#189CCA] to-[#0F6E8E]', // pick a darker shade manually
+        iconBg: 'bg-white/20',
+        title: 'text-[#0F3D4A]',                 // darker text shade
+        amount: 'text-[#189CCA]',
+        period: 'text-[#147FA1]',
+        check: 'text-[#189CCA]',
+        feature: 'text-[#147FA1]',
+        button: 'bg-[#189CCA] hover:bg-[#0F6E8E]',
+        badge: 'bg-yellow-400 text-[#0F3D4A]'
+        },
+    gold: {
+      border: 'border-yellow-200',
+      borderBottom: 'border-b-yellow-600',
+      ring: 'ring-yellow-500',
+      gradient: 'from-yellow-500 to-amber-600',
+      iconBg: 'bg-white/20',
+      title: 'text-amber-900',
+      amount: 'text-amber-700',
+      period: 'text-amber-800',
+      check: 'text-amber-600',
+      feature: 'text-amber-900',
+      button: 'bg-amber-600 hover:bg-amber-700',
+      badge: 'bg-blue-400 text-amber-900'
+    }
+  };
+
+  const scheme = colors[colorScheme];
 
   return (
     <div 
-      className={`relative overflow-hidden rounded-xl sm:rounded-2xl border-2 border-green-200 bg-white transition-all duration-300 hover:shadow-xl sm:hover:scale-105 border-b-4 border-b-green-600 ${highlighted ? 'ring-2 ring-green-500 ring-offset-2' : ''}`}
+      className={`relative overflow-hidden rounded-xl sm:rounded-2xl border-2 ${scheme.border} bg-white transition-all duration-300 hover:shadow-xl sm:hover:scale-105 border-b-4 ${scheme.borderBottom} ${highlighted ? `ring-2 ${scheme.ring} ring-offset-2` : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Header Image */}
       <div className="relative h-32 sm:h-40 overflow-hidden">
         <div 
-          className="absolute inset-0 bg-gradient-to-br from-green-400 to-green-600 opacity-90"
+          className="absolute inset-0 opacity-90"
           style={{
             backgroundImage: image ? `url(${image})` : 'none',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500/80 to-green-600/80" />
+        <div className={`absolute inset-0 bg-gradient-to-br ${scheme.gradient} opacity-80`} />
         
         {/* Icon overlay */}
         <div className="absolute inset-0 flex items-center justify-center">
@@ -30,7 +63,7 @@ const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon
         </div>
 
         {highlighted && (
-          <span className="absolute top-3 right-3 rounded-full bg-yellow-400 px-2 py-1 sm:px-3 text-xs font-bold text-green-800 shadow-lg">
+          <span className={`absolute top-3 right-3 rounded-full ${scheme.badge} px-2 py-1 sm:px-3 text-xs font-bold shadow-lg`}>
             POPULAR
           </span>
         )}
@@ -39,20 +72,20 @@ const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon
       {/* Card Content */}
       <div className="p-4 sm:p-6">
         <div className="relative z-10">
-          <h3 className="mb-2 sm:mb-3 text-lg sm:text-xl font-bold text-green-800 leading-tight">{title}</h3>
+          <h3 className={`mb-2 sm:mb-3 text-lg sm:text-xl font-bold ${scheme.title} leading-tight`}>{title}</h3>
           
           {amount && (
             <div className="mb-3 sm:mb-4">
-              <div className="text-xl sm:text-3xl font-bold text-green-600 leading-tight">Ksh {amount}</div>
-              {period && <div className="mt-1 text-xs sm:text-sm text-green-800 opacity-70">/ {period}</div>}
+              <div className={`text-xl sm:text-3xl font-bold ${scheme.amount} leading-tight`}>Ksh {amount}</div>
+              {period && <div className={`mt-1 text-xs sm:text-sm ${scheme.period} opacity-70`}>/ {period}</div>}
             </div>
           )}
           
           <ul className="mb-4 sm:mb-6 space-y-2 sm:space-y-3">
             {features.slice(0, isHovered ? features.length : 3).map((feature, index) => (
               <li key={index} className="flex items-start space-x-2">
-                <CheckCircle2 className="mt-0.5 h-3 w-3 sm:h-4 sm:w-4 text-green-600 flex-shrink-0" />
-                <span className="text-xs sm:text-sm text-green-800 leading-relaxed">{feature}</span>
+                <CheckCircle2 className={`mt-0.5 h-3 w-3 sm:h-4 sm:w-4 ${scheme.check} flex-shrink-0`} />
+                <span className={`text-xs sm:text-sm ${scheme.feature} leading-relaxed`}>{feature}</span>
               </li>
             ))}
             {features.length > 3 && !isHovered && (
@@ -63,7 +96,7 @@ const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon
           </ul>
           
           <button 
-            className="group w-full rounded-lg bg-green-600 hover:bg-green-700 px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base"
+            className={`group w-full rounded-lg ${scheme.button} px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base`}
           >
             <span className="flex items-center justify-center space-x-2">
               <Download className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -94,6 +127,7 @@ const FosaProducts = () => {
       amount: "60% of Basic Salary",
       period: "PAYABLE IN 14 MONTHS",
       category: 'loans',
+      colorScheme: 'blue',
       image: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Maximum loan amount is 60% of Member basic salary",
@@ -112,6 +146,7 @@ const FosaProducts = () => {
       amount: "60% of Net Salary", 
       period: "PAYABLE IN 14 MONTHS",
       category: 'loans',
+      colorScheme: 'gold',
       image: 'https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Salary must pass through FOSA at least three months",
@@ -127,6 +162,7 @@ const FosaProducts = () => {
       amount: "300,000 max",
       period: "PAYABLE IN 48 MONTHS", 
       category: 'loans',
+      colorScheme: 'blue',
       image: 'https://images.unsplash.com/photo-1618044733300-9472054094ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Third rule apply",
@@ -147,6 +183,7 @@ const FosaProducts = () => {
       amount: "300,000 Max",
       period: "PAYABLE IN 20 MONTHS",
       category: 'loans',
+      colorScheme: 'gold',
       image: 'https://images.unsplash.com/photo-1640622300473-977435c38c04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Interest rate of 3% per month amortized",
@@ -162,6 +199,7 @@ const FosaProducts = () => {
       amount: "100,000 Max",
       period: "PAYABLE IN 16 MONTHS",
       category: 'loans',
+      colorScheme: 'blue',
       image: 'https://images.unsplash.com/photo-1639754390580-2e7437267698?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for new Sacco members",
@@ -180,6 +218,7 @@ const FosaProducts = () => {
       amount: "Savings Account",
       period: "INTEREST PAYABLE IN 30 MONTHS",
       category: 'savings',
+      colorScheme: 'gold',
       image: 'https://images.unsplash.com/photo-1633265486064-086b219458ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for all Sacco members",
@@ -196,6 +235,7 @@ const FosaProducts = () => {
       amount: "Savings Account",
       period: "INTEREST PAYABLE IN 12 MONTHS",
       category: 'savings',
+      colorScheme: 'blue',
       image: 'https://images.unsplash.com/photo-1640622843377-6b5af9417e70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for all Sacco members",
@@ -212,6 +252,7 @@ const FosaProducts = () => {
       amount: "Savings Account", 
       period: "INTEREST PAYABLE IN 24 MONTHS",
       category: 'savings',
+      colorScheme: 'gold',
       image: 'https://images.unsplash.com/photo-1638913970779-388698e52c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for all Sacco members",
@@ -227,6 +268,7 @@ const FosaProducts = () => {
       title: "FOSA Ordinary Account",
       amount: "Ordinary Account",
       category: 'accounts',
+      colorScheme: 'blue',
       image: 'https://images.unsplash.com/photo-1640622300473-977435c38c04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "No ledger fees or account maintenance Fees",
@@ -249,13 +291,13 @@ const FosaProducts = () => {
       <div className="bg-white/95 px-4 sm:px-6 py-8 sm:py-14 text-gray-900 mt-16 sm:mt-28">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <div className="mb-4 sm:mb-6 text-xs sm:text-sm font-semibold text-green-600 uppercase tracking-wide">
+            <div className="mb-4 sm:mb-6 text-xs sm:text-sm font-semibold text-blue-700 uppercase tracking-wide">
               FOSA
             </div>
-            <h1 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-green-800 leading-tight">
+            <h1 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 leading-tight">
               Chuna Front Office Products Available For You
             </h1>
-            <div className="mx-auto h-1 w-12 sm:w-16 bg-green-600 mb-4 sm:mb-8"></div>
+            <div className="mx-auto h-1 w-12 sm:w-16 bg-gradient-to-r from-blue-600 to-amber-500 mb-4 sm:mb-8"></div>
           </div>
         </div>
       </div>
@@ -272,7 +314,7 @@ const FosaProducts = () => {
                   onClick={() => setActiveCategory(category.id)}
                   className={`flex items-center space-x-1.5 sm:space-x-2 rounded-full px-3 py-2 sm:px-6 sm:py-3 font-semibold text-sm sm:text-base transition-all duration-200 ${
                     activeCategory === category.id
-                      ? 'bg-green-600 text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-blue-600 to-amber-500 text-white shadow-lg'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -297,17 +339,17 @@ const FosaProducts = () => {
       </div>
 
       {/* Contact CTA - Mobile Optimized */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 px-4 sm:px-6 py-12 sm:py-16">
+      <div className="bg-gradient-to-r from-blue-700 via-blue-800 to-amber-600 px-4 sm:px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl font-bold leading-tight">Ready to Get Started?</h2>
-          <p className="mb-6 sm:mb-8 text-base sm:text-xl text-green-100 leading-relaxed">
+          <p className="mb-6 sm:mb-8 text-base sm:text-xl text-blue-100 leading-relaxed">
             Contact us today to learn more about our services and how we can help you achieve your financial goals.
           </p>
           <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:justify-center">
-            <button className="rounded-lg bg-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-green-600 transition-all duration-200 hover:shadow-lg sm:hover:scale-105">
+            <button className="rounded-lg bg-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-blue-700 transition-all duration-200 hover:shadow-lg sm:hover:scale-105">
               Contact Us
             </button>
-            <button className="rounded-lg border-2 border-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-green-600">
+            <button className="rounded-lg border-2 border-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-blue-700">
               Learn More
             </button>
           </div>
