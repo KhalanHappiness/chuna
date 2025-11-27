@@ -397,7 +397,31 @@ export default function MembershipPage() {
             </div>
           </section>
 
-      
+          {/* FAQ Section */}
+          <section className="bg-white rounded-xl shadow-lg p-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-6">
+              <div className="border-l-4 border-emerald-500 bg-emerald-50 p-6 rounded-r-lg">
+                <h3 className="font-semibold text-gray-900 mb-2">What is the minimum amount to join?</h3>
+                <p className="text-gray-700">The minimum share capital is KES 5,000, and monthly contributions start from KES 1,000.</p>
+              </div>
+              
+              <div className="border-l-4 border-blue-500 bg-blue-50 p-6 rounded-r-lg">
+                <h3 className="font-semibold text-gray-900 mb-2">How quickly can I access a loan?</h3>
+                <p className="text-gray-700">Once you've been a member for 6 months, you can access loans up to 4 times your savings within 48 hours.</p>
+              </div>
+              
+              <div className="border-l-4 border-purple-500 bg-purple-50 p-6 rounded-r-lg">
+                <h3 className="font-semibold text-gray-900 mb-2">What documents do I need to join?</h3>
+                <p className="text-gray-700">You need a copy of your ID, passport photo, payslip or proof of income, and completed membership form.</p>
+              </div>
+              
+              <div className="border-l-4 border-orange-500 bg-orange-50 p-6 rounded-r-lg">
+                <h3 className="font-semibold text-gray-900 mb-2">Are there any monthly fees?</h3>
+                <p className="text-gray-700">There's a small monthly service fee of KES 200 to cover operational costs and member services.</p>
+              </div>
+            </div>
+          </section>
 
          
           <section className="bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl shadow-lg p-8 text-white text-center">

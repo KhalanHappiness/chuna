@@ -4,6 +4,7 @@ import { Download, Search, FileText, Menu, X, ChevronLeft, ChevronRight } from '
 const DownloadsPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [downloadingId, setDownloadingId] = useState(null);
@@ -42,10 +43,14 @@ const DownloadsPage = () => {
     }
   };
 
-  const filteredDownloads = downloads.filter(item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (item.category && item.category.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredDownloads = downloads.filter(item => {
+    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.category && item.category.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    
+    return matchesSearch && matchesCategory;
+  });
 
   const totalPages = Math.ceil(filteredDownloads.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -169,39 +174,114 @@ const DownloadsPage = () => {
 
       {/* Downloads Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Controls */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <label className="text-sm text-gray-600">Display</label>
-              <select 
-                value={itemsPerPage}
+        {/* Filter Section */}
+        <div className="mb-6 bg-white rounded-lg shadow p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Filter Downloads</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Category Filter */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Category
+              </label>
+              <select
+                value={selectedCategory}
                 onChange={(e) => {
-                  setItemsPerPage(Number(e.target.value));
+                  setSelectedCategory(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="border border-gray-300 rounded px-3 py-1 text-sm"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
+                <option value="all">All Categories</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
               </select>
-              <span className="text-sm text-gray-600">downloads per page</span>
+            </div>
+
+            {/* Search Box */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Search
+              </label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <input
+                  type="text"
+                  placeholder="Search by title or category..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
+          {/* Active Filters */}
+          {(selectedCategory !== 'all' || searchTerm) && (
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <span className="text-sm text-gray-600">Active filters:</span>
+              {selectedCategory !== 'all' && (
+                <span className="inline-flex items-center bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full">
+                  {selectedCategory}
+                  <button
+                    onClick={() => setSelectedCategory('all')}
+                    className="ml-2 hover:text-green-900"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </span>
+              )}
+              {searchTerm && (
+                <span className="inline-flex items-center bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
+                  Search: "{searchTerm}"
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="ml-2 hover:text-blue-900"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </span>
+              )}
+              <button
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setSearchTerm('');
+                  setCurrentPage(1);
+                }}
+                className="text-sm text-red-600 hover:text-red-700 font-medium"
+              >
+                Clear all filters
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Controls */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+          <div className="flex items-center space-x-2">
+            <label className="text-sm text-gray-600">Show</label>
+            <select 
+              value={itemsPerPage}
               onChange={(e) => {
-                setSearchTerm(e.target.value);
+                setItemsPerPage(Number(e.target.value));
                 setCurrentPage(1);
               }}
-              className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            />
+              className="border border-gray-300 rounded px-3 py-1 text-sm"
+            >
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+            </select>
+            <span className="text-sm text-gray-600">per page</span>
+          </div>
+
+          <div className="text-sm text-gray-600">
+            {filteredDownloads.length} {filteredDownloads.length === 1 ? 'result' : 'results'} found
           </div>
         </div>
 
@@ -282,14 +362,17 @@ const DownloadsPage = () => {
                     <td colSpan="5" className="px-6 py-12 text-center">
                       <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                       <p className="text-gray-500">
-                        {searchTerm ? 'No downloads match your search' : 'No downloads available'}
+                        {searchTerm || selectedCategory !== 'all' ? 'No downloads match your filters' : 'No downloads available'}
                       </p>
-                      {searchTerm && (
+                      {(searchTerm || selectedCategory !== 'all') && (
                         <button
-                          onClick={() => setSearchTerm('')}
+                          onClick={() => {
+                            setSearchTerm('');
+                            setSelectedCategory('all');
+                          }}
                           className="mt-2 text-green-600 hover:text-green-700 text-sm"
                         >
-                          Clear search
+                          Clear filters
                         </button>
                       )}
                     </td>

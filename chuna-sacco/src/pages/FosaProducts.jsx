@@ -45,14 +45,7 @@ const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon
     >
       {/* Header Image */}
       <div className="relative h-32 sm:h-40 overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-90"
-          style={{
-            backgroundImage: image ? `url(${image})` : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        />
+       
         <div className={`absolute inset-0 bg-gradient-to-br ${scheme.gradient} opacity-80`} />
         
         {/* Icon overlay */}
@@ -128,7 +121,6 @@ const FosaProducts = () => {
       period: "PAYABLE IN 14 MONTHS",
       category: 'loans',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Maximum loan amount is 60% of Member basic salary",
         "Member salary must pass through FOSA for at least 12 months",
@@ -147,7 +139,6 @@ const FosaProducts = () => {
       period: "PAYABLE IN 14 MONTHS",
       category: 'loans',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Salary must pass through FOSA at least three months",
         "Loan recovered within a maximum of one (1) month",
@@ -163,7 +154,6 @@ const FosaProducts = () => {
       period: "PAYABLE IN 48 MONTHS", 
       category: 'loans',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1618044733300-9472054094ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Third rule apply",
         "Not pegged to deposit contribution but on salary",
@@ -184,7 +174,6 @@ const FosaProducts = () => {
       period: "PAYABLE IN 20 MONTHS",
       category: 'loans',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1640622300473-977435c38c04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Interest rate of 3% per month amortized",
         "Turn around time is one day",
@@ -200,7 +189,6 @@ const FosaProducts = () => {
       period: "PAYABLE IN 16 MONTHS",
       category: 'loans',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1639754390580-2e7437267698?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for new Sacco members",
         "A least (1/3) of the loan is deducted as deposits and 1st 5000 share capital",
@@ -219,7 +207,6 @@ const FosaProducts = () => {
       period: "INTEREST PAYABLE IN 30 MONTHS",
       category: 'savings',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1633265486064-086b219458ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for all Sacco members",
         "Minimum monthly contribution of 500 shillings",
@@ -236,7 +223,6 @@ const FosaProducts = () => {
       period: "INTEREST PAYABLE IN 12 MONTHS",
       category: 'savings',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1640622843377-6b5af9417e70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for all Sacco members",
         "Minimum monthly contribution of 500 shillings",
@@ -253,7 +239,6 @@ const FosaProducts = () => {
       period: "INTEREST PAYABLE IN 24 MONTHS",
       category: 'savings',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1638913970779-388698e52c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Designed for all Sacco members",
         "Minimum monthly contribution of 500 shillings",
@@ -269,7 +254,6 @@ const FosaProducts = () => {
       amount: "Ordinary Account",
       category: 'accounts',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1640622300473-977435c38c04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "No ledger fees or account maintenance Fees",
         "No withdrawal limit",
@@ -291,10 +275,10 @@ const FosaProducts = () => {
       <div className="bg-white/95 px-4 sm:px-6 py-8 sm:py-14 text-gray-900 mt-16 sm:mt-28">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <div className="mb-4 sm:mb-6 text-xs sm:text-sm font-semibold text-blue-700 uppercase tracking-wide">
+            <div className="mb-4 sm:mb-6 text-xs sm:text-sm font-semibold text-cyan-600 uppercase tracking-wide">
               FOSA
             </div>
-            <h1 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 leading-tight">
+            <h1 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-600 leading-tight">
               Chuna Front Office Products Available For You
             </h1>
             <div className="mx-auto h-1 w-12 sm:w-16 bg-gradient-to-r from-blue-600 to-amber-500 mb-4 sm:mb-8"></div>
@@ -339,7 +323,7 @@ const FosaProducts = () => {
       </div>
 
       {/* Contact CTA - Mobile Optimized */}
-      <div className="bg-gradient-to-r from-blue-700 via-blue-800 to-amber-600 px-4 sm:px-6 py-12 sm:py-16">
+      <div className="bg-gradient-to-r from-cyan-600  px-4 sm:px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl font-bold leading-tight">Ready to Get Started?</h2>
           <p className="mb-6 sm:mb-8 text-base sm:text-xl text-blue-100 leading-relaxed">
