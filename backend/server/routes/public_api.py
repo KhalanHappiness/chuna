@@ -72,19 +72,25 @@ def board():
 
 @public_api_bp.route('/products')
 def products():
-    """Get products with optional category filter"""
-    categories = ProductCategory.query.order_by(ProductCategory.display_order).all()
+    product_type = request.args.get('type')  # Add this
     category_slug = request.args.get('category')
+    
+    query = Product.query.filter_by(is_active=True)
+    
+    if product_type:
+        query = query.filter_by(product_type=product_type)
     
     if category_slug:
         category = ProductCategory.query.filter_by(slug=category_slug).first()
-        products = Product.query.filter_by(product_category_id=category.id, is_active=True).order_by(Product.display_order).all() if category else []
-    else:
-        products = Product.query.filter_by(is_active=True).order_by(Product.display_order).all()
+        if category:
+            query = query.filter_by(product_category_id=category.id)
+    
+    products = query.order_by(Product.display_order).all()
+    categories = ProductCategory.query.order_by(ProductCategory.display_order).all()
     
     return jsonify({
         'categories': [c.to_dict() for c in categories],
-        'products': [p.to_dict() for p in products]
+        'products': [p.to_dict(include_features=True, include_category=True) for p in products]
     })
 
 @public_api_bp.route('/downloads')
