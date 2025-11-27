@@ -128,7 +128,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 24 MONTHS",
       category: 'emergency',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1633158829875-e5316a358c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Minimum net pay of Ksh 5,500.00 after disbursement",
         "Member salary must pass through FOSA",
@@ -146,7 +145,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 30 MONTHS",
       category: 'emergency',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1677756119517-756a188d2d94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Maximum repayment period is 12 months",
         "A third rule is applicable",
@@ -164,7 +162,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 20 MONTHS",
       category: 'emergency',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1618044733300-9472054094ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Maximum repayment period is 20 months",
         "A third rule is applicable",
@@ -183,7 +180,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 60 MONTHS",
       category: 'special',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1640622300473-977435c38c04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Maximum repayment period is 72 months",
         "A third rule is applicable",
@@ -201,7 +197,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 72 MONTHS",
       category: 'special',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1639754390580-2e7437267698?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Deposits Multiplier: 3 (three) times",
         "Must have been a member for at least three months",
@@ -219,7 +214,6 @@ const BosaProducts = () => {
       period: "60 MONTHS",
       category: 'normal',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1633265486064-086b219458ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Application must be made on the official loan form duly completed",
         "Agreement and Guarantorship in-line with membership",
@@ -237,7 +231,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 24 MONTHS",
       category: 'normal',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1640622843377-6b5af9417e70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Application must be made on the official loan form duly completed",
         "Agreement and Guarantorship in-line with membership",
@@ -255,7 +248,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 36 MONTHS",
       category: 'normal',
       colorScheme: 'gold',
-      image: 'https://images.unsplash.com/photo-1638913970779-388698e52c7d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Application must be made on the official loan form duly completed",
         "Agreement and Guarantorship in-line with membership",
@@ -273,7 +265,6 @@ const BosaProducts = () => {
       period: "PAYABLE IN 48 MONTHS",
       category: 'normal',
       colorScheme: 'blue',
-      image: 'https://images.unsplash.com/photo-1640622300473-977435c38c04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
       features: [
         "Application must be made on the official loan form duly completed",
         "Agreement and Guarantorship in-line with membership",
