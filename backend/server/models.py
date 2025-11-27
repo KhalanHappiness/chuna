@@ -358,7 +358,7 @@ class Product(db.Model):
     is_popular = db.Column(db.Boolean, default=False)
     display_order = db.Column(db.Integer, default=0)
     is_active = db.Column(db.Boolean, default=True)
-    product_type = db.Column(db.String(10), nullable=False, default='bosa')  # 'bosa' or 'fosa'
+    product_type = db.Column(db.String(10), nullable=False, server_default='bosa')  # 'bosa' or 'fosa'
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
