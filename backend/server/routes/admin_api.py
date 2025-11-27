@@ -883,7 +883,8 @@ def create_product():
             icon_class=data.get('icon_class'),
             is_popular=data.get('is_popular', False),
             display_order=data.get('display_order', 0),
-            is_active=data.get('is_active', True)
+            is_active=data.get('is_active', True),
+            product_type=data.get('product_type', 'bosa')
         )
         
         db.session.add(product)
@@ -937,7 +938,8 @@ def update_product(id):
         product.display_order = data.get('display_order', product.display_order)
         product.is_active = data.get('is_active', product.is_active)
         product.updated_at = datetime.utcnow()
-        
+        product.product_type = data.get('product_type', product.product_type)  
+
         # Update features if provided
         if 'features' in data:
             # Delete existing features
