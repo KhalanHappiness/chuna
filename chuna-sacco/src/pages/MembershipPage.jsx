@@ -68,34 +68,10 @@ export default function MembershipPage() {
        
 
           {/* Benefits Overview Cards */}
-          <section className="grid md:grid-cols-3 gap-6 mt-40">
-            <div className="bg-gradient-to-br from-emerald-500 to-green-600 text-white p-8 rounded-xl shadow-lg">
-              <DollarSign className="w-12 h-12 mb-4" />
-              <h3 className="text-xl font-bold mb-3">Competitive Rates</h3>
-              <p className="text-emerald-100 mb-4">Enjoy up to 12% dividend on shares and low interest rates on loans</p>
-              <div className="text-2xl font-bold">12%</div>
-              <div className="text-sm text-emerald-100">Annual Dividend</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white p-8 rounded-xl shadow-lg">
-              <TrendingUp className="w-12 h-12 mb-4" />
-              <h3 className="text-xl font-bold mb-3">Flexible Loans</h3>
-              <p className="text-blue-100 mb-4">Access loans up to 4x your savings with flexible repayment terms</p>
-              <div className="text-2xl font-bold">4X</div>
-              <div className="text-sm text-blue-100">Loan Multiplier</div>
-            </div>
-            
-            <div className="bg-gradient-to-br from-purple-500 to-pink-600 text-white p-8 rounded-xl shadow-lg">
-              <Users className="w-12 h-12 mb-4" />
-              <h3 className="text-xl font-bold mb-3">Community</h3>
-              <p className="text-purple-100 mb-4">Join a supportive community of over 5,000 active members</p>
-              <div className="text-2xl font-bold">5K+</div>
-              <div className="text-sm text-purple-100">Members</div>
-            </div>
-          </section>
-          <section className="bg-white rounded-xl shadow-lg p-8">
+          
+          <section className="bg-white rounded-xl shadow-lg p-8 mt-40">
             <div className="text-center mb-8">
-              <div className="w-full max-w-md mx-auto h-48 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center mb-6">
+              <div className="w-full max-w-md mx-auto h-48 bg-gradient-to-br from-green-600 to-green-700 rounded-lg flex items-center justify-center mb-6">
                 <div className="text-center text-white">
                   <Building2 className="w-16 h-16 mx-auto mb-4" />
                   <p className="text-lg font-semibold">Your Financial Future</p>
@@ -113,12 +89,12 @@ export default function MembershipPage() {
               </p>
               
               <div className="grid md:grid-cols-2 gap-6 mt-8">
-                <div className="bg-emerald-50 p-6 rounded-lg border-l-4 border-emerald-500">
-                  <h3 className="font-semibold text-emerald-800 mb-3 flex items-center">
+                <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
+                  <h3 className="font-semibold text-green-800 mb-3 flex items-center">
                     <UserCheck className="w-5 h-5 mr-2" />
                     Individual Members
                   </h3>
-                  <p className="text-emerald-700">
+                  <p className="text-green-700">
                     Whether you're a salaried employee, self-employed professional, or student, 
                     you are welcome to join Chuna SACCO. We value financial discipline and 
                     commitment to our shared goals.
@@ -162,7 +138,7 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-lg text-lg">
+              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg text-lg">
                 START YOUR MEMBERSHIP JOURNEY
               </button>
             </div>
@@ -191,8 +167,8 @@ export default function MembershipPage() {
             </div>
             
             <div className="space-y-6">
-              <div className="flex items-start space-x-4 p-6 bg-gradient-to-r from-emerald-50 to-green-50 rounded-lg border-l-4 border-emerald-500">
-                <div className="w-10 h-10 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold">
+              <div className="flex items-start space-x-4 p-6 bg-gradient-to-r from-green-50 to-green-50 rounded-lg border-l-4 border-green-600">
+                <div className="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold">
                   1
                 </div>
                 <div>
@@ -232,7 +208,7 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-lg flex items-center mx-auto text-lg">
+              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg flex items-center mx-auto text-lg">
                 APPLY FOR MEMBERSHIP
                 <ArrowRight className="w-5 h-5 ml-2" />
               </button>
@@ -263,8 +239,8 @@ export default function MembershipPage() {
                 
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 text-emerald-600" />
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Access to Financial Products</h3>
@@ -276,8 +252,8 @@ export default function MembershipPage() {
                   </div>
                   
                   <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 text-emerald-600" />
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Exclusive Member Benefits</h3>
@@ -290,8 +266,8 @@ export default function MembershipPage() {
                   </div>
 
                   <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 text-emerald-600" />
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 mb-2">Community Connection</h3>
@@ -306,7 +282,7 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-lg text-lg">
+              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg text-lg">
                 EXPLORE MEMBER BENEFITS
               </button>
             </div>
@@ -391,7 +367,7 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-lg text-lg">
+              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg text-lg">
                 VIEW MEMBER HANDBOOK
               </button>
             </div>
@@ -401,7 +377,7 @@ export default function MembershipPage() {
           <section className="bg-white rounded-xl shadow-lg p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-6">
-              <div className="border-l-4 border-emerald-500 bg-emerald-50 p-6 rounded-r-lg">
+              <div className="border-l-4 border-green-600 bg-green-50 p-6 rounded-r-lg">
                 <h3 className="font-semibold text-gray-900 mb-2">What is the minimum amount to join?</h3>
                 <p className="text-gray-700">The minimum share capital is KES 5,000, and monthly contributions start from KES 1,000.</p>
               </div>
@@ -424,18 +400,18 @@ export default function MembershipPage() {
           </section>
 
          
-          <section className="bg-gradient-to-r from-emerald-600 to-green-600 rounded-xl shadow-lg p-8 text-white text-center">
+          <section className="bg-gradient-to-r from-green-600 to-green-700 rounded-xl shadow-lg p-8 text-white text-center">
             <div className="max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold mb-4">Ready to Join Chuna SACCO?</h2>
-              <p className="text-xl mb-8 text-emerald-100">
+              <p className="text-xl mb-8 text-green-100">
                 Take the first step towards financial freedom and community empowerment. 
                 Join thousands of members who trust Chuna SACCO with their financial future.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-white text-emerald-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg text-lg">
+                <button className="bg-white text-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg text-lg">
                   START APPLICATION
                 </button>
-                <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-emerald-600 transition-colors text-lg">
+                <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors text-lg">
                   LEARN MORE
                 </button>
               </div>
