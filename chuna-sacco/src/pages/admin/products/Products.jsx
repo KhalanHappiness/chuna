@@ -1,3 +1,5 @@
+// Updated Products.jsx - Admin Component with Product Type Dropdown
+
 import { useState, useEffect } from 'react';
 import { adminAPI } from '../../../api/axios';
 import { Plus, Edit, Trash2, Package, Star, List } from 'lucide-react';
@@ -15,6 +17,7 @@ const Products = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [editingCategory, setEditingCategory] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedType, setSelectedType] = useState('all'); // NEW: Filter by type
   
   const [productForm, setProductForm] = useState({
     product_category_id: '',
@@ -28,6 +31,7 @@ const Products = () => {
     is_popular: false,
     display_order: 0,
     is_active: true,
+    product_type: 'bosa', // NEW: Default to BOSA
     features: [''],
   });
 
@@ -58,9 +62,16 @@ const Products = () => {
     }
   };
 
-  const filteredProducts = selectedCategory === 'all'
-    ? products
-    : products.filter(p => p.product_category_id === parseInt(selectedCategory));
+  // NEW: Filter by both category and type
+  const filteredProducts = products.filter(p => {
+    const categoryMatch = selectedCategory === 'all' || p.product_category_id === parseInt(selectedCategory);
+    const typeMatch = selectedType === 'all' || p.product_type === selectedType;
+    return categoryMatch && typeMatch;
+  });
+
+  // NEW: Count products by type
+  const bosaCount = products.filter(p => p.product_type === 'bosa').length;
+  const fosaCount = products.filter(p => p.product_type === 'fosa').length;
 
   // Product Handlers
   const handleOpenProductModal = (product = null) => {
@@ -78,6 +89,7 @@ const Products = () => {
         is_popular: product.is_popular || false,
         display_order: product.display_order || 0,
         is_active: product.is_active,
+        product_type: product.product_type || 'bosa', // NEW
         features: product.features?.map(f => f.feature_text) || [''],
       });
     } else {
@@ -94,6 +106,7 @@ const Products = () => {
         is_popular: false,
         display_order: 0,
         is_active: true,
+        product_type: 'bosa', // NEW: Default
         features: [''],
       });
     }
@@ -168,7 +181,7 @@ const Products = () => {
     }
   };
 
-  // Category Handlers
+  // Category Handlers (unchanged)
   const handleOpenCategoryModal = (category = null) => {
     if (category) {
       setEditingCategory(category);
@@ -245,7 +258,7 @@ const Products = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-          <p className="text-gray-600 mt-1">Manage loan and savings products</p>
+          <p className="text-gray-600 mt-1">Manage BOSA and FOSA loan products</p>
         </div>
         <div className="flex gap-3">
           <Button variant="secondary" onClick={() => handleOpenCategoryModal()} icon={List}>
@@ -257,8 +270,42 @@ const Products = () => {
         </div>
       </div>
 
-      {/* Categories Filter */}
+      {/* NEW: Type Filter */}
       <div className="card">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <button
+            onClick={() => setSelectedType('all')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              selectedType === 'all'
+                ? 'bg-primary-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            All Products ({products.length})
+          </button>
+          <button
+            onClick={() => setSelectedType('bosa')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              selectedType === 'bosa'
+                ? 'bg-blue-600 text-white'
+                : 'bg-blue-50 text-blue-700 hover:bg-blue-100'
+            }`}
+          >
+            BOSA Products ({bosaCount})
+          </button>
+          <button
+            onClick={() => setSelectedType('fosa')}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              selectedType === 'fosa'
+                ? 'bg-cyan-600 text-white'
+                : 'bg-cyan-50 text-cyan-700 hover:bg-cyan-100'
+            }`}
+          >
+            FOSA Products ({fosaCount})
+          </button>
+        </div>
+
+        {/* Category Filter */}
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setSelectedCategory('all')}
@@ -268,10 +315,10 @@ const Products = () => {
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
-            All Products ({products.length})
+            All Categories
           </button>
           {categories.map((cat) => {
-            const count = products.filter(p => p.product_category_id === cat.id).length;
+            const count = filteredProducts.filter(p => p.product_category_id === cat.id).length;
             return (
               <button
                 key={cat.id}
@@ -299,7 +346,15 @@ const Products = () => {
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                   <Package className="w-6 h-6 text-primary-600" />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
+                  {/* NEW: Product Type Badge */}
+                  <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                    product.product_type === 'bosa'
+                      ? 'bg-blue-100 text-blue-800'
+                      : 'bg-cyan-100 text-cyan-800'
+                  }`}>
+                    {product.product_type?.toUpperCase()}
+                  </span>
                   {product.is_popular && (
                     <span className="flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
                       <Star className="w-3 h-3 mr-1" />
@@ -412,6 +467,28 @@ const Products = () => {
       >
         <form onSubmit={handleProductSubmit} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
+            {/* NEW: Product Type Dropdown */}
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Product Type <span className="text-red-500">*</span>
+              </label>
+              <select
+                name="product_type"
+                value={productForm.product_type}
+                onChange={handleProductInputChange}
+                required
+                className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+              >
+                <option value="bosa">BOSA (Back Office)</option>
+                <option value="fosa">FOSA (Front Office)</option>
+              </select>
+              <p className="mt-1 text-sm text-gray-500">
+                {productForm.product_type === 'bosa' 
+                  ? 'This product will appear on the BOSA page'
+                  : 'This product will appear on the FOSA page'}
+              </p>
+            </div>
+
             {/* Category */}
             <div className="col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -576,7 +653,7 @@ const Products = () => {
         </form>
       </Modal>
 
-      {/* Category Management Modal */}
+      {/* Category Management Modal (unchanged) */}
       <Modal
         isOpen={showCategoryModal}
         onClose={() => setShowCategoryModal(false)}

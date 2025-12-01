@@ -3,32 +3,98 @@ import { Eye, Target, Users, CheckCircle, Shield, Award, BookOpen, Phone, Mail, 
 
 const SupervisoryCommittee = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [committeeMembers, setCommitteeMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const API_BASE_URL = 'http://localhost:5000/api/public';
+  const FLASK_BASE_URL = 'http://localhost:5000';
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
-  const committeeMembers = [
-    {
-      id: 1,
-      name: "Dr. Angeline Chopchirchir",
-      role: "Member",
-      image: "https://www.chunasacco.co.ke/sites/default/files/all-uploads/supervisory/dr-angela.jpg",
-    },
-    {
-      id: 2,
-      name: "Mr. Richard Agatu",
-      role: "Member", 
-      image: "https://www.chunasacco.co.ke/sites/default/files/all-uploads/supervisory/mr-agutu.jpg",
-    },
-    {
-      id: 3,
-      name: "Mr. Hezborn Esilkumo",
-      role: "Member",
-      image: "https://www.chunasacco.co.ke/sites/default/files/all-uploads/supervisory/mr-oeshi.jpg",
-    }
-  ];
+  // Fetch supervisory members from backend
+  useEffect(() => {
+    const fetchSupervisoryMembers = async () => {
+      try {
+        setLoading(true);
+        const url = `${API_BASE_URL}/board`;
+        
+        console.group('🔍 API Request Debug Info');
+        console.log('API_BASE_URL:', API_BASE_URL);
+        console.log('Full URL:', url);
+        console.log('Attempting fetch at:', new Date().toLocaleTimeString());
+        console.groupEnd();
+        
+        const response = await fetch(url);
+        
+        console.group('📥 API Response Debug Info');
+        console.log('Response status:', response.status);
+        console.log('Response OK:', response.ok);
+        console.log('Content-Type:', response.headers.get('content-type'));
+        console.log('Response URL:', response.url);
+        console.groupEnd();
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('❌ Error response body:', errorText.substring(0, 500));
+          throw new Error(`HTTP ${response.status}: Failed to fetch. Is Flask running on port 5000?`);
+        }
+        
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          const text = await response.text();
+          console.error('❌ Non-JSON response received:', text.substring(0, 200));
+          throw new Error(`Server returned ${contentType || 'unknown type'} instead of JSON. Check Flask endpoint.`);
+        }
+        
+        const data = await response.json();
+        
+        console.group('📊 API Data Debug Info');
+        console.log('Full data:', data);
+        console.log('Has executive?', Array.isArray(data.executive));
+        console.log('Has board?', Array.isArray(data.board));
+        console.log('Has supervisory?', Array.isArray(data.supervisory));
+        console.log('Supervisory count:', data.supervisory?.length || 0);
+        console.groupEnd();
+        
+        // Check if supervisory array exists
+        if (!data.supervisory) {
+          throw new Error('Response missing "supervisory" field');
+        }
+        
+        // Map the supervisory members to the format needed by the component
+        const mappedMembers = data.supervisory.map(member => ({
+          id: member.id,
+          name: member.full_name,
+          role: member.position,
+          image: member.photo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.full_name)}&size=400&background=10b981&color=fff`,
+          expertise: member.bio || '',
+          email: member.email,
+          phone: member.phone,
+          education: member.education
+        }));
+        
+        console.log('✅ Mapped members:', mappedMembers);
+        setCommitteeMembers(mappedMembers);
+        setLoading(false);
+      } catch (err) {
+        console.group('❌ Error Details');
+        console.error('Error type:', err.name);
+        console.error('Error message:', err.message);
+        console.error('Full error:', err);
+        console.groupEnd();
+        
+        setError(err.message || 'Failed to load committee members');
+        setLoading(false);
+      }
+    };
+
+    fetchSupervisoryMembers();
+  }, [API_BASE_URL]);
 
   const mandatePoints = [
     "Internal Audit Committee of the Society ensuring effective control systems",
@@ -76,13 +142,70 @@ const SupervisoryCommittee = () => {
       content: "Each elected at a general meeting for a period of three years with annual renewals."
     },
     {
-      
+      title: "Qualifications",
       content: "The members of the Supervisory Committee shall meet the same qualifications as those of the members of the Management Committee"
     },
     {
-      content: " In addition at least one member of the committee shall have basic bookkeeping, accounting, auditing or financial management knowledge. Where no such person is elected, those elected may be taken for basic accounting training."
+      title: "Financial Expertise",
+      content: "In addition at least one member of the committee shall have basic bookkeeping, accounting, auditing or financial management knowledge. Where no such person is elected, those elected may be taken for basic accounting training."
     }
   ];
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-green-600 mb-4"></div>
+          <p className="text-xl text-gray-600">Loading Supervisory Committee...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-red-100 rounded-full p-4 w-16 h-16 mx-auto mb-4">
+            <Shield className="w-8 h-8 text-red-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Unable to Load Committee</h2>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (committeeMembers.length === 0) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="bg-green-100 rounded-full p-4 w-16 h-16 mx-auto mb-4">
+            <Shield className="w-8 h-8 text-green-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">No Supervisory Committee Members Yet</h2>
+          <p className="text-gray-600 mb-4">
+            The supervisory committee members haven't been added yet. They will appear here once created in the admin panel.
+          </p>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-left">
+            <p className="text-sm text-blue-800 font-semibold mb-2">💡 For Administrators:</p>
+            <p className="text-sm text-blue-700">
+              Go to Admin → Board Management → Add New Member → Set Category to "Supervisory"
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white py-16 mt-20">
@@ -142,9 +265,12 @@ const SupervisoryCommittee = () => {
                   {/* Image Container */}
                   <div className="relative overflow-hidden bg-gradient-to-br from-green-100 to-emerald-100">
                     <img
-                      src={member.image}
+                      src={member.image.startsWith('http') ? member.image : `${FLASK_BASE_URL}${member.image}`}
                       alt={member.name}
                       className="w-full h-82 object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&size=400&background=10b981&color=fff`;
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                     
@@ -160,7 +286,31 @@ const SupervisoryCommittee = () => {
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{member.name}</h3>
                     <p className="text-green-600 font-semibold mb-2">{member.role}</p>
-                    <p className="text-gray-600 text-sm">{member.expertise}</p>
+                    {member.expertise && (
+                      <p className="text-gray-600 text-sm mb-4">{member.expertise}</p>
+                    )}
+                    
+                    {/* Contact Info */}
+                    <div className="space-y-2 pt-4 border-t border-gray-100">
+                      {member.email && (
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Mail className="w-4 h-4 mr-2 text-green-600" />
+                          <span className="truncate">{member.email}</span>
+                        </div>
+                      )}
+                      {member.phone && (
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Phone className="w-4 h-4 mr-2 text-green-600" />
+                          <span>{member.phone}</span>
+                        </div>
+                      )}
+                      {member.education && (
+                        <div className="flex items-center text-sm text-gray-600">
+                          <BookOpen className="w-4 h-4 mr-2 text-green-600" />
+                          <span>{member.education}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -199,7 +349,7 @@ const SupervisoryCommittee = () => {
                       <CheckCircle className="w-4 h-4 text-green-600" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900">{point.title}</h4>
+                      {point.title && <h4 className="font-semibold text-gray-900">{point.title}</h4>}
                       <p className="text-gray-600 text-sm">{point.content}</p>
                     </div>
                   </div>
@@ -273,8 +423,6 @@ const SupervisoryCommittee = () => {
           </div>
         </div>
       </section>
-
-      
     </div>
   );
 };

@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import { Download, ChevronRight, Clock, DollarSign, Users, BookOpen, PiggyBank, AlertCircle, CheckCircle2, GraduationCap, Home, Car } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Download, ChevronRight, DollarSign, Users, BookOpen, AlertCircle, CheckCircle2, GraduationCap, Loader2, RefreshCw } from 'lucide-react';
 
-const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon, highlighted = false, image, colorScheme = 'blue' }) => {
+const API_BASE_URL = 'http://localhost:5000/api/public';
+
+const ServiceCard = ({ product, onDownload }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
-  const colors = {
+  const colorSchemes = {
     blue: {
       border: 'border-[#189CCA33]',
       borderBottom: 'border-b-[#189CCA]',
       ring: 'ring-[#189CCA]',
       gradient: 'from-[#189CCA] to-[#0F6E8E]',
-      iconBg: 'bg-white/20',
       title: 'text-[#0F3D4A]',
       amount: 'text-[#189CCA]',
       period: 'text-[#147FA1]',
@@ -24,7 +26,6 @@ const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon
       borderBottom: 'border-b-yellow-600',
       ring: 'ring-yellow-500',
       gradient: 'from-yellow-500 to-amber-600',
-      iconBg: 'bg-white/20',
       title: 'text-amber-900',
       amount: 'text-amber-700',
       period: 'text-amber-800',
@@ -35,52 +36,87 @@ const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon
     }
   };
 
-  const scheme = colors[colorScheme];
+  const getIconComponent = (iconClass) => {
+    const iconMap = {
+      'AlertCircle': AlertCircle,
+      'DollarSign': DollarSign,
+      'GraduationCap': GraduationCap,
+      'Users': Users,
+      'BookOpen': BookOpen,
+      'fa-solid fa-exclamation-circle': AlertCircle,
+      'fa-solid fa-dollar-sign': DollarSign,
+      'fa-solid fa-graduation-cap': GraduationCap,
+      'fa-solid fa-users': Users,
+      'fa-solid fa-book-open': BookOpen,
+      'fa-solid fa-wallet': DollarSign,
+    };
+    return iconMap[iconClass] || DollarSign;
+  };
+
+  // Use product's color scheme or alternate between blue/gold based on ID
+  const colorScheme = product.color_scheme || (product.id % 2 === 0 ? 'gold' : 'blue');
+  const scheme = colorSchemes[colorScheme];
+  const Icon = getIconComponent(product.icon_class);
+  const features = product.features?.map(f => f.feature_text || f) || [];
+
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    try {
+      await onDownload(product.id);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <div 
-      className={`relative overflow-hidden rounded-xl sm:rounded-2xl border-2 ${scheme.border} bg-white transition-all duration-300 hover:shadow-xl sm:hover:scale-105 border-b-4 ${scheme.borderBottom} ${highlighted ? `ring-2 ${scheme.ring} ring-offset-2` : ''}`}
+      className={`relative overflow-hidden rounded-xl sm:rounded-2xl border-2 ${scheme.border} bg-white transition-all duration-300 hover:shadow-xl sm:hover:scale-105 border-b-4 ${scheme.borderBottom} ${product.is_popular ? `ring-2 ${scheme.ring} ring-offset-2` : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Header Image */}
       <div className="relative h-32 sm:h-40 overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-90"
-          style={{
-            backgroundImage: image ? `url(${image})` : 'none',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        />
         <div className={`absolute inset-0 bg-gradient-to-br ${scheme.gradient} opacity-80`} />
-        
-        {/* Icon overlay */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="rounded-full bg-white/20 p-3 sm:p-4 backdrop-blur-sm">
             <Icon className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
           </div>
         </div>
-
-        {highlighted && (
+        {product.is_popular && (
           <span className={`absolute top-3 right-3 rounded-full ${scheme.badge} px-2 py-1 sm:px-3 text-xs font-bold shadow-lg`}>
             POPULAR
           </span>
         )}
       </div>
 
-      {/* Card Content */}
       <div className="p-4 sm:p-6">
-        <div className="relative z-10">
-          <h3 className={`mb-2 sm:mb-3 text-lg sm:text-xl font-bold ${scheme.title} leading-tight`}>{title}</h3>
-          
-          {amount && (
-            <div className="mb-3 sm:mb-4">
-              <div className={`text-xl sm:text-3xl font-bold ${scheme.amount} leading-tight`}>Ksh {amount}</div>
-              {period && <div className={`mt-1 text-xs sm:text-sm ${scheme.period} opacity-70`}>/ {period}</div>}
+        <h3 className={`mb-2 sm:mb-3 text-lg sm:text-xl font-bold ${scheme.title} leading-tight`}>
+          {product.name}
+        </h3>
+        
+        {product.max_amount && (
+          <div className="mb-3 sm:mb-4">
+            <div className={`text-xl sm:text-3xl font-bold ${scheme.amount} leading-tight`}>
+              Ksh {product.max_amount}
             </div>
-          )}
-          
+            {product.repayment_period && (
+              <div className={`mt-1 text-xs sm:text-sm ${scheme.period} opacity-70`}>
+                / {product.repayment_period}
+              </div>
+            )}
+          </div>
+        )}
+
+        {product.description && (
+          <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+        )}
+
+        {product.interest_rate && (
+          <p className="text-sm text-gray-600 mb-3">
+            <span className="font-semibold">Interest Rate:</span> {product.interest_rate}
+          </p>
+        )}
+        
+        {features.length > 0 && (
           <ul className="mb-4 sm:mb-6 space-y-2 sm:space-y-3">
             {features.slice(0, isHovered ? features.length : 3).map((feature, index) => (
               <li key={index} className="flex items-start space-x-2">
@@ -94,203 +130,135 @@ const ServiceCard = ({ title, amount, period, features, downloadText, icon: Icon
               </div>
             )}
           </ul>
-          
-          <button 
-            className={`group w-full rounded-lg ${scheme.button} px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base`}
-          >
-            <span className="flex items-center justify-center space-x-2">
+        )}
+        
+        <button 
+          onClick={handleDownload}
+          disabled={isDownloading}
+          className={`group w-full rounded-lg ${scheme.button} px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed`}
+        >
+          <span className="flex items-center justify-center space-x-2">
+            {isDownloading ? (
+              <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
+            ) : (
               <Download className="h-3 w-3 sm:h-4 sm:w-4" />
-              <span>{downloadText}</span>
-              <ChevronRight className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${isHovered ? 'translate-x-1' : ''}`} />
-            </span>
-          </button>
-        </div>
+            )}
+            <span>Download Form</span>
+            <ChevronRight className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${isHovered ? 'translate-x-1' : ''}`} />
+          </span>
+        </button>
       </div>
     </div>
   );
 };
 
 const BosaProducts = () => {
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState('all');
-  
-  const categories = [
-    { id: 'all', name: 'All Products', icon: Users },
-    { id: 'emergency', name: 'Emergency Loans', icon: AlertCircle },
-    { id: 'normal', name: 'Normal Loans', icon: DollarSign },
-    { id: 'special', name: 'Special Loans', icon: BookOpen }
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const services = [
-    {
-      id: 1,
-      title: "Emergency Loan 6 Months",
-      amount: "300,000 Max",
-      period: "PAYABLE IN 24 MONTHS",
-      category: 'emergency',
-      colorScheme: 'blue',
-      features: [
-        "Minimum net pay of Ksh 5,500.00 after disbursement",
-        "Member salary must pass through FOSA",
-        "Maximum repayment period is 6 months",
-        "Interest rate is charged 10% upfront",
-        "Processed within a day"
-      ],
-      downloadText: "Download Form",
-      icon: AlertCircle
-    },
-    {
-      id: 2,
-      title: "Emergency Loan 12 Months",
-      amount: "300,000 Max",
-      period: "PAYABLE IN 30 MONTHS",
-      category: 'emergency',
-      colorScheme: 'gold',
-      features: [
-        "Maximum repayment period is 12 months",
-        "A third rule is applicable",
-        "Effective interest rate is charged at 15% p.a",
-        "Processed within a day",
-        "Able to top up"
-      ],
-      downloadText: "Download Form",
-      icon: AlertCircle
-    },
-    {
-      id: 3,
-      title: "Emergency Loan 20 Months",
-      amount: "300,000 Max",
-      period: "PAYABLE IN 20 MONTHS",
-      category: 'emergency',
-      colorScheme: 'blue',
-      features: [
-        "Maximum repayment period is 20 months",
-        "A third rule is applicable",
-        "Effective interest rate is charged at p.a",
-        "Processed within a day",
-        "Able to top up"
-      ],
-      downloadText: "Download Form",
-      icon: AlertCircle,
-      highlighted: true
-    },
-    {
-      id: 4,
-      title: "School Fees Loan",
-      amount: "300,000 Max",
-      period: "PAYABLE IN 60 MONTHS",
-      category: 'special',
-      colorScheme: 'gold',
-      features: [
-        "Maximum repayment period is 72 months",
-        "A third rule is applicable",
-        "Effective interest rate is charged at 12% P.A",
-        "Processed within a day",
-        "Able to top up"
-      ],
-      downloadText: "Download Form",
-      icon: GraduationCap
-    },
-    {
-      id: 5,
-      title: "Jiunge Loan 72 Months",
-      amount: "6,000,000 Max",
-      period: "PAYABLE IN 72 MONTHS",
-      category: 'special',
-      colorScheme: 'blue',
-      features: [
-        "Deposits Multiplier: 3 (three) times",
-        "Must have been a member for at least three months",
-        "Fully filled Jiunge Loan application form",
-        "Latest pay slip",
-        "OPEN FOSA being your monthly salary pay point"
-      ],
-      downloadText: "Download Form",
-      icon: Users
-    },
-    {
-      id: 6,
-      title: "Normal 60",
-      amount: "UP to 6million",
-      period: "60 MONTHS",
-      category: 'normal',
-      colorScheme: 'gold',
-      features: [
-        "Application must be made on the official loan form duly completed",
-        "Agreement and Guarantorship in-line with membership",
-        "Member and Guarantor MUST reside in original pay slip front more than one month old",
-        "Lending conditions relating at the time of application",
-        "Must details on the loan form"
-      ],
-      downloadText: "Download Form",
-      icon: DollarSign
-    },
-    {
-      id: 7,
-      title: "Normal Loan (24 Months)",
-      amount: "1,000,000 Max",
-      period: "PAYABLE IN 24 MONTHS",
-      category: 'normal',
-      colorScheme: 'blue',
-      features: [
-        "Application must be made on the official loan form duly completed",
-        "Agreement and Guarantorship in-line with membership",
-        "The Loan Applicant MUST reside in original pay slip front more than one month old",
-        "Lending conditions relating at the time of application",
-        "Must details on the loan form"
-      ],
-      downloadText: "Download Form",
-      icon: DollarSign
-    },
-    {
-      id: 8,
-      title: "Normal (36 Months)",
-      amount: "3,000,000 Max",
-      period: "PAYABLE IN 36 MONTHS",
-      category: 'normal',
-      colorScheme: 'gold',
-      features: [
-        "Application must be made on the official loan form duly completed",
-        "Agreement and Guarantorship in-line with membership",
-        "The Loan Applicant MUST reside in original pay slip front more than one month old",
-        "Lending conditions relating at the time of application",
-        "Must details on the loan form"
-      ],
-      downloadText: "Download Form",
-      icon: DollarSign
-    },
-    {
-      id: 9,
-      title: "Normal (48 Months)",
-      amount: "6,000,000 Max",
-      period: "PAYABLE IN 48 MONTHS",
-      category: 'normal',
-      colorScheme: 'blue',
-      features: [
-        "Application must be made on the official loan form duly completed",
-        "Agreement and Guarantorship in-line with membership",
-        "The Loan Applicant MUST reside in original pay slip front more than one month old",
-        "Lending conditions relating at the time of application",
-        "Must details on the loan form"
-      ],
-      downloadText: "Download Form",
-      icon: DollarSign
+  // ✅ FIXED: Clean fetch function
+  const fetchProducts = async (categorySlug = null) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Build URL with type=bosa parameter
+      let url = `${API_BASE_URL}/products?type=bosa`;
+      
+      // Add category filter if provided
+      if (categorySlug) {
+        url += `&category=${categorySlug}`;
+      }
+      
+      console.log('Fetching from:', url); // Debug log
+      
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      console.log('Received data:', data); // Debug log
+      
+      setCategories(data.categories || []);
+      setProducts(data.products || []);
+    } catch (err) {
+      console.error('Error fetching products:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
-  const filteredServices = activeCategory === 'all' 
-    ? services 
-    : services.filter(service => service.category === activeCategory);
+  // Fetch on mount
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // Handle category changes
+  const handleCategoryChange = (categoryId) => {
+    setActiveCategory(categoryId);
+    
+    if (categoryId === 'all') {
+      fetchProducts(); // Fetch all BOSA products
+    } else {
+      const category = categories.find(c => c.id === categoryId);
+      if (category) {
+        fetchProducts(category.slug); // Fetch filtered BOSA products
+      }
+    }
+  };
+
+  // Handle form downloads
+  const handleDownload = async (productId) => {
+    try {
+      const product = products.find(p => p.id === productId);
+      const response = await fetch(`${API_BASE_URL}/forms/download/${productId}`);
+      
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${product.slug || 'loan'}_form.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      } else {
+        throw new Error('Download failed');
+      }
+    } catch (err) {
+      console.error('Error downloading form:', err);
+      alert('Failed to download form. Please try again.');
+    }
+  };
+
+  const getCategoryIcon = (iconClass) => {
+    const iconMap = {
+      'fa-solid fa-users': Users,
+      'fa-solid fa-exclamation-circle': AlertCircle,
+      'fa-solid fa-dollar-sign': DollarSign,
+      'fa-solid fa-book-open': BookOpen,
+    };
+    return iconMap[iconClass] || Users;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-      {/* Header - Mobile Optimized */}
+      {/* Header */}
       <div className="bg-white/95 px-4 sm:px-6 py-8 sm:py-14 text-gray-900 mt-16 sm:mt-28">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
             <div className="mb-4 sm:mb-6 text-xs sm:text-sm font-semibold text-blue-700 uppercase tracking-wide">
               BOSA
             </div>
-            <h1 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 leading-tight">
+            <h1 className="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-cyan-600 leading-tight">
               Chuna Back Office Products Available For You
             </h1>
             <div className="mx-auto h-1 w-12 sm:w-16 bg-gradient-to-r from-blue-600 to-amber-500 mb-4 sm:mb-8"></div>
@@ -298,16 +266,28 @@ const BosaProducts = () => {
         </div>
       </div>
 
-      {/* Category Filter - Mobile Optimized */}
+      {/* Category Filter */}
       <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-200 px-3 sm:px-6 py-3 sm:py-4">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-wrap gap-2 justify-center">
+            <button
+              onClick={() => handleCategoryChange('all')}
+              className={`flex items-center space-x-1.5 sm:space-x-2 rounded-full px-3 py-2 sm:px-6 sm:py-3 font-semibold text-sm sm:text-base transition-all duration-200 ${
+                activeCategory === 'all'
+                  ? 'bg-gradient-to-r from-blue-600 to-amber-500 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <Users className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span>All Products</span>
+            </button>
+            
             {categories.map((category) => {
-              const Icon = category.icon;
+              const Icon = getCategoryIcon(category.icon_class);
               return (
                 <button
                   key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
+                  onClick={() => handleCategoryChange(category.id)}
                   className={`flex items-center space-x-1.5 sm:space-x-2 rounded-full px-3 py-2 sm:px-6 sm:py-3 font-semibold text-sm sm:text-base transition-all duration-200 ${
                     activeCategory === category.id
                       ? 'bg-gradient-to-r from-blue-600 to-amber-500 text-white shadow-lg'
@@ -323,19 +303,60 @@ const BosaProducts = () => {
         </div>
       </div>
 
-      {/* Services Grid - Mobile First */}
-      <div className="px-3 sm:px-6 py-6 sm:py-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredServices.map((service) => (
-              <ServiceCard key={service.id} {...service} />
-            ))}
+      {/* Loading State */}
+      {loading && (
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <Loader2 className="h-12 w-12 animate-spin text-blue-600 mx-auto mb-4" />
+            <p className="text-gray-600">Loading BOSA products...</p>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Optional CTA Section */}
-      <div className="bg-gradient-to-r from-blue-700 via-blue-800 to-amber-600 px-4 sm:px-6 py-12 sm:py-16">
+      {/* Error State */}
+      {error && (
+        <div className="mx-auto max-w-2xl px-4 py-12">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+            <AlertCircle className="h-12 w-12 text-red-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-red-900 mb-2">Failed to Load Products</h3>
+            <p className="text-red-700 mb-4">{error}</p>
+            <button
+              onClick={() => fetchProducts()}
+              className="inline-flex items-center space-x-2 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+            >
+              <RefreshCw className="h-4 w-4" />
+              <span>Retry</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Products Grid */}
+      {!loading && !error && (
+        <div className="px-3 sm:px-6 py-6 sm:py-12">
+          <div className="mx-auto max-w-7xl">
+            {products.length > 0 ? (
+              <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                {products.map((product) => (
+                  <ServiceCard 
+                    key={product.id} 
+                    product={product}
+                    onDownload={handleDownload}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500 text-lg">No BOSA products available in this category</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* CTA Section */}
+      <div className="bg-gradient-to-r from-cyan-600 px-4 sm:px-6 py-12 sm:py-16">
         <div className="mx-auto max-w-4xl text-center text-white">
           <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl font-bold leading-tight">Need Help Choosing?</h2>
           <p className="mb-6 sm:mb-8 text-base sm:text-xl text-blue-100 leading-relaxed">
