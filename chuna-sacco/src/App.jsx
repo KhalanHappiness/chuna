@@ -20,6 +20,7 @@ import BoardOfDirectors from './pages/BoardOfDirectors'
 import SupervisoryCommittee from './pages/SupervisoryCommittee'
 import MembershipPage from './pages/MembershipPage'
 import DepartmentsPage from './pages/DepartmentsPage'
+import ContactPage from './pages/ContactPage'
 
 // Admin components
 import Login from './pages/admin/auth/Login'
@@ -112,6 +113,7 @@ function App() {
               <Route path="/supervisorycommittee" element={<SupervisoryCommittee />} />
               <Route path="/membership" element={<MembershipPage />} />
               <Route path="/staff" element={<DepartmentsPage />} />
+              <Route path="/contactus" element={<ContactPage/>}/>
 
               {/* ============ ADMIN LOGIN (No Auth Required) ============ */}
               <Route path="/admin/login" element={<Login />} />
