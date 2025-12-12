@@ -149,7 +149,7 @@ const AboutContent = () => {
                   name="image"
                   onChange={(e) => handleImageChange(key, e.target.files[0])}
                   accept="image/*"
-                  currentImage={section.image_url ? `http://localhost:5000${section.image_url}` : null}
+                  currentImage={section.image_url ? `https://chuna.onrender.com${section.image_url}` : null}
                 />
 
                 {/* Video URL */}

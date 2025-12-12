@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Download, ChevronRight, Clock, DollarSign, Users, BookOpen, PiggyBank, AlertCircle, CheckCircle2, Loader2, RefreshCw } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:5000/api/public';
+const API_BASE_URL = 'https://chuna.onrender.com/public';
 
 const ServiceCard = ({ product, onDownload }) => {
   const [isHovered, setIsHovered] = useState(false);

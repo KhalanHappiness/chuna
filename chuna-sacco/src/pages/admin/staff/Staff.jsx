@@ -218,7 +218,7 @@ const Staff = () => {
               <div className="flex justify-center mb-4">
                 {member.photo_url ? (
                   <img
-                    src={`http://localhost:5000${member.photo_url}`}
+                    src={`https://chuna.onrender.com${member.photo_url}`}
                     alt={member.full_name}
                     className="w-24 h-24 rounded-full object-cover border-4 border-primary-100"
                   />
@@ -325,7 +325,7 @@ const Staff = () => {
             name="photo"
             onChange={handleInputChange}
             accept="image/*"
-            currentImage={editingStaff?.photo_url ? `http://localhost:5000${editingStaff.photo_url}` : null}
+            currentImage={editingStaff?.photo_url ? `https://chuna.onrender.com${editingStaff.photo_url}` : null}
           />
 
           {/* Department */}
