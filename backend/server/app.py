@@ -72,9 +72,9 @@ def serve_uploaded_file(folder, filename):
         return {'error': 'File not found', 'message': str(e)}, 404
 
 # Import and register blueprints AFTER app is created
-from routes.auth_api import auth_api_bp
-from routes.admin_api import admin_api_bp
-from routes.public_api import public_api_bp
+from server.routes.auth_api import auth_api_bp
+from server.routes.admin_api import admin_api_bp
+from server.routes.public_api import public_api_bp
 
 app.register_blueprint(auth_api_bp, url_prefix='/api/auth')
 app.register_blueprint(admin_api_bp, url_prefix='/api/admin')
