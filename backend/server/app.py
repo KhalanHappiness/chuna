@@ -30,17 +30,22 @@ jwt = JWTManager(app)
 CORS(app, resources={
     r"/api/*": {
         "origins": [
-            "https://chuna.onrender.com"  
+            "http://localhost:3000",
+            "http://localhost:5173",
+            "https://chuna-frontend.onrender.com"   # your deployed frontend
         ],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     },
     r"/static/*": {
         "origins": [
-            "https://chuna.onrender.com"   # ADD THIS LINE
+            "http://localhost:3000",
+            "http://localhost:5173",
+            "https://chuna-frontend.onrender.com"
         ]
     }
 })
+
 
 # JWT error handlers
 @jwt.expired_token_loader
