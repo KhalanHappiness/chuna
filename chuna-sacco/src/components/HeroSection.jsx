@@ -19,7 +19,7 @@ const HeroSection = () => {
         setLoading(true);
         // Replace with your actual API URL
         const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://chuna.onrender.com';
-        const response = await fetch(`${API_BASE_URL}/api/public/home`);
+        const response = await fetch(`${API_BASE_URL}/public/home`);
         
         if (!response.ok) {
           throw new Error('Failed to fetch data');
