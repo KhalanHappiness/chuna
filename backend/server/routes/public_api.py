@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from models import (
+from server.models import (
     SliderImage, NewsUpdate, Department, StaffMember, BoardMember, 
     Product, ProductCategory, DownloadableForm, AboutContent, CoreValue, Award, db
 )
