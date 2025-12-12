@@ -75,9 +75,9 @@ from server.routes.auth_api import auth_api_bp
 from server.routes.admin_api import admin_api_bp
 from server.routes.public_api import public_api_bp
 
-app.register_blueprint(auth_api_bp, url_prefix='/api/auth')
-app.register_blueprint(admin_api_bp, url_prefix='/api/admin')
-app.register_blueprint(public_api_bp, url_prefix='/api/public')
+app.register_blueprint(auth_api_bp, url_prefix='/auth')
+app.register_blueprint(admin_api_bp, url_prefix='/admin')
+app.register_blueprint(public_api_bp, url_prefix='/public')
 
 # Add this after registering all blueprints
 print("\n" + "="*60)
