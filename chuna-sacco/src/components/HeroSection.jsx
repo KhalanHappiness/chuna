@@ -117,7 +117,7 @@ const HeroSection = () => {
     return (
       <section className="bg-white overflow-hidden pt-16 md:pt-24 relative">
         <div className="w-full">
-          <div className="h-[400px] sm:h-[500px] md:h-[550px] lg:h-[650px] flex items-center justify-center bg-gradient-to-br from-emerald-50 to-blue-50">
+          <div className="h-[450px] sm:h-[500px] md:h-[600px] lg:h-[700px] flex items-center justify-center bg-gradient-to-br from-emerald-50 to-blue-50">
             <div className="text-center">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
               <p className="mt-4 text-gray-600">Loading...</p>
@@ -152,7 +152,7 @@ const HeroSection = () => {
 
   if (slides.length === 0) {
     return (
-      <section className="bg-white overflow-hidden pt-16 md:pt-24 relative">
+      <section className="bg-white overflow-hidden pt-16 md:pt-24 relative ">
         <div className="w-full">
           <div className="h-[400px] sm:h-[500px] md:h-[550px] lg:h-[650px] flex items-center justify-center bg-gradient-to-br from-emerald-50 to-blue-50">
             <div className="text-center p-8">
@@ -167,7 +167,7 @@ const HeroSection = () => {
   }
 
   return (
-    <section className="bg-white overflow-hidden pt-16 md:pt-24 relative">
+    <section className="bg-white overflow-hidden pt-16 md:pt-24 relative ">
       <div className="w-full">
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 lg:gap-12 items-center">
           

@@ -71,7 +71,7 @@ export default function MembershipPage() {
           
           <section className="bg-white rounded-xl shadow-lg p-8 mt-40">
             <div className="text-center mb-8">
-              <div className="w-full max-w-md mx-auto h-48 bg-gradient-to-br from-green-600 to-green-700 rounded-lg flex items-center justify-center mb-6">
+              <div className="w-full max-w-md mx-auto h-48 bg-cyan-500 rounded-lg flex items-center justify-center mb-6">
                 <div className="text-center text-white">
                   <Building2 className="w-16 h-16 mx-auto mb-4" />
                   <p className="text-lg font-semibold">Your Financial Future</p>
@@ -138,7 +138,7 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg text-lg">
+              <button className="bg-cyan-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-amber-700 transition-colors shadow-lg text-lg">
                 START YOUR MEMBERSHIP JOURNEY
               </button>
             </div>
@@ -208,7 +208,7 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg flex items-center mx-auto text-lg">
+              <button className="bg-cyan-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg flex items-center mx-auto text-lg">
                 APPLY FOR MEMBERSHIP
                 <ArrowRight className="w-5 h-5 ml-2" />
               </button>
@@ -218,7 +218,7 @@ export default function MembershipPage() {
           {/* After Joining Section */}
           <section className="bg-white rounded-xl shadow-lg p-8">
             <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="w-full h-64 bg-gradient-to-br from-orange-400 to-red-500 rounded-lg flex items-center justify-center relative overflow-hidden">
+              <div className="w-full h-64 bg-amber-600 rounded-lg flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                 <div className="text-center text-white z-10">
                   <Award className="w-16 h-16 mx-auto mb-4" />
@@ -282,7 +282,7 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg text-lg">
+              <button className="bg-cyan-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-colors shadow-lg text-lg">
                 EXPLORE MEMBER BENEFITS
               </button>
             </div>
@@ -367,14 +367,14 @@ export default function MembershipPage() {
             </div>
             
             <div className="mt-8 text-center">
-              <button className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg text-lg">
+              <button className="bg-cyan-500 text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-colors shadow-lg text-lg">
                 VIEW MEMBER HANDBOOK
               </button>
             </div>
           </section>
 
           {/* FAQ Section */}
-          <section className="bg-white rounded-xl shadow-lg p-8">
+          {/* <section className="bg-white rounded-xl shadow-lg p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-6">
               <div className="border-l-4 border-green-600 bg-green-50 p-6 rounded-r-lg">
@@ -397,7 +397,7 @@ export default function MembershipPage() {
                 <p className="text-gray-700">There's a small monthly service fee of KES 200 to cover operational costs and member services.</p>
               </div>
             </div>
-          </section>
+          </section> */}
 
          
           <section className="bg-gradient-to-r from-green-600 to-green-700 rounded-xl shadow-lg p-8 text-white text-center">

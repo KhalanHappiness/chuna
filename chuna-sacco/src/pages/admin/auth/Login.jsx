@@ -129,11 +129,11 @@ const Login = () => {
           </form>
 
           {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+          {/* <div className="mt-6 p-4 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600 font-medium mb-2">Demo Credentials:</p>
             <p className="text-xs text-gray-500">Username: <span className="font-mono">admin</span></p>
             <p className="text-xs text-gray-500">Password: <span className="font-mono">password123</span></p>
-          </div>
+          </div> */}
         </div>
 
         {/* Footer */}

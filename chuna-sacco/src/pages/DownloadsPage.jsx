@@ -348,7 +348,7 @@ const DownloadsPage = () => {
                           className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-2 transition-all ${
                             downloadingId === item.id
                               ? 'bg-gray-400 cursor-not-allowed text-white'
-                              : 'bg-blue-500 hover:bg-blue-600 text-white hover:shadow-lg transform hover:scale-105'
+                              : 'bg-cyan-600 hover:bg-cyan-600 text-white hover:shadow-lg transform hover:scale-105'
                           }`}
                         >
                           <Download className={`h-4 w-4 ${downloadingId === item.id ? 'animate-bounce' : ''}`} />
@@ -407,7 +407,7 @@ const DownloadsPage = () => {
                     onClick={() => setCurrentPage(pageNum)}
                     className={`px-3 py-2 text-sm rounded ${
                       currentPage === pageNum
-                        ? 'bg-green-600 text-white'
+                        ? 'bg-cyan-600 text-white'
                         : 'text-gray-500 hover:text-gray-700'
                     }`}
                   >

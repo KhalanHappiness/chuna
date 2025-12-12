@@ -342,7 +342,6 @@ class ProductCategory(db.Model):
     def __repr__(self):
         return f'<ProductCategory {self.name}>'
 
-
 class Product(db.Model):
     __tablename__ = 'products'
     
@@ -358,7 +357,12 @@ class Product(db.Model):
     is_popular = db.Column(db.Boolean, default=False)
     display_order = db.Column(db.Integer, default=0)
     is_active = db.Column(db.Boolean, default=True)
-    product_type = db.Column(db.String(10), nullable=False, server_default='bosa')  # 'bosa' or 'fosa'
+    product_type = db.Column(db.String(10), nullable=False, server_default='bosa')
+    
+    document_filename = db.Column(db.String(255))  # Original filename
+    document_filepath = db.Column(db.String(500))  # Path where file is stored
+    document_size = db.Column(db.Integer)  # File size in bytes
+    document_type = db.Column(db.String(50))  # MIME type
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -379,9 +383,15 @@ class Product(db.Model):
             'is_popular': self.is_popular,
             'display_order': self.display_order,
             'is_active': self.is_active,
-            'product_type': self.product_type,  # ADD THIS LINE
+            'product_type': self.product_type,
             'created_at': self.created_at.isoformat() if self.created_at else None,
-            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+            'document': {
+                'filename': self.document_filename,
+                'filepath': self.document_filepath,
+                'size': self.document_size,
+                'type': self.document_type
+            } if self.document_filename else None
         }
         if include_features:
             data['features'] = [feature.to_dict() for feature in self.features]
