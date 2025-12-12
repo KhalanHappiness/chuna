@@ -27,24 +27,12 @@ migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
 # Initialize CORS (allow React to make requests)
-CORS(app, resources={
-    r"/api/*": {
-        "origins": [
-            "http://localhost:3000",
-            "http://localhost:5173",
-            "https://chuna-frontend.onrender.com"   # your deployed frontend
-        ],
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"]
-    },
-    r"/static/*": {
-        "origins": [
-            "http://localhost:3000",
-            "http://localhost:5173",
-            "https://chuna-frontend.onrender.com"
-        ]
-    }
-})
+CORS(app, origins=[
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://chuna-frontend.onrender.com"
+], supports_credentials=True)
+
 
 
 # JWT error handlers
