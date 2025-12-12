@@ -30,14 +30,14 @@ jwt = JWTManager(app)
 CORS(app, resources={
     r"/api/*": {
         "origins": [
-            "https://chuna-frontend.onrender.com"  
+            "https://chuna.onrender.com"  
         ],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     },
     r"/static/*": {
         "origins": [
-            "https://chuna-frontend.onrender.com"   # ADD THIS LINE
+            "https://chuna.onrender.com"   # ADD THIS LINE
         ]
     }
 })
