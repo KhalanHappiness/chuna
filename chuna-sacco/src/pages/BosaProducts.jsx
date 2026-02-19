@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Download, ChevronRight, DollarSign, Users, BookOpen, AlertCircle, CheckCircle2, GraduationCap, Loader2, RefreshCw } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:5000/api/public';
+const API_BASE_URL = 'https://chuna.onrender.com/public';
 
 const ServiceCard = ({ product, onDownload }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -274,7 +274,7 @@ const BosaProducts = () => {
               onClick={() => handleCategoryChange('all')}
               className={`flex items-center space-x-1.5 sm:space-x-2 rounded-full px-3 py-2 sm:px-6 sm:py-3 font-semibold text-sm sm:text-base transition-all duration-200 ${
                 activeCategory === 'all'
-                  ? 'bg-gradient-to-r from-blue-600 to-amber-500 text-white shadow-lg'
+                  ? 'bg-amber-500 text-white shadow-lg'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -290,7 +290,7 @@ const BosaProducts = () => {
                   onClick={() => handleCategoryChange(category.id)}
                   className={`flex items-center space-x-1.5 sm:space-x-2 rounded-full px-3 py-2 sm:px-6 sm:py-3 font-semibold text-sm sm:text-base transition-all duration-200 ${
                     activeCategory === category.id
-                      ? 'bg-gradient-to-r from-blue-600 to-amber-500 text-white shadow-lg'
+                      ? 'bg-amber-500 text-white shadow-lg'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >

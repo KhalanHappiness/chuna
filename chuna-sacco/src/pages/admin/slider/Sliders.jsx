@@ -162,7 +162,7 @@ const Sliders = () => {
               {/* Image */}
               <div className="relative h-48 bg-gray-100 rounded-lg overflow-hidden mb-4">
                 <img
-                  src={`http://localhost:5000${slider.image_url}`}
+                  src={`https://chuna.onrender.com${slider.image_url}`}
                   alt={slider.title}
                   className="w-full h-full object-cover"
                 />

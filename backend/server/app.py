@@ -1,7 +1,7 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from models import db
+from server.models import db
 from flask_migrate import Migrate
 import os
 
@@ -27,26 +27,13 @@ migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
 # Initialize CORS (allow React to make requests)
-CORS(app, resources={
-    r"/api/*": {
-        "origins": [
-            "http://localhost:3000", 
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",  # ADD THIS LINE
-            "http://127.0.0.1:3000"   # ADD THIS LINE
-        ],
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"]
-    },
-    r"/static/*": {
-        "origins": [
-            "http://localhost:3000", 
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",  # ADD THIS LINE
-            "http://127.0.0.1:3000"   # ADD THIS LINE
-        ]
-    }
-})
+CORS(app, origins=[
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://chuna-frontend.onrender.com"
+], supports_credentials=True)
+
+
 
 # JWT error handlers
 @jwt.expired_token_loader
@@ -72,13 +59,13 @@ def serve_uploaded_file(folder, filename):
         return {'error': 'File not found', 'message': str(e)}, 404
 
 # Import and register blueprints AFTER app is created
-from routes.auth_api import auth_api_bp
-from routes.admin_api import admin_api_bp
-from routes.public_api import public_api_bp
+from server.routes.auth_api import auth_api_bp
+from server.routes.admin_api import admin_api_bp
+from server.routes.public_api import public_api_bp
 
-app.register_blueprint(auth_api_bp, url_prefix='/api/auth')
-app.register_blueprint(admin_api_bp, url_prefix='/api/admin')
-app.register_blueprint(public_api_bp, url_prefix='/api/public')
+app.register_blueprint(auth_api_bp, url_prefix='/auth')
+app.register_blueprint(admin_api_bp, url_prefix='/admin')
+app.register_blueprint(public_api_bp, url_prefix='/public')
 
 # Add this after registering all blueprints
 print("\n" + "="*60)

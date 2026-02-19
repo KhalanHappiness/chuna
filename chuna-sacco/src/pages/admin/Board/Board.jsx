@@ -226,7 +226,7 @@ const BoardMembers = () => {
               <div className="flex justify-center mb-4">
                 {member.photo_url ? (
                   <img
-                    src={`http://localhost:5000${member.photo_url}`}
+                    src={`https://chuna.onrender.com${member.photo_url}`}
                     alt={member.full_name}
                     className="w-32 h-32 rounded-full object-cover border-4 border-primary-100"
                   />
@@ -333,7 +333,7 @@ const BoardMembers = () => {
             name="photo"
             onChange={handleInputChange}
             accept="image/*"
-            currentImage={editingMember?.photo_url ? `http://localhost:5000${editingMember.photo_url}` : null}
+            currentImage={editingMember?.photo_url ? `https://chuna.onrender.com${editingMember.photo_url}` : null}
           />
 
           {/* Category */}

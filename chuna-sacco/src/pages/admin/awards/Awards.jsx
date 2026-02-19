@@ -145,7 +145,7 @@ const Awards = () => {
               <div className="flex justify-center mb-4">
                 {award.icon_url ? (
                   <img
-                    src={`http://localhost:5000${award.icon_url}`}
+                    src={`https://chuna.onrender.com${award.icon_url}`}
                     alt={award.title}
                     className="w-20 h-20 object-contain"
                   />
@@ -213,7 +213,7 @@ const Awards = () => {
             name="icon"
             onChange={handleInputChange}
             accept="image/*"
-            currentImage={editingAward?.icon_url ? `http://localhost:5000${editingAward.icon_url}` : null}
+            currentImage={editingAward?.icon_url ? `https://chuna.onrender.com${editingAward.icon_url}` : null}
           />
 
           <Input

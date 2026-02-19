@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from models import (
+from server.models import (
     db, AdminUser, SliderImage, NewsUpdate, AboutContent, CoreValue, 
     Award, Department, StaffMember, BoardMember, ProductCategory, 
     Product, ProductFeature, DownloadableForm

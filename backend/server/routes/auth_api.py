@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, create_refresh_token, jwt_required, get_jwt_identity
-from models import db, AdminUser
+from server.models import db, AdminUser
 from datetime import datetime
 
 auth_api_bp = Blueprint('auth_api', __name__)
