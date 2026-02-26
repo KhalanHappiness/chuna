@@ -30,7 +30,7 @@ jwt = JWTManager(app)
 CORS(app, origins=[
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://chuna-frontend.onrender.com"
+    "https://chuna.vercel.app/"
 ], supports_credentials=True)
 
 
