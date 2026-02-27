@@ -13,8 +13,8 @@ const DownloadsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = 'https://chuna.onrender.com/public';
-  const FLASK_BASE_URL = 'https://chuna.onrender.com';
+  const API_BASE_URL = 'https://chuna-00t6.onrender.com/public';
+  const FLASK_BASE_URL = 'https://chuna-00t6.onrender.com';
 
   // Fetch downloads from API
   useEffect(() => {
