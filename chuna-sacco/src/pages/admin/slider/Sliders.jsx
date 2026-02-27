@@ -162,7 +162,7 @@ const Sliders = () => {
               {/* Image */}
               <div className="relative h-48 bg-gray-100 rounded-lg overflow-hidden mb-4">
                 <img
-                  src={`https://chuna.onrender.com${slider.image_url}`}
+                  src={`{slider.image_url}`}
                   alt={slider.title}
                   className="w-full h-full object-cover"
                 />
@@ -256,7 +256,7 @@ const Sliders = () => {
             onChange={handleInputChange}
             accept="image/*"
             required={!editingSlider}
-            currentImage={editingSlider ? `http://localhost:5000${editingSlider.image_url}` : null}
+            currentImage={editingSlider ? editingSlider.image_url : null}
           />
 
           {/* Title */}
