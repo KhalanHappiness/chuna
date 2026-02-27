@@ -95,6 +95,27 @@ def create_upload_folders():
         os.makedirs(path, exist_ok=True)
         print(f"Created/verified folder: {path}")
 
+@app.route('/create-admin', methods=['GET'])
+def create_admin():
+    from server.models import AdminUser
+    
+    existing = AdminUser.query.filter_by(email='admin@chuna.com').first()
+    if existing:
+        return {'message': 'Admin already exists'}, 400
+    
+    admin = AdminUser(
+        username='admin',
+        email='chunasacco@uonbi.ac.ke',
+        full_name='Site Administrator',
+        role='superadmin',
+        is_active=True
+    )
+    admin.set_password('admin123')
+    
+    db.session.add(admin)
+    db.session.commit()
+    return {'message': 'Admin created successfully'}, 201
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
