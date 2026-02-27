@@ -7,6 +7,8 @@ from server.models import (
 )
 from werkzeug.utils import secure_filename
 from datetime import datetime
+import cloudinary
+import cloudinary.uploader  
 import os
 
 admin_api_bp = Blueprint('admin_api', __name__)
@@ -27,31 +29,19 @@ def admin_required(fn):
 
 
 def save_file(file, folder):
-    """Save uploaded file and return URL"""
+    """Upload file to Cloudinary and return URL"""
     if file and file.filename:
-        # Get the original filename and replace spaces with underscores
-        original_filename = secure_filename(file.filename)
-        original_filename = original_filename.replace(' ', '_')
-        
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
-        filename = timestamp + original_filename
-        
-        # Create the full folder path
-        folder_path = os.path.join(current_app.config['UPLOAD_FOLDER'], folder)
-        
-        # Create directory if it doesn't exist
-        os.makedirs(folder_path, exist_ok=True)
-        
-        # Save the file
-        filepath = os.path.join(folder_path, filename)
-        file.save(filepath)
-        
-        # Log for debugging
-        print(f"File saved to: {filepath}")
-        print(f"File exists: {os.path.exists(filepath)}")
-        print(f"Returning URL: /static/uploads/{folder}/{filename}")
-        
-        return f'/static/uploads/{folder}/{filename}'
+        try:
+            result = cloudinary.uploader.upload(
+                file,
+                folder=folder,
+                resource_type="auto"
+            )
+            print(f"File uploaded to Cloudinary: {result['secure_url']}")
+            return result['secure_url']
+        except Exception as e:
+            print(f"Cloudinary upload failed: {str(e)}")
+            return None
     return None
 # ==================== DASHBOARD STATS ====================
 
