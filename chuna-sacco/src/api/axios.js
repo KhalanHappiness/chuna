@@ -121,9 +121,12 @@ export const adminAPI = {
   // Products
   getProducts: () => api.get('/admin/products'),
   getProductCategories: () => api.get('/admin/product-categories'),
-  createProduct: (data) => api.post('/admin/products', data),
-  updateProduct: (id, data) => api.put(`/admin/products/${id}`, data),
-  deleteProduct: (id) => api.delete(`/admin/products/${id}`),
+  createProductCategory: (data) => api.post('/admin/product-categories', data),  // ADD THIS
+  updateProductCategory: (id, data) => api.put(`/admin/product-categories/${id}`, data),  // ADD THIS
+  deleteProductCategory: (id) => api.delete(`/admin/product-categories/${id}`),  // ADD THIS
+  // createProduct: (data) => api.post('/admin/products', data),
+  // updateProduct: (id, data) => api.put(`/admin/products/${id}`, data),
+  // deleteProduct: (id) => api.delete(`/admin/products/${id}`),
   
   // Forms
   getForms: () => api.get('/admin/forms'),
