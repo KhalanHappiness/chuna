@@ -1,6 +1,8 @@
 alembic==1.14.1
 blinker==1.8.2
+certifi==2026.2.25
 click==8.1.8
+cloudinary==1.44.1
 Flask==3.0.3
 Flask-Cors==5.0.0
 Flask-JWT-Extended==4.6.0
@@ -18,7 +20,9 @@ packaging==25.0
 psycopg2-binary==2.9.10
 PyJWT==2.9.0
 python-dotenv==1.0.1
+six==1.17.0
 SQLAlchemy==2.0.44
 typing_extensions==4.13.2
+urllib3==2.2.3
 Werkzeug==3.0.6
 zipp==3.20.2
