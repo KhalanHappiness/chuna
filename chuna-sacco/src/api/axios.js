@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://chuna.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://chuna-00t6.onrender.com';
 
 // Create axios instance
 const api = axios.create({
