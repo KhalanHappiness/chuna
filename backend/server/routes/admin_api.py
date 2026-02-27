@@ -32,10 +32,17 @@ def save_file(file, folder):
     """Upload file to Cloudinary and return URL"""
     if file and file.filename:
         try:
+            # Determine resource type
+            filename = file.filename.lower()
+            if filename.endswith('.pdf') or filename.endswith('.doc') or filename.endswith('.docx'):
+                resource_type = "raw"
+            else:
+                resource_type = "image"
+
             result = cloudinary.uploader.upload(
                 file,
                 folder=folder,
-                resource_type="auto"
+                resource_type=resource_type
             )
             print(f"File uploaded to Cloudinary: {result['secure_url']}")
             return result['secure_url']
