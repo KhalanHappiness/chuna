@@ -177,16 +177,7 @@ export default function BoardOfDirectors() {
           </section>
         )} */}
 
-        {/* Call to Action */}
-        <section className="mt-16 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl shadow-lg p-8 text-white text-center">
-          <h2 className="text-3xl font-bold mb-4">Join Our Growing Community</h2>
-          <p className="text-xl mb-8 text-green-100 max-w-2xl mx-auto">
-            Become part of a SACCO led by experienced professionals committed to your financial success
-          </p>
-          <button className="bg-white text-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg text-lg">
-            BECOME A MEMBER
-          </button>
-        </section>
+       
       </div>
       {/* Call to Action - Full Width */}
       <section className="mt-16 bg-gradient-to-r from-green-600 to-emerald-600 shadow-lg p-8 text-white text-center">
