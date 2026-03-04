@@ -203,99 +203,103 @@ const LoanCalculator = () => {
 
 
 const YouTubeVideoCard = () => {
-
-    const [videoOpen, setVideoOpen] = useState(false);
+  const [videoOpen, setVideoOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 h-full group flex flex-col">
-      {/* Video Thumbnail */}
-      <div className="relative h-50 overflow-hidden">
-        <img 
-          src="https://chunasacco.co.ke/sites/default/files/2024-02/670png.png"
-          alt="Chuna Sacco Success Stories"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-        
-        {/* Play Button */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div
-            onClick={() => setVideoOpen(true)} 
-            className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl hover:bg-red-700 transition-colors duration-300 hover:scale-110 transform cursor-pointer"
-          >
-            <Play className="w-6 h-6 text-white ml-0.5" />
-          </div>
-        </div>
-
-        {/* YouTube Badge */}
-        <div className="absolute top-3 right-3 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-          <Youtube className="w-3 h-3" />
-          <span>YouTube</span>
-        </div>
-
-        {/* Duration */}
-        <div className="absolute bottom-3 right-3 bg-black/70 text-white px-2 py-1 rounded text-xs">
-          0:52
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-6 flex-1 flex flex-col">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <Youtube className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-gray-900">Success Stories</h3>
-            <p className="text-gray-600 text-sm">Watch real member journeys</p>
-          </div>
-        </div>
-
-        <p className="text-gray-600 mb-5 leading-relaxed text-sm flex-1">
-          Discover how Chuna Sacco has transformed lives through our member success stories. From small business loans to homeownership dreams - watch real testimonials from our community.
-        </p>
-
-    
-
-        {/* CTA Button */}
-        <a
-          href="https://www.youtube.com/embed/K9jOswGlNoA?autoplay=1"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-2.5 px-4 rounded-xl font-semibold hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 transform shadow-lg flex items-center justify-center gap-2 group text-sm"
-        >
-          <Youtube className="w-4 h-4" />
-          Watch Stories
-          <ExternalLink className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" />
-        </a>
-      </div>
-
-
+    <>
+      {/* Modal rendered outside the card via portal-like pattern */}
       {videoOpen && (
-  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
-    <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-[90%] max-w-5xl h-[70vh] relative">
-      {/* Close button */}
-      <button
-        onClick={() => setVideoOpen(false)}
-        className="absolute top-2 right-2 text-black text-2xl font-bold z-10"
-      >
-        ✕
-      </button>
+        <div 
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-[9999]"
+          onClick={() => setVideoOpen(false)} // click backdrop to close
+        >
+          <div 
+            className="bg-white rounded-2xl shadow-xl overflow-hidden w-[90%] max-w-5xl relative"
+            onClick={e => e.stopPropagation()} // prevent closing when clicking inside
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setVideoOpen(false)}
+              className="absolute top-3 right-3 bg-black text-white w-8 h-8 rounded-full text-lg font-bold z-10 hover:bg-gray-800 flex items-center justify-center"
+            >
+              ✕
+            </button>
 
-      {/* YouTube iframe */}
-      <iframe
-        className="w-full h-full"
-        src="https://www.youtube.com/embed/K9jOswGlNoA?autoplay=1"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowFullScreen
-      ></iframe>
-    </div>
-  </div>
-)}
+            {/* YouTube iframe */}
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/K9jOswGlNoA?autoplay=1"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
-    </div>
+      <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 h-full group flex flex-col">
+        {/* Video Thumbnail */}
+        <div className="relative h-50 overflow-hidden">
+          <img
+            src="https://chunasacco.co.ke/sites/default/files/2024-02/670png.png"
+            alt="Chuna Sacco Success Stories"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+          {/* Play Button */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <button
+              onClick={() => setVideoOpen(true)}
+              className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-2xl hover:bg-red-700 transition-colors duration-300 hover:scale-110 transform cursor-pointer"
+            >
+              <Play className="w-6 h-6 text-white ml-0.5" />
+            </button>
+          </div>
+
+          {/* YouTube Badge */}
+          <div className="absolute top-3 right-3 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+            <Youtube className="w-3 h-3" />
+            <span>YouTube</span>
+          </div>
+
+          {/* Duration */}
+          <div className="absolute bottom-3 right-3 bg-black/70 text-white px-2 py-1 rounded text-xs">
+            0:52
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 flex-1 flex flex-col">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <Youtube className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900">Success Stories</h3>
+              <p className="text-gray-600 text-sm">Watch real member journeys</p>
+            </div>
+          </div>
+
+          <p className="text-gray-600 mb-5 leading-relaxed text-sm flex-1">
+            Discover how Chuna Sacco has transformed lives through our member success stories. From small business loans to homeownership dreams - watch real testimonials from our community.
+          </p>
+
+          {/* CTA Button — now opens modal instead of new tab */}
+          <button
+            onClick={() => setVideoOpen(true)}
+            className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-2.5 px-4 rounded-xl font-semibold hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 transform shadow-lg flex items-center justify-center gap-2 group text-sm"
+          >
+            <Youtube className="w-4 h-4" />
+            Watch Stories
+            <ExternalLink className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-300" />
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
