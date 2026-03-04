@@ -44,7 +44,7 @@ const Mchuna = () => {
             <div className="relative">
               <div className="bg-gradient-to-br from-blue-100 to-gray-200 overflow-hidden shadow-2xl relative">
                 <img 
-                  src="https://www.chunasacco.co.ke/sites/default/files/2024-02/670png.png" 
+                  src="https://chunasacco.co.ke/sites/default/files/2024-02/670png.png" 
                   alt="chuna sacco" 
                 />
                 {/* Play button overlay */}
