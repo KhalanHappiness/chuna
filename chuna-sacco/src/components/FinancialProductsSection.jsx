@@ -189,43 +189,6 @@ export default function FinancialProductsSection() {
           })}
         </div>
 
-        {/* Quick Links Strip */}
-        <div style={{
-          background: "#111",
-          borderRadius: 20,
-          padding: "28px 36px",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          marginBottom: 40,
-        }}>
-          <span style={{ color: "#aaa", fontSize: 12, fontFamily: "sans-serif", fontWeight: 600, letterSpacing: "0.1em", whiteSpace: "nowrap" }}>
-            MORE PRODUCTS →
-          </span>
-          {quickLinks.map((q, i) => (
-            <button key={i} style={{
-              display: "flex", alignItems: "center", gap: 10,
-              background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 12,
-              padding: "10px 18px",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-              color: "white",
-            }}
-              onMouseEnter={e => e.currentTarget.style.background = "rgba(22,163,74,0.3)"}
-              onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}
-            >
-              <q.icon size={15} color="#16a34a" />
-              <div style={{ textAlign: "left" }}>
-                <div style={{ fontSize: 13, fontWeight: 600, fontFamily: "sans-serif" }}>{q.label}</div>
-                <div style={{ fontSize: 11, color: "#888", fontFamily: "sans-serif" }}>{q.sub}</div>
-              </div>
-            </button>
-          ))}
-        </div>
 
         {/* CTA */}
         <div style={{ textAlign: "center" }}>
