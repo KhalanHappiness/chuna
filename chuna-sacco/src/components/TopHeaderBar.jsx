@@ -119,37 +119,37 @@ const TopHeaderBar = () => {
         {/* Right side - Navigation Links */}
         <div className="flex items-center space-x-0.5 sm:space-x-1 text-xs">
           {/* Show only essential links on mobile */}
-          <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
+          <a href="https://webportal.chunasacco.co.ke//#/auth/login" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
             MEMBERS PORTAL
           </a>
           <span className="text-emerald-300 hidden sm:inline">|</span>
           
           {/* Mobile - show abbreviated links */}
-          <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 sm:hidden">
+          <a href="https://webportal.chunasacco.co.ke//#/auth/login" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 sm:hidden">
             PORTAL
           </a>
           <span className="text-emerald-300 sm:hidden">|</span>
           
-          <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
+          {/* <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
             BID DATA UPDATE
           </a>
-          <span className="text-emerald-300 hidden sm:inline">|</span>
+          <span className="text-emerald-300 hidden sm:inline">|</span> */}
           
-          <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden lg:inline-block">
+          <a href="https://applications.chunasacco.co.ke/index.php?r=new-membership" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden lg:inline-block">
             NEW MEMBER APPLICATION
           </a>
           <span className="text-emerald-300 hidden lg:inline">|</span>
           
           {/* Mobile - show abbreviated */}
-          <a href="#" className="hover:bg-emerald-700 px-1 py-1 rounded transition-colors duration-200 sm:hidden">
+          <a href="https://applications.chunasacco.co.ke/index.php?r=new-membership" className="hover:bg-emerald-700 px-1 py-1 rounded transition-colors duration-200 sm:hidden">
             JOIN
           </a>
-          <span className="text-emerald-300 sm:hidden">|</span>
+          {/* <span className="text-emerald-300 sm:hidden">|</span> */}
           
-          <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200">
+          {/* <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200">
             <span className="hidden sm:inline">CAREERS</span>
             <span className="sm:hidden">JOBS</span>
-          </a>
+          </a> */}
         </div>
       </div>
     </div>
