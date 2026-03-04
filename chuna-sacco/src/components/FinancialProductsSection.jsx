@@ -8,7 +8,7 @@ const products = [
     title: "FOSA Products",
     tag: "Front Office",
     description: "Deepening financial service delivery through our Front Office Service Activities — banking solutions built around you.",
-    stat: "50,000+",
+    stat: "3,000+",
     statLabel: "Members Served",
     accent: "#16a34a",
     light: "#dcfce7",
