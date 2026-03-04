@@ -211,7 +211,7 @@ const YouTubeVideoCard = () => {
       {/* Video Thumbnail */}
       <div className="relative h-50 overflow-hidden">
         <img 
-          src="https://www.chunasacco.co.ke/sites/default/files/2024-02/670png.png"
+          src="https://chunasacco.co.ke/sites/default/files/2024-02/670png.png"
           alt="Chuna Sacco Success Stories"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />

@@ -14,27 +14,27 @@ const LatestUpdates = () => {
       date: "Aug 5, 2025",
       readTime: "3 min read",
       featured: true,
-      link: "https://www.chunasacco.co.ke/atm-decline-error-codes-and-reasons"
+      link: "https://chunasacco.co.ke/atm-decline-error-codes-and-reasons"
     },
     {
       id: 2,
       title: "Request for Quotation (RFQ): Monitoring System for Infrastructure Operations",
       summary: "",
-      image: "https://www.chunasacco.co.ke/sites/default/files/2025-08/monit.png",
+      image: "https://chunasacco.co.ke/sites/default/files/2025-08/monit.png",
       category: "Business",
       date: "Aug 4, 2025",
       readTime: "2 min read",
-      link: "https://www.chunasacco.co.ke/request-quotation-rfq-monitoring-system-infrastructure-operations"
+      link: "https://chunasacco.co.ke/request-quotation-rfq-monitoring-system-infrastructure-operations"
     },
     {
       id: 3,
       title: "Sacco update Dec 2024",
       summary: "",
-      image: "https://www.chunasacco.co.ke/sites/default/files/2024-12/r2.png",
+      image: "https://chunasacco.co.ke/sites/default/files/2024-12/r2.png",
       category: "News",
       date: "Dec 18, 2024",
       readTime: "4 min read",
-      link: "https://www.chunasacco.co.ke/sacco-update-dec-2024"
+      link: "https://chunasacco.co.ke/sacco-update-dec-2024"
     }
   ];
 
