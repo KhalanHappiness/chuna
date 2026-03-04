@@ -118,7 +118,7 @@ export default function WhoWeAre() {
               <div className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 group-hover:scale-105">
                 <div className="absolute inset-0 bg-green-600 opacity-70"></div>
                 <img 
-                  src="https://www.chunasacco.co.ke/sites/default/files/all-uploads/inver.jpg" 
+                  src="https://chunasacco.co.ke/sites/default/files/all-uploads/inver.jpg" 
                   alt="Savings Growth"
                   className="w-full h-96 object-cover mix-blend-overlay"
                 />
