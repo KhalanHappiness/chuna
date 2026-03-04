@@ -15,7 +15,7 @@ const partners = [
   { name: "UON", logo: UonLogo },
   { name: "SaccoLogo", logo: SaccoLogo },
   {name: "familybank", logo: familyLogo},
-  {name: "CooperativeBank", logo: "https://www.chunasacco.co.ke/sites/default/files/partners/coop_0.jpg"}
+  {name: "CooperativeBank", logo: "https://chunasacco.co.ke/sites/default/files/partners/coop_0.jpg"}
 ];
 
 const OurPartners = () => {

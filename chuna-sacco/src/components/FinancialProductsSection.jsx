@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Users, TrendingUp, Shield, BookOpen, Building2, CreditCard, ArrowRight, Sparkles } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 const products = [
   {
@@ -54,6 +55,7 @@ const quickLinks = [
 
 export default function FinancialProductsSection() {
   const [hovered, setHovered] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <section style={{ fontFamily: "'Georgia', 'Times New Roman', serif", background: "#f8f9f4", padding: "80px 0", overflow: "hidden" }}>
@@ -227,7 +229,9 @@ export default function FinancialProductsSection() {
 
         {/* CTA */}
         <div style={{ textAlign: "center" }}>
-          <button style={{
+          <button 
+          onClick={()=> navigate('/fosaProducts')}
+          style={{
             background: "#16a34a",
             color: "white",
             border: "none",
