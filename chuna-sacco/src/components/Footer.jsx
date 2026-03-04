@@ -100,7 +100,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            © Copyright Chuna Co-operative Savings & Credit Society Ltd 2025. All Rights Reserved.
+            © Chuna CHUNA DT SACCO LTD ict department
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="https://www.chunasacco.co.ke/sites/default/files/2025-02/Privacy%20Policy%20for%20Chuna%20SACCO%20Mobile%20Banking%20App.pdf" className="text-gray-400 hover:text-emerald-600 text-sm">Privacy Policy</a>
