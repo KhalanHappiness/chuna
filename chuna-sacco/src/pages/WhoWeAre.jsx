@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play, Menu, X, Phone, Mail, MapPin, Clock, Award, Users, Target, Eye, Heart, Shield, Lightbulb, TrendingUp, CheckCircle } from 'lucide-react';
+import grow from '../assets/sliderimg4.jpeg';
 
 export default function WhoWeAre() {
 
@@ -118,7 +119,7 @@ export default function WhoWeAre() {
               <div className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-transform duration-500 group-hover:scale-105">
                 <div className="absolute inset-0 bg-green-600 opacity-70"></div>
                 <img 
-                  src="https://chunasacco.co.ke/sites/default/files/all-uploads/inver.jpg" 
+                  src={grow} 
                   alt="Savings Growth"
                   className="w-full h-96 object-cover mix-blend-overlay"
                 />
