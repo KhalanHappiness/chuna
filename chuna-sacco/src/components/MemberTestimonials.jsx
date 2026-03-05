@@ -3,54 +3,58 @@ import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import youtubeimg from "../assets/youtubeimg.png";
+import betty from "../assets/betty2.png";
+import erick from "../assets/erick.png";
+import dennis from "../assets/dennis.png";
+import faith from "../assets/faith.jpg";
+import harriet from "../assets/harriet2_0.png";
+
 
 const testimonials = [
   {
     id: 1,
-    name: "Grace Wanjiku",
-    role: "Small Business Owner",
-    business: "Wanjiku's Tailoring Shop",
+    name: "Betty jackline",
+    role: "Member",
     content: "The SACCO has been instrumental in growing my tailoring business. Their flexible loan terms and low interest rates allowed me to buy new equipment and expand. The staff is always helpful and understanding.",
     rating: 5,
-    photo: "https://images.unsplash.com/photo-1494790108755-2616c64e9b8f?ixlib=rb-4.0.3&w=400&h=400&fit=crop&crop=face",
+    photo: betty,
     memberSince: "2018"
   },
   {
     id: 2,
-    name: "David Kiprotich",
-    role: "Teacher & Farmer",
+    name: "Dennis Moindi",
+    role: "Business Development Manager",
     content: "I've been saving with this SACCO for over 5 years now. The dividends are excellent and the mobile banking makes it so convenient. I was able to get a loan to start my poultry farm thanks to them.",
     rating: 5,
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&w=400&h=400&fit=crop&crop=face",
+    photo: dennis,
     memberSince: "2019"
   },
   {
     id: 3,
-    name: "Samuel Ochieng",
-    role: "Logistics Manager",
-    business: "TransCorp Ltd",
+    name: "Erick Bundi",
+    role: "ICT Manager",
     content: "Professional service and transparent processes. The SACCO helped me secure a mortgage for my family home. Their financial advisory services are top-notch and have helped me plan for my retirement.",
     rating: 4,
-    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=400&h=400&fit=crop&crop=face",
+    photo: erick,
     memberSince: "2017"
   },
   {
     id: 4,
-    name: "Mary Nyambura",
+    name: "Faith Maina",
     role: "Entrepreneur",
-    business: "Fresh Produce Supplier",
+    business: "Fashion and Design",
     content: "The emergency loan facility saved my business during tough times. The quick approval process and reasonable terms meant I could restock my inventory without delay. Highly recommend this SACCO.",
     rating: 5,
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&w=400&h=400&fit=crop&crop=face",
+    photo: faith,
     memberSince: "2020"
   },
   {
     id: 5,
-    name: "John Mwangi",
-    role: "IT Consultant",
+    name: "Harriet Moraa",
+    role: "Consultant",
     content: "The digital banking platform is fantastic! I can access my account 24/7, apply for loans online, and track my savings growth. The customer service team is always responsive and professional.",
     rating: 5,
-    photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&w=400&h=400&fit=crop&crop=face",
+    photo: harriet,
     memberSince: "2021"
   }
 ];
