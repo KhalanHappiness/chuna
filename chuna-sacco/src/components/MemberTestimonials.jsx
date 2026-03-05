@@ -8,7 +8,7 @@ import erick from "../assets/erick.png";
 import dennis from "../assets/dennis.png";
 import faith from "../assets/faith.jpg";
 import harriet from "../assets/harriet2_0.png";
-
+import lenah from "../assets/lenah.jpg";
 
 const testimonials = [
   {
@@ -31,11 +31,10 @@ const testimonials = [
   },
   {
     id: 3,
-    name: "Erick Bundi",
-    role: "ICT Manager",
+    name: "Lenah Gesare",
     content: "Professional service and transparent processes. The SACCO helped me secure a mortgage for my family home. Their financial advisory services are top-notch and have helped me plan for my retirement.",
     rating: 4,
-    photo: erick,
+    photo: lenah,
     memberSince: "2017"
   },
   {
