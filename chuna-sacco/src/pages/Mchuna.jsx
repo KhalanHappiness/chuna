@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X, Phone, Mail, MapPin, Clock, ChevronDown, Search } from 'lucide-react';
+import youtubeimg from "../assets/youtubeimg.png";
 
 const Mchuna = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -44,7 +45,7 @@ const Mchuna = () => {
             <div className="relative">
               <div className="bg-gradient-to-br from-blue-100 to-gray-200 overflow-hidden shadow-2xl relative">
                 <img 
-                  src="https://chunasacco.co.ke/sites/default/files/2024-02/670png.png" 
+                  src={youtubeimg}
                   alt="chuna sacco" 
                 />
                 {/* Play button overlay */}

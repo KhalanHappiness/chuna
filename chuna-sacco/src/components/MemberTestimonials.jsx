@@ -2,7 +2,7 @@ import { Star, ChevronLeft, ChevronRight, Quote, Calculator, Play, Users, Trendi
 import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
+import youtubeimg from "../assets/youtubeimg.png";
 
 const testimonials = [
   {
@@ -73,20 +73,23 @@ const StarRating = ({ rating, size = "w-4 h-4" }) => {
 };
 
 
-const LoanCalculator = () => {
-  const [loanAmount, setLoanAmount] = useState(100000);
-  const [period, setPeriod] = useState(12);
-  const [interestRate, setInterestRate] = useState(12);
 
-  const monthlyPayment =
-    (loanAmount *
-      (interestRate / 100 / 12) *
-      Math.pow(1 + interestRate / 100 / 12, period)) /
-    (Math.pow(1 + interestRate / 100 / 12, period) - 1);
+
+const LoanCalculator = () => {
+  const [loanAmount, setLoanAmount] = useState('');
+  const [period, setPeriod] = useState('');
+  const [interestRate, setInterestRate] = useState('');
+
+  const monthlyPayment = loanAmount && period && interestRate
+    ? (loanAmount * (interestRate / 100 / 12) * Math.pow(1 + interestRate / 100 / 12, period)) /
+      (Math.pow(1 + interestRate / 100 / 12, period) - 1)
+    : 0;
+  const totalRepayment = monthlyPayment > 0 ? Math.round(monthlyPayment * period) : 0;
+
 
   return (
     <div className="bg-white rounded-3xl shadow-xl p-6 border border-gray-100 hover:shadow-2xl transition-all duration-500 h-full flex flex-col">
-      {/* Header */}
+     {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
           <Calculator className="w-6 h-6 text-white" />
@@ -99,27 +102,32 @@ const LoanCalculator = () => {
 
       {/* Calculator Form */}
       <div className="space-y-5 flex-1">
+
         {/* Loan Amount */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Loan Amount (KSh)
           </label>
           <input
-            type="range"
+            type="number"
             min="10000"
             max="8000000"
-            step="10000"
+            step="1000"
             value={loanAmount}
             onChange={(e) => setLoanAmount(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-full cursor-pointer"
+            onFocus={(e) => e.target.select()}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="e.g. 500,000"
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>10K</span>
-            <span>8M</span>
+            <span>Min: KSh 10,000</span>
+            <span>Max: KSh 8,000,000</span>
           </div>
-          <div className="mt-2 text-lg font-bold text-green-600">
-            KSh {loanAmount.toLocaleString()}
-          </div>
+          {loanAmount > 0 && (
+            <div className="mt-2 text-lg font-bold text-green-600">
+              KSh {Number(loanAmount).toLocaleString()}
+            </div>
+          )}
         </div>
 
         {/* Loan Period */}
@@ -128,39 +136,47 @@ const LoanCalculator = () => {
             Loan Period (Months)
           </label>
           <input
-            type="range"
-            min="6"
+            type="number"
+            min="1"
             max="84"
-            step="6"
+            step="1"
             value={period}
             onChange={(e) => setPeriod(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-full cursor-pointer"
+            onFocus={(e) => e.target.select()}
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="e.g. 12"
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>6M</span>
-            <span>84M</span>
+            <span>Min: 1 month</span>
+            <span>Max: 84 months</span>
           </div>
-          <div className="mt-2 text-lg font-bold text-blue-600">
-            {period} months
-          </div>
+          {period > 0 && (
+            <div className="mt-2 text-lg font-bold text-blue-600">
+              {period} months
+            </div>
+          )}
         </div>
 
-        {/* Interest Rate - Dropdown */}
+        {/* Interest Rate */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Interest Rate (% p.a.)
           </label>
-          <select
+          <input
+            type="number"
+            min="1"
+            max="100"
+            step="0.5"
             value={interestRate}
             onChange={(e) => setInterestRate(Number(e.target.value))}
+            onFocus={(e) => e.target.select()}
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            {[5, 7.5, 10, 12, 15, 18, 20, 22.5, 25].map((rate) => (
-              <option key={rate} value={rate}>
-                {rate}%
-              </option>
-            ))}
-          </select>
+            placeholder="e.g. 12"
+          />
+          <div className="flex justify-between text-xs text-gray-500 mt-1">
+            <span>Min: 1%</span>
+            <span>Max: 100%</span>
+          </div>
         </div>
 
         {/* Results */}
@@ -169,25 +185,30 @@ const LoanCalculator = () => {
             <div className="text-center">
               <div className="flex items-center justify-center gap-1 mb-1">
                 <DollarSign className="w-4 h-4 text-green-600" />
-                <span className="text-xs font-medium text-gray-700">
-                  Monthly Payment
-                </span>
+                <span className="text-xs font-medium text-gray-700">Monthly Payment</span>
               </div>
               <div className="text-lg font-bold text-green-600">
-                KSh {Math.round(monthlyPayment).toLocaleString()}
+                {monthlyPayment > 0 ? `KSh ${Math.round(monthlyPayment).toLocaleString()}` : '—'}
               </div>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1 mb-1">
                 <Percent className="w-4 h-4 text-emerald-600" />
-                <span className="text-xs font-medium text-gray-700">
-                  Interest Rate
-                </span>
+                <span className="text-xs font-medium text-gray-700">Interest Rate</span>
               </div>
               <div className="text-lg font-bold text-emerald-600">
-                {interestRate}% p.a.
+                {interestRate ? `${interestRate}% p.a.` : '—'}
               </div>
             </div>
+            <div className="text-center">
+            <div className="flex items-center justify-center gap-1 mb-1">
+              <TrendingUp className="w-4 h-4 text-blue-600" />
+              <span className="text-xs font-medium text-gray-700">Total Repayment</span>
+            </div>
+            <div className="text-lg font-bold text-blue-600">
+              {totalRepayment > 0 ? `KSh ${totalRepayment.toLocaleString()}` : '—'}
+            </div>
+          </div>
           </div>
 
           <button className="w-full mt-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2.5 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 hover:scale-105 transform shadow-lg text-sm">
@@ -197,7 +218,7 @@ const LoanCalculator = () => {
       </div>
     </div>
   );
-};
+}
 
 
 
@@ -244,7 +265,7 @@ const YouTubeVideoCard = () => {
         {/* Video Thumbnail */}
         <div className="relative h-50 overflow-hidden">
           <img
-            src="https://chunasacco.co.ke/sites/default/files/2024-02/670png.png"
+            src={youtubeimg}
             alt="Chuna Sacco Success Stories"
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
           />
