@@ -312,9 +312,7 @@ export default function ChunaSaccoFAQ() {
             <a href="https://www.chunasacco.co.ke" target="_blank" rel="noreferrer" className="bg-emerald-800 text-white font-bold px-5 py-3 rounded-xl text-sm hover:bg-emerald-900 transition-colors shadow">
               🌐 Visit Website
             </a>
-            <a href="tel:*670#" className="bg-white text-emerald-700 font-bold px-5 py-3 rounded-xl text-sm hover:bg-emerald-50 transition-colors shadow">
-              📞 Dial *670#
-            </a>
+           
           </div>
         </div>
       </div>
