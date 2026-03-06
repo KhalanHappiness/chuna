@@ -21,6 +21,7 @@ import SupervisoryCommittee from './pages/SupervisoryCommittee'
 import MembershipPage from './pages/MembershipPage'
 import DepartmentsPage from './pages/DepartmentsPage'
 import ContactPage from './pages/ContactPage'
+import ChunaSaccoFAQ from './pages/ChunaSaccoFAQ'
 
 // Admin components
 import Login from './pages/admin/auth/Login'
@@ -114,6 +115,7 @@ function App() {
               <Route path="/membership" element={<MembershipPage />} />
               <Route path="/staff" element={<DepartmentsPage />} />
               <Route path="/contactus" element={<ContactPage/>}/>
+              <Route path="/faqs" element={<ChunaSaccoFAQ/>}/>
 
               {/* ============ ADMIN LOGIN (No Auth Required) ============ */}
               <Route path="/admin/login" element={<Login />} />

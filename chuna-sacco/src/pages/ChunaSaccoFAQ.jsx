@@ -20,7 +20,7 @@ const faqs = [
       },
       {
         q: "Where is Chuna Sacco located?",
-        a: "Our headquarters is at Harry Thuku Road, University of Nairobi. But you don't always have to visit us in person — you can access many of our services online, via M-Chuna app, or by dialing *670# from your phone!"
+        a: "Our headquarters is at Harry Thuku Road, University of Nairobi. But you don't always have to visit us in person — you can access many of our services online, via M-Pesa, or by dialing *670# from your phone!"
       }
     ]
   },
@@ -31,17 +31,20 @@ const faqs = [
     questions: [
       {
         q: "Who can join Chuna Sacco?",
-        a: "Great news — Chuna Sacco is open to all members of the public! Whether you're a student, a professional, a business owner, or retired, you can become a member and start enjoying our financial services. We welcome everyone with open arms!"
+        a: "Great news — almost anyone can join! Chuna Sacco welcomes salaried employees, self-employed individuals, students, retirees, family members of existing members, and employees of partner organizations. If you're a Kenyan citizen, you're eligible!"
       },
       {
         q: "How do I join Chuna Sacco?",
-        a: "Joining is easy and quick! You can apply online at applications.chunasacco.co.ke or visit our office in person. You'll need a copy of your National ID or valid passport, a recent passport-size photo, membership fee of Ksh. 500, KRA pin and proof of income (if employed). Once your application is approved, you'll receive your membership number — online applicants get theirs within about 5 minutes!"
+        a: "Joining is easy and quick! You can apply online at applications.chunasacco.co.ke or visit our office in person. You'll need a copy of your National ID or valid passport, a recent passport-size photo, and proof of income (if employed). Once your application is approved, you'll receive your membership number — online applicants get theirs within about 5 minutes!"
       },
       {
         q: "How much does it cost to join?",
-        a: "There's a one-time membership fee of Ksh 500."
+        a: "There's a one-time entrance fee of Ksh 1,000 as per our SACCO by-laws. After that, you'll start contributing a minimum of Ksh 500 per month to activate and maintain your account."
       },
-     
+      {
+        q: "How long does membership approval take?",
+        a: "It's super fast! Online applications are verified in less than 20 minutes, and you'll receive your membership confirmation (member number) within 5 minutes for online submissions or about 1 hour for hardcopy submissions at the office."
+      },
       {
         q: "Can I cancel my membership?",
         a: "Yes, you can cease your membership if you ever need to. The process involves notifying the SACCO of your intention, settling any outstanding loans or fees, and closing your account. We're always happy to chat with you first to see if there's anything we can do to help!"
@@ -55,7 +58,7 @@ const faqs = [
     questions: [
       {
         q: "What types of savings accounts are available?",
-        a: "We offer a variety of savings accounts designed to fit your goals, including a Holiday Savings Account, Fixed Deposit Account, Junior Account and an Education Savings Account (ideal for saving up school fees). Each account has its own features and benefits, so you can choose the one that best suits your needs!"
+        a: "We offer a variety of savings accounts designed to fit your goals, including a Holiday Savings Account (great for vacations or festive seasons) and an Education Account (ideal for saving up school fees). Each account has a minimum monthly contribution of Ksh 500 and earns a minimum interest rate of 10% annually."
       },
       {
         q: "How do I deposit money into my account?",
@@ -228,43 +231,44 @@ export default function ChunaSaccoFAQ() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-teal-50 font-sans">
       {/* Hero Header */}
-      <div className="bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-800 text-white pt-16 pb-24 px-6 relative overflow-hidden">
-        {/* Decorative circles */}
+      <div className="bg-gradient-to-br from-green-900 via-green-700 to-emerald-600 text-white pt-16 pb-28 px-6 relative overflow-hidden">
+        {/* Decorative shapes */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/3"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full translate-y-1/2 -translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-white opacity-5 rounded-full translate-y-1/2 -translate-x-1/4"></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-green-500 opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
 
-        <div className="max-w-3xl mx-auto text-center relative z-10">
+        <div className="max-w-5xl mx-auto text-center relative z-10">
           <div className="text-5xl mb-4">🌿</div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">Chuna Sacco FAQ</h1>
-          <p className="text-emerald-100 text-lg mb-8 max-w-xl mx-auto">
+          <p className="text-green-100 text-lg mb-8 max-w-2xl mx-auto">
             Got questions? We've got answers! Browse everything you need to know about saving, borrowing, and growing with us.
           </p>
 
           {/* Search bar */}
-          <div className="relative max-w-xl mx-auto">
+          <div className="relative max-w-2xl mx-auto">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">🔍</span>
             <input
               type="text"
               placeholder="Search questions..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full pl-12 pr-5 py-4 rounded-2xl text-gray-800 text-base shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-300"
+              className="w-full pl-12 pr-5 py-4 rounded-2xl text-gray-800 text-base shadow-lg focus:outline-none focus:ring-4 focus:ring-green-300"
             />
           </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 -mt-10 pb-20">
+      <div className="max-w-7xl mx-auto px-7 -mt-2 pb-20">
         {/* Category filter pills */}
-        <div className="flex flex-wrap gap-2 justify-center mb-10">
+        <div className="flex flex-wrap gap-2 justify-center mb-10 pt-6">
           {categories.map(cat => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 shadow-sm ${
                 activeCategory === cat
-                  ? "bg-emerald-600 text-white shadow-md"
-                  : "bg-white text-gray-600 hover:bg-emerald-50 hover:text-emerald-700 border border-gray-200"
+                  ? "bg-green-700 text-white shadow-md"
+                  : "bg-white text-gray-600 hover:bg-green-50 hover:text-green-700 border border-gray-200"
               }`}
             >
               {cat}
@@ -281,9 +285,11 @@ export default function ChunaSaccoFAQ() {
 
         {/* FAQ sections */}
         {filtered.length > 0 ? (
-          filtered.map((section, i) => (
-            <CategorySection key={i} {...section} />
-          ))
+          <div className="flex flex-col">
+            {filtered.map((section, i) => (
+              <CategorySection key={i} {...section} />
+            ))}
+          </div>
         ) : (
           <div className="text-center py-20 text-gray-400">
             <div className="text-5xl mb-4">🤔</div>
@@ -293,7 +299,7 @@ export default function ChunaSaccoFAQ() {
         )}
 
         {/* Contact CTA */}
-        <div className="mt-12 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl p-8 text-center text-white shadow-lg">
+        <div className="mt-12 bg-gradient-to-r from-green-800 to-green-600 rounded-3xl p-8 text-center text-white shadow-lg">
           <div className="text-4xl mb-3">💬</div>
           <h2 className="text-2xl font-bold mb-2">Still have questions?</h2>
           <p className="text-emerald-100 mb-6 text-sm max-w-md mx-auto">

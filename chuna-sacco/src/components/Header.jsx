@@ -59,7 +59,8 @@ const Header = () => {
     { name: 'Products', path: '/fosaProducts', hasDropdown: true },
     { name: 'Membership', path: '/membership' },
     {name: 'Downloads', path: '/downloads'},
-    { name: 'Contact', path: '/contactus' }
+    { name: 'Contact', path: '/contactus' },
+    {name: 'FAQs', path: '/faqs'}
   ]
 
   return (
