@@ -174,7 +174,7 @@ const HeroSection = () => {
           {/* Image Slider */}
           <div className="relative lg:col-span-3">
             <div className="relative bg-gradient-to-br from-emerald-50 to-blue-50 overflow-hidden shadow-2xl">
-              <div className="relative h-[400px] sm:h-[500px] md:h-[550px] lg:h-[650px] overflow-hidden">
+              <div className="relative h-[300px] sm:h-[380px] md:h-[430px] lg:h-[500px] overflow-hidden">
                 {slides.map((slide, index) => (
                   <div
                     key={index}
