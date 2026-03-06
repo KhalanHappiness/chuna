@@ -1,6 +1,7 @@
-import { ArrowRight, Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { ArrowRight, Phone, Mail, MapPin, Clock, Send, Facebook, Linkedin, Twitter, Youtube } from 'lucide-react';
 import { useState } from 'react';
 import chunaLogo from '../assets/chuna.png';
+
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -42,8 +43,13 @@ const Footer = () => {
             </p>
             {/* Social icons */}
             <div style={{ display: "flex", gap: 10 }}>
-              {["f", "in", "tw", "yt"].map((s, i) => (
-                <a key={i} href="#" style={{
+              {[
+                { icon: Facebook, href: "https://www.facebook.com/chunasaccoltd" },
+                { icon: Linkedin, href: "https://www.linkedin.com/company/chuna-sacco" },
+                { icon: Twitter, href: "https://twitter.com/chunasaccoltd" },
+                { icon: Youtube, href: "https://www.youtube.com/@chunasacco" },
+              ].map((s, i) => (
+                    <a key={i} href="#" style={{
                   width: 36, height: 36, borderRadius: 8,
                   background: "rgba(255,255,255,0.1)",
                   border: "1px solid rgba(255,255,255,0.15)",
@@ -54,7 +60,7 @@ const Footer = () => {
                   onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = "white"; }}
                   onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "rgba(255,255,255,0.7)"; }}
                 >
-                  {s.toUpperCase()}
+                  <s.icon size={16}/>
                 </a>
               ))}
             </div>
