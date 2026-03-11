@@ -44,12 +44,11 @@ const Footer = () => {
             {/* Social icons */}
             <div style={{ display: "flex", gap: 10 }}>
               {[
-                { icon: Facebook, href: "https://www.facebook.com/chunasaccoltd" },
-                { icon: Linkedin, href: "https://www.linkedin.com/company/chuna-sacco" },
-                { icon: Twitter, href: "https://twitter.com/chunasaccoltd" },
-                { icon: Youtube, href: "https://www.youtube.com/@chunasacco" },
+                { icon: Facebook, href: "https://www.facebook.com/chuna.sacco.7" },
+                { icon: Twitter, href: "https://x.com/chunasaccoltd" },
+                { icon: Youtube, href: "https://www.youtube.com/@chunasacco4017" },
               ].map((s, i) => (
-                    <a key={i} href="#" style={{
+                    <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" style={{
                   width: 36, height: 36, borderRadius: 8,
                   background: "rgba(255,255,255,0.1)",
                   border: "1px solid rgba(255,255,255,0.15)",

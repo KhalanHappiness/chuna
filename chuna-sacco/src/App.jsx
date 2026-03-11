@@ -22,6 +22,7 @@ import MembershipPage from './pages/MembershipPage'
 import DepartmentsPage from './pages/DepartmentsPage'
 import ContactPage from './pages/ContactPage'
 import ChunaSaccoFAQ from './pages/ChunaSaccoFAQ'
+import CookieBanner from './components/CookieBanner'
 
 // Admin components
 import Login from './pages/admin/auth/Login'
@@ -100,6 +101,7 @@ function App() {
         />
 
         <div className="min-h-screen bg-gray-50">
+          <CookieBanner />
           <PublicLayout>
             <Routes>
               {/* ============ PUBLIC ROUTES ============ */}

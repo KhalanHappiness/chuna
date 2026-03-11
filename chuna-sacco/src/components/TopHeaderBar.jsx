@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const TopHeaderBar = () => {
   const [currentMessage, setCurrentMessage] = useState(0);
@@ -130,15 +131,16 @@ const TopHeaderBar = () => {
           </a>
           <span className="text-emerald-300 sm:hidden">|</span>
           
-          {/* <a href="#" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
-            BID DATA UPDATE
-          </a>
-          <span className="text-emerald-300 hidden sm:inline">|</span> */}
+          <Link to="/faqs" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
+            Innovations
+          </Link>
+          <span className="text-emerald-300 hidden sm:inline">|</span>
           
-          <a href="https://applications.chunasacco.co.ke/index.php?r=new-membership" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden lg:inline-block">
-            NEW MEMBER APPLICATION
-          </a>
-          <span className="text-emerald-300 hidden lg:inline">|</span>
+
+          <Link to="/faqs" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
+            FAQs
+          </Link>
+          <span className="text-emerald-300 hidden sm:inline">|</span>
           
           {/* Mobile - show abbreviated */}
           <a href="https://applications.chunasacco.co.ke/index.php?r=new-membership" className="hover:bg-emerald-700 px-1 py-1 rounded transition-colors duration-200 sm:hidden">

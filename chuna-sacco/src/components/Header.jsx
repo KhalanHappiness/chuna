@@ -59,8 +59,7 @@ const Header = () => {
     { name: 'Products', path: '/fosaProducts', hasDropdown: true },
     { name: 'Membership', path: '/membership' },
     {name: 'Downloads', path: '/downloads'},
-    { name: 'Contact', path: '/contactus' },
-    {name: 'FAQs', path: '/faqs'}
+    { name: 'Contact', path: '/contactus' }
   ]
 
   return (
@@ -192,8 +191,8 @@ const Header = () => {
           
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
-            <Link
-              to="/login"
+            <a
+              href="https://webportal.chunasacco.co.ke//#/auth/login"
               className={`transition-colors text-sm xl:text-base ${
                 isActiveLink('/login')
                   ? 'text-green-600 font-semibold'
@@ -201,7 +200,7 @@ const Header = () => {
               }`}
             >
               Login
-            </Link>
+            </a>
             <a 
               href="https://applications.chunasacco.co.ke/index.php?r=new-membership"
               target="_blank"
@@ -301,8 +300,8 @@ const Header = () => {
             
             {/* Mobile Auth Buttons */}
             <div className="pt-4 space-y-3 border-t border-gray-200 mt-6">
-              <Link
-                to="/login"
+              <a
+                href="https://webportal.chunasacco.co.ke//#/auth/login"
                 onClick={handleLinkClick}
                 className={`block w-full px-4 py-3 rounded-lg transition-all duration-200 text-center font-medium ${
                   isActiveLink('/login')
@@ -311,7 +310,7 @@ const Header = () => {
                 }`}
               >
                 Login
-              </Link>
+              </a>
               <a
                 href="https://applications.chunasacco.co.ke/index.php?r=new-membership"
                 target="_blank"
