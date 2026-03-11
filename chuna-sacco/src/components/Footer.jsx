@@ -99,7 +99,7 @@ const Footer = () => {
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {[
                 { icon: MapPin, text: "University of Nairobi, Main Campus" },
-                { icon: Phone, text: "+254 758 111 222", href: "tel:+254705951672" },
+                { icon: Phone, text: "+254 705 951 672", href: "tel:+254705951672" },
                 { icon: Mail, text: "chunasacco@uonbi.ac.ke", href: "mailto:chunasacco@uonbi.ac.ke" },
                 { icon: Clock, text: "Mon–Fri: 8AM – 5PM" },
               ].map(({ icon: Icon, text, href }, i) => (
