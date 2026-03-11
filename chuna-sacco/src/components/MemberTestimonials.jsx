@@ -13,49 +13,39 @@ import lenah from "../assets/lenah.jpg";
 const testimonials = [
   {
     id: 1,
-    name: "Betty jackline",
-    role: "Member",
-    content: "The SACCO has been instrumental in growing my tailoring business. Their flexible loan terms and low interest rates allowed me to buy new equipment and expand. The staff is always helpful and understanding.",
+    name: "David Warui",
+    role: "Business Owner",
+    content: "I always dreamed of owning my own taxi business but never had the capital to start. Chuna Sacco made it possible. The application process was straightforward and the staff walked me through every step with patience and professionalism. With my first loan, I purchased my first vehicle, and within a year I had paid it off and taken a second loan for another car. The low interest rates and flexible repayment schedule meant I could reinvest my earnings back into the business without feeling overwhelmed. Today I run a fleet of three taxis and employ two drivers, providing income for their families as well as my own. I also used my savings dividends to build a small home for my family in Nakuru. This SACCO didn't just give me a loan — they gave me a future, a home, and the confidence to keep dreaming bigger.",
     rating: 5,
     photo: betty,
     memberSince: "2018"
   },
   {
     id: 2,
-    name: "Dennis Moindi",
-    role: "Business Development Manager",
-    content: "I've been saving with this SACCO for over 5 years now. The dividends are excellent and the mobile banking makes it so convenient. I was able to get a loan to start my poultry farm thanks to them.",
+    name: "Everlyne Kajuju",
+    role: "Member",
+    content: "Retiring comfortably was something I thought was only possible for the wealthy. Chuna Sacco changed that belief entirely. After years of consistent saving and faithful contributions, I was able to access a substantial loan that I used to purchase land and begin construction of my retirement home in the village. The staff guided me through the entire process, from loan application to disbursement, with transparency and genuine care. The repayment terms were structured in a way that never strained my monthly budget. Today, my home is complete, my family has a place to gather, and I sleep peacefully knowing my future is secure. Chuna Sacco didn't just help me build a house — they helped me build a legacy for my children and grandchildren to be proud of.",
     rating: 5,
     photo: dennis,
     memberSince: "2019"
   },
   {
     id: 3,
-    name: "Lenah Gesare",
-    content: "Professional service and transparent processes. The SACCO helped me secure a mortgage for my family home. Their financial advisory services are top-notch and have helped me plan for my retirement.",
+    name: "Matthew Owiti",
+    content: "Winning a school construction tender was a milestone I had worked toward for years, but securing the upfront capital to execute the project was always the biggest obstacle. Chuna Sacco stepped in when I needed them most. The loan process was fast, transparent, and the repayment terms were structured around my project timelines, which made all the difference. With the funds disbursed on time, I was able to purchase materials, pay my crew, and deliver the project within the agreed deadline. That first tender opened doors to more contracts, and I have since completed three school construction projects across the county. My business has grown from a one-man operation to a team of fifteen skilled workers. Chuna Sacco believed in my vision before anyone else did, and for that I will always be grateful.",
     rating: 4,
     photo: lenah,
     memberSince: "2017"
   },
   {
     id: 4,
-    name: "Faith Maina",
+    name: "Charles makena",
     role: "Entrepreneur",
-    business: "Fashion and Design",
-    content: "The emergency loan facility saved my business during tough times. The quick approval process and reasonable terms meant I could restock my inventory without delay. Highly recommend this SACCO.",
+    content: "Starting a business from scratch with no external funding felt impossible until I discovered Chuna Sacco. I had the idea, the skills, and the drive, but what I lacked was capital. The moment I walked into their offices, I was met with professionalism and genuine interest in my goals. They helped me structure a loan that matched my business plan and repayment capacity. With the funds, I stocked my shop, paid the first months of rent, and covered all my startup costs without borrowing from family or friends. Within six months my business was profitable and I had already begun saving more aggressively through the SACCO. Today my shop is fully established, I have hired two employees, and I am already planning to open a second branch. Chuna Sacco gave me the foundation I needed to turn my dream into a real, thriving business.",
     rating: 5,
     photo: faith,
     memberSince: "2020"
-  },
-  {
-    id: 5,
-    name: "Harriet Moraa",
-    role: "Consultant",
-    content: "The digital banking platform is fantastic! I can access my account 24/7, apply for loans online, and track my savings growth. The customer service team is always responsive and professional.",
-    rating: 5,
-    photo: harriet,
-    memberSince: "2021"
-  }
+   }
 ];
 
 const StarRating = ({ rating, size = "w-4 h-4" }) => {
@@ -375,14 +365,14 @@ const TestimonialsScroller = () => {
           {/* Member Photo and Info */}
           <div className="flex items-center gap-3 mb-4">
             <div className="relative">
-              <img
+              {/* <img
                 src={currentTestimonial.photo}
                 alt={currentTestimonial.name}
                 className="w-12 h-12 rounded-full object-cover border-2 border-white/30"
-              />
-              <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
+              /> */}
+              {/* <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-green-400 rounded-full border-2 border-white flex items-center justify-center">
                 <Verified className="w-2.5 h-2.5 text-white" />
-              </div>
+              </div> */}
             </div>
             <div>
               <h4 className="text-lg font-bold text-white">{currentTestimonial.name}</h4>
@@ -399,8 +389,8 @@ const TestimonialsScroller = () => {
           </div>
 
           {/* Testimonial Text */}
-          <blockquote className="flex-1 mb-4">
-            <p className="text-sm leading-relaxed text-white/95">
+          <blockquote className="flex-1 mb-4 min-h-[120px]">
+            <p className="text-sm leading-relaxed text-white/95 line-clamp-none">
               "{currentTestimonial.content}"
             </p>
           </blockquote>
