@@ -37,7 +37,7 @@ const Footer = () => {
 
           {/* Brand Column */}
           <div style={{ gridColumn: "span 1" }}>
-            <img src={chunaLogo} alt="Chuna DT Sacco" style={{ height: 52, width: "auto", marginBottom: 20, filter: "brightness(0) invert(1)" }} />
+            <img src={chunaLogo} alt="Chuna DT Sacco" style={{ height: 52, width: "auto", marginBottom: 20 }} />
             <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 13, lineHeight: 1.8, marginBottom: 20 }}>
               To mobilize savings and provide affordable financial services aimed at promoting socio-economic welfare of members through prudent management.
             </p>
