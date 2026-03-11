@@ -131,7 +131,7 @@ const TopHeaderBar = () => {
           </a>
           <span className="text-emerald-300 sm:hidden">|</span>
           
-          <Link to="/faqs" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
+          <Link to="/innovations" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
             INNOVATIONS
           </Link>
           <span className="text-emerald-300 hidden sm:inline">|</span>
