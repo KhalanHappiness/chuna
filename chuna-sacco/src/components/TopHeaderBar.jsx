@@ -132,7 +132,7 @@ const TopHeaderBar = () => {
           <span className="text-emerald-300 sm:hidden">|</span>
           
           <Link to="/faqs" className="hover:bg-emerald-700 px-1 sm:px-2 py-1 rounded transition-colors duration-200 hidden sm:inline-block">
-            Innovations
+            INNOVATIONS
           </Link>
           <span className="text-emerald-300 hidden sm:inline">|</span>
           
@@ -143,8 +143,8 @@ const TopHeaderBar = () => {
           <span className="text-emerald-300 hidden sm:inline">|</span>
           
           {/* Mobile - show abbreviated */}
-          <a href="https://applications.chunasacco.co.ke/index.php?r=new-membership" className="hover:bg-emerald-700 px-1 py-1 rounded transition-colors duration-200 sm:hidden">
-            JOIN
+          <a href="https://webportal.chunasacco.co.ke//#/auth/login" className="hover:bg-emerald-700 px-1 py-1 rounded transition-colors duration-200 sm:hidden">
+            PORTAL
           </a>
           {/* <span className="text-emerald-300 sm:hidden">|</span> */}
           
