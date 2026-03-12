@@ -573,7 +573,7 @@ const MemberTestimonials = () => {
                 <ArrowRight className="w-5 h-5" />
               </a>
               <a
-                href="tel:+254-XX-XXXXXXX"
+                href="tel:+254-705-951-672"
                 className="bg-white text-gray-700 px-8 py-4 rounded-2xl font-semibold hover:bg-gray-50 transition-all duration-300 hover:scale-105 transform shadow-lg border border-gray-200"
               >
                 Contact Us Today

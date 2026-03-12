@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download, ChevronRight, DollarSign, Users, BookOpen, AlertCircle, CheckCircle2, GraduationCap, Loader2, RefreshCw } from 'lucide-react';
-
+import { Link } from 'react-router-dom';
 const API_BASE_URL = 'https://chuna-00t6.onrender.com/public';
 
 const ServiceCard = ({ product, onDownload }) => {
@@ -132,21 +132,14 @@ const ServiceCard = ({ product, onDownload }) => {
           </ul>
         )}
         
-        <button 
-          onClick={handleDownload}
-          disabled={isDownloading}
-          className={`group w-full rounded-lg ${scheme.button} px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed`}
-        >
-          <span className="flex items-center justify-center space-x-2">
-            {isDownloading ? (
-              <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
-            ) : (
-              <Download className="h-3 w-3 sm:h-4 sm:w-4" />
-            )}
+        <Link 
+            to="/downloads"
+            className={`group w-full rounded-lg ${scheme.button} px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base flex items-center justify-center space-x-2`}
+          >
+            <Download className="h-3 w-3 sm:h-4 sm:w-4" />
             <span>Download Form</span>
             <ChevronRight className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${isHovered ? 'translate-x-1' : ''}`} />
-          </span>
-        </button>
+        </Link>
       </div>
     </div>
   );

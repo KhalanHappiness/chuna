@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download, ChevronRight, Clock, DollarSign, Users, BookOpen, PiggyBank, AlertCircle, CheckCircle2, Loader2, RefreshCw } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const API_BASE_URL = 'https://chuna-00t6.onrender.com/public';
 
@@ -133,21 +134,14 @@ const ServiceCard = ({ product, onDownload }) => {
           </ul>
         )}
         
-        <button 
-          onClick={handleDownload}
-          disabled={isDownloading}
-          className={`group w-full rounded-lg ${scheme.button} px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed`}
-        >
-          <span className="flex items-center justify-center space-x-2">
-            {isDownloading ? (
-              <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
-            ) : (
-              <Download className="h-3 w-3 sm:h-4 sm:w-4" />
-            )}
+        <Link 
+            to="/downloads"
+            className={`group w-full rounded-lg ${scheme.button} px-3 py-2.5 sm:px-4 sm:py-3 font-semibold text-white transition-all duration-200 hover:shadow-lg text-sm sm:text-base flex items-center justify-center space-x-2`}
+          >
+            <Download className="h-3 w-3 sm:h-4 sm:w-4" />
             <span>Download Form</span>
             <ChevronRight className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${isHovered ? 'translate-x-1' : ''}`} />
-          </span>
-        </button>
+        </Link>
       </div>
     </div>
   );
@@ -366,12 +360,16 @@ const FosaProducts = () => {
             Contact us today to learn more about our services and how we can help you achieve your financial goals.
           </p>
           <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:justify-center">
-            <button className="rounded-lg bg-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-cyan-700 transition-all duration-200 hover:shadow-lg sm:hover:scale-105">
+            <Link 
+            to= "/contactus"
+            className="rounded-lg bg-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-cyan-700 transition-all duration-200 hover:shadow-lg sm:hover:scale-105">
               Contact Us
-            </button>
-            <button className="rounded-lg border-2 border-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-cyan-700">
+            </Link>
+            <Link
+              to="/membership"
+              className="rounded-lg border-2 border-white px-6 py-3 sm:px-8 sm:py-4 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-cyan-700">
               Learn More
-            </button>
+            </Link>
           </div>
         </div>
       </div>

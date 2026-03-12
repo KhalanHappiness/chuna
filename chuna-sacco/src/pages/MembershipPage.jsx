@@ -19,6 +19,7 @@ import {
   Clock,
   DollarSign
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function MembershipPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -408,12 +409,16 @@ export default function MembershipPage() {
                 Join thousands of members who trust Chuna SACCO with their financial future.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-white text-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg text-lg">
+                <a 
+                  href = 'https://applications.chunasacco.co.ke/index.php?r=new-membership'
+                  className="bg-white text-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg text-lg">
                   START APPLICATION
-                </button>
-                <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors text-lg">
-                  LEARN MORE
-                </button>
+                </a>
+                <Link  
+                  to="/contactus"
+                  className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors text-lg">
+                  CONTACT US
+                </Link>
               </div>
             </div>
           </section>
