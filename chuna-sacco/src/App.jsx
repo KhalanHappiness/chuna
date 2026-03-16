@@ -24,6 +24,7 @@ import ContactPage from './pages/ContactPage'
 import ChunaSaccoFAQ from './pages/ChunaSaccoFAQ'
 import CookieBanner from './components/CookieBanner'
 import InnovationsPage from './pages/InnovationsPage'
+import TimelinePage from './pages/TimelinePage'
 
 // Admin components
 import Login from './pages/admin/auth/Login'
@@ -120,6 +121,7 @@ function App() {
               <Route path="/contactus" element={<ContactPage/>}/>
               <Route path="/faqs" element={<ChunaSaccoFAQ/>}/>
               <Route path="/innovations" element={<InnovationsPage/>}/>
+              <Route path="/timeline" element={<TimelinePage/>}/>
 
               {/* ============ ADMIN LOGIN (No Auth Required) ============ */}
               <Route path="/admin/login" element={<Login />} />

@@ -49,7 +49,9 @@ const Header = () => {
     {name: 'Who We Are', path: '/WhoWeAre'},
     {name: 'Board of Directors', path: '/boardofdirectors'},
     {name: 'Supervisory Committee', path: '/supervisorycommittee'},
-    {name: 'Staff', path: '/staff'}
+    {name: 'Staff', path: '/staff'},
+    {name: 'Timeline', path: '/timeline'}
+    
   ]
 
   // Navigation links configuration
