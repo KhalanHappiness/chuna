@@ -50,7 +50,6 @@ const Header = () => {
     {name: 'Board of Directors', path: '/boardofdirectors'},
     {name: 'Supervisory Committee', path: '/supervisorycommittee'},
     {name: 'Staff', path: '/staff'},
-    {name: 'Timeline', path: '/timeline'}
     
   ]
 
@@ -58,10 +57,12 @@ const Header = () => {
   const navigationLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/WhoWeAre', hasDropdown: true },
-    { name: 'Products', path: '/fosaProducts', hasDropdown: true },
+    { name: 'Products', path: '/products', hasDropdown: true },
     { name: 'Membership', path: '/membership' },
     {name: 'Downloads', path: '/downloads'},
-    { name: 'Contact', path: '/contactus' }
+    { name: 'Contact', path: '/contactus' },
+    {name: '@50', path: '/timeline'}
+
   ]
 
   return (
