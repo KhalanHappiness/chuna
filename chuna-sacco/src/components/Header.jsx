@@ -61,7 +61,7 @@ const Header = () => {
     { name: 'Membership', path: '/membership' },
     {name: 'Downloads', path: '/downloads'},
     { name: 'Contact', path: '/contactus' },
-    {name: '@50', path: '/timeline'}
+    {name: 'Chuna @50', path: '/timeline'}
 
   ]
 

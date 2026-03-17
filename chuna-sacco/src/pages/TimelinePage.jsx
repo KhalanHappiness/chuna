@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /**
  * Chuna Sacco — History & Timeline Page
@@ -161,62 +161,84 @@ const colorMap = {
 
 
 /* ── HERO BANNER ─────────────────────────────────────── */
+const slides = [
+  { year: '1976', icon: '🏛️', color: '#0a2010', caption: 'Chuna Sacco is founded at the University of Nairobi', desc: 'On 24th March 1976, Chuna Sacco was registered as CS/2466 — a small savings circle that would grow into Kenya\'s trusted "University Sacco".', thumbLabel: '1976 · Founded' },
+  { year: '2010', icon: '✅', color: '#1a0f2e', caption: 'SASRA Deposit-Taking Sacco Licence secured', desc: 'Registered by SASRA as a fully licenced Deposit-Taking Sacco, cementing credibility and protecting member deposits.', thumbLabel: '2010 · SASRA' },
+  { year: '2016', icon: '🇰🇪', color: '#1a1a0a', caption: 'Open bond — membership opened to all Kenyans', desc: 'Any Kenyan regardless of residence or employment can now access Chuna\'s growing portfolio of 14+ financial products.', thumbLabel: '2016 · Open Bond' },
+  { year: '2018', icon: '📱', color: '#0a1a2e', caption: 'USSD *670# mobile banking platform launched', desc: 'Bank from any phone, any network — check balances, transfer funds, and apply for loans instantly via *670#.', thumbLabel: '2018 · USSD' },
+  { year: '2020', icon: '📊', color: '#0d2010', caption: 'Asset base surpasses Ksh 1.7 billion', desc: 'Audited financials confirm Ksh 1.7B+ in assets — decades of prudent management and member trust.', thumbLabel: '2020 · Ksh 1.7B' },
+  { year: '2025', icon: '🏆', color: '#0d1f0d', caption: 'Celebrating 50 years of empowering Kenyans', desc: 'Five decades of service — an open-bond Sacco with Ksh 1.7B+ in assets, 14+ products and a full digital banking platform.', thumbLabel: '2025 · 50 Years' },
+];
+
 function HeroBanner() {
+  const [current, setCurrent] = useState(0);
+  const s = slides[current];
+  const go = (dir) => setCurrent((current + dir + slides.length) % slides.length);
+
+  useEffect(() => {
+    const t = setInterval(() => setCurrent(c => (c + 1) % slides.length), 5000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
-    <section
-      className="relative overflow-hidden py-24 px-6 text-white text-center"
-      style={{ background: "linear-gradient(135deg, #1E6B2E 0%, #2D8A3E 50%, #3AA050 100%)" }}
-    >
-      {/* dot pattern */}
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage: "radial-gradient(white 1.5px, transparent 1.5px)",
-          backgroundSize: "28px 28px",
-        }}
-      />
-      {/* large year watermark */}
-      <div className="absolute bottom-0 right-8 font-black text-white/5 select-none leading-none"
-        style={{ fontSize: "220px", fontFamily: "Montserrat, sans-serif" }}>
-        1976
+    <section className="relative overflow-hidden flex flex-col" style={{ background: "linear-gradient(160deg,#0d2e14,#1a4f25,#1E6B2E)", minHeight: 540, marginTop: 80 }}>
+      {/* dot texture */}
+      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(white 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
+      {/* gold divider */}
+      <div className="absolute left-0 right-0 top-1/2 h-px opacity-60" style={{ background: "linear-gradient(90deg,transparent,#C9A800 30%,#C9A800 70%,transparent)" }} />
+      <div className="absolute top-1/2 left-[55%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full z-10" style={{ background: "#C9A800", boxShadow: "0 0 16px rgba(201,168,0,0.6)" }} />
+
+      {/* arrows */}
+      <button onClick={() => go(-1)} className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/40 border border-white/15 text-white text-xl flex items-center justify-center hover:bg-yellow-600/30 transition-colors">‹</button>
+      <button onClick={() => go(1)}  className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/40 border border-white/15 text-white text-xl flex items-center justify-center hover:bg-yellow-600/30 transition-colors">›</button>
+
+      {/* main grid */}
+      <div className="grid grid-cols-2 flex-1 relative z-10" style={{ minHeight: 480 }}>
+        {/* LEFT — photo */}
+        <div className="flex items-center p-10 pl-10">
+          <div className="w-full max-w-lg rounded-md overflow-hidden relative shadow-2xl aspect-[4/3]" style={{ background: `linear-gradient(135deg,${s.color},#1E6B2E)` }}>
+            <span className="absolute top-3 left-3 bg-[#C9A800] text-black text-xs font-black px-3 py-1 rounded">{s.thumbLabel}</span>
+            <div className="w-full h-full flex flex-col items-center justify-center gap-3">
+              <span className="text-6xl opacity-30">{s.icon}</span>
+              <span className="font-black text-white/10 text-5xl" style={{ fontFamily: "Montserrat,sans-serif" }}>{s.year}</span>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white/85 text-xs p-3 pt-8">{s.caption}</div>
+          </div>
+        </div>
+
+        {/* RIGHT — year + desc */}
+        <div className="flex flex-col justify-between p-10 pl-12">
+          <div className="flex flex-col items-end text-right">
+           
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A800] inline-block" /> Our History · 1976–2025
+            </div>
+            <div className="font-black text-[#C9A800] leading-none tracking-[-4px]" style={{ fontFamily: "Montserrat,sans-serif", fontSize: "clamp(80px,13vw,150px)" }}>{s.year}</div>
+          </div>
+
+          <div>
+            <p className="text-white/70 text-sm leading-relaxed mb-4 max-w-md">{s.desc}</p>
+            {/* thumbnails */}
+            <div className="flex gap-2 items-center">
+              <button onClick={() => go(-1)} className="w-7 h-7 bg-white/10 border border-white/20 text-white flex items-center justify-center text-sm flex-shrink-0 hover:bg-yellow-600/30 transition-colors">‹</button>
+              {slides.map((sl, i) => (
+                <div key={i} onClick={() => setCurrent(i)} className={`w-28 h-[72px] rounded flex-shrink-0 cursor-pointer relative overflow-hidden border-2 transition-all ${i === current ? "border-[#C9A800]" : "border-transparent hover:border-yellow-600/40"}`}
+                  style={{ background: `linear-gradient(135deg,${sl.color},#1E6B2E)` }}>
+                  <div className="w-full h-full flex items-center justify-center text-2xl">{sl.icon}</div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white/80 text-[8px] font-semibold text-center py-0.5">{sl.thumbLabel}</div>
+                </div>
+              ))}
+              <button onClick={() => go(1)} className="w-7 h-7 bg-white/10 border border-white/20 text-white flex items-center justify-center text-sm flex-shrink-0 hover:bg-yellow-600/30 transition-colors">›</button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="relative z-10 max-w-3xl mx-auto">
-        {/* breadcrumb */}
-        <div className="flex items-center justify-center gap-2 text-white/60 text-xs mb-6">
-          <a href="#" className="hover:text-white transition-colors">Home</a>
-          <span>/</span>
-          <a href="#" className="hover:text-white transition-colors">About</a>
-          <span>/</span>
-          <span className="text-white font-semibold">Our Timeline</span>
-        </div>
-
-        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-          <span className="w-2 h-2 rounded-full bg-[#C9A800] inline-block" />
-          Our History
-        </div>
-
-        <h1 className="font-black text-4xl md:text-6xl leading-tight mb-6"
-          style={{ fontFamily: "Montserrat, sans-serif" }}>
-          50 Years of Walking<br />
-          <span className="text-yellow-300">With Our Members</span>
-        </h1>
-
-        <p className="text-white/70 text-lg leading-relaxed max-w-xl mx-auto mb-8">
-          From a small savings circle among University of Nairobi staff in 1976 to a nationwide open-bond Sacco serving thousands of Kenyans — this is our story.
-        </p>
-
-        {/* stats row */}
-        <div className="flex justify-center gap-10 flex-wrap mt-8 pt-8 border-t border-white/15">
-          {[["1976", "Year Founded"], ["50+", "Years of Service"], ["Ksh 2.5B+", "Asset Base"], ["14+", "Products"]].map(
-            ([v, l]) => (
-              <div key={l} className="text-center">
-                <div className="font-black text-2xl text-yellow-300" style={{ fontFamily: "Montserrat, sans-serif" }}>{v}</div>
-                <div className="text-white/50 text-xs uppercase tracking-wider mt-1">{l}</div>
-              </div>
-            )
-          )}
-        </div>
+      {/* dot pagination */}
+      <div className="flex justify-center gap-1.5 py-3 bg-black/20 relative z-10">
+        {slides.map((_, i) => (
+          <button key={i} onClick={() => setCurrent(i)} className={`h-2 rounded-full transition-all ${i === current ? "bg-[#C9A800] w-5" : "bg-white/25 w-2 hover:bg-yellow-600/40"}`} />
+        ))}
       </div>
     </section>
   );
