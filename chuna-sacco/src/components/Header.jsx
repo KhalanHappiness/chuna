@@ -43,7 +43,7 @@ const Header = () => {
     { name: 'Insurance', path: '/insurance' },
     { name: 'Agency Banking', path: '/products/agency-banking' },
     { name: 'Mchuna', path: '/mchuna' },
-    {name: 'Payment Moes', path: '/payment-modes'}
+    {name: 'Payment Modes', path: '/payment-modes'}
   ]
 
   const aboutUsItems = [
