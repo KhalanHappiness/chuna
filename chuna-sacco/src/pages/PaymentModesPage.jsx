@@ -607,7 +607,6 @@ export default function PaymentModesPage() {
 
       <PaybillTable />
       <Notes />
-      <CTA />
     </div>
   );
 }
