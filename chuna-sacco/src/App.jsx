@@ -26,6 +26,8 @@ import CookieBanner from './components/CookieBanner'
 import InnovationsPage from './pages/InnovationsPage'
 import TimelinePage from './pages/TimelinePage'
 import ProductsPage from './pages/Products'
+import PaymentModesPage from './pages/PaymentModesPage'
+
 
 // Admin components
 import Login from './pages/admin/auth/Login'
@@ -124,6 +126,7 @@ function App() {
               <Route path="/innovations" element={<InnovationsPage/>}/>
               <Route path="/timeline" element={<TimelinePage/>}/>
               <Route path="/products" element={<ProductsPage/>}/>
+              <Route path="/payment-modes" element={<PaymentModesPage/>}/>
 
               {/* ============ ADMIN LOGIN (No Auth Required) ============ */}
               <Route path="/admin/login" element={<Login />} />

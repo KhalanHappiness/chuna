@@ -1,29 +1,17 @@
 import { useState, useEffect } from "react";
 
-/**
- * Chuna Sacco — History & Timeline Page
- * Inspired by the Stima Sacco timeline layout.
- * Brand colours: Green #2D8A3E | Red #C0392B | Gold #C9A800 | White #FFFFFF
- *
- * Usage in your React + Tailwind project:
- *   import ChunaSaccoTimeline from './ChunaSaccoTimeline';
- *   <ChunaSaccoTimeline />
- *
- * Add to tailwind.config.js extend.colors:
- *   'sacco-green': '#2D8A3E'
- *   'sacco-dark':  '#1E6B2E'
- *   'sacco-light': '#E8F5EB'
- *   'sacco-pale':  '#F2FAF3'
- *   'sacco-red':   '#C0392B'
- *   'sacco-gold':  '#C9A800'
- */
+/* ─────────────────────────────────────────────────────
+   Chuna Sacco — Timeline Page
+   Complete file. Just import and use:
+     import TimelinePage from "./TimelinePage";
+───────────────────────────────────────────────────── */
 
-/* ── DATA ───────────────────────────────────────────── */
+// ─── 1. MILESTONE DATA ────────────────────────────────
 const milestones = [
   {
     year: "1976",
     title: "The Beginning — Chuna Sacco is Founded",
-    body: "On 24th March 1976, Chuna Savings and Credit Co-operative Society Limited was registered under the Co-operatives Act as CS/2466 by the Commissioner of Cooperative Development. Founded by University of Nairobi members of staff, the Sacco was born with a single purpose: to organise and promote the welfare and economic interests of its members.",
+    body: "On 24th March 1976, Chuna Savings and Credit Co-operative Society Limited was registered under the Co-operatives Act as CS/2466. Founded by University of Nairobi members of staff, the Sacco was born with a single purpose: to organise and promote the welfare and economic interests of its members.",
     highlight: "Registration No. CS/2466 — 24th March 1976",
     icon: "🏛️",
     color: "green",
@@ -47,7 +35,7 @@ const milestones = [
   {
     year: "2000s",
     title: "Embracing BOSA & FOSA",
-    body: "Chuna Sacco formalised its dual-service model, operating both Back Office Service Activities (BOSA) and Front Office Service Activities (FOSA). This structure enabled the Sacco to offer full banking-like services including salary processing, current accounts, and withdrawable savings — all under one roof at the University of Nairobi main campus.",
+    body: "Chuna Sacco formalised its dual-service model, operating both Back Office Service Activities (BOSA) and Front Office Service Activities (FOSA). This structure enabled the Sacco to offer full banking-like services including salary processing, current accounts, and withdrawable savings — all under one roof.",
     highlight: "BOSA + FOSA — full financial services under one roof",
     icon: "🏦",
     color: "red",
@@ -55,15 +43,15 @@ const milestones = [
   {
     year: "2010",
     title: "SASRA Regulation — A Mark of Trust",
-    body: "Chuna Sacco was duly registered by the Sacco Societies Regulatory Authority (SASRA) as a Deposit-Taking Sacco (DTS), meeting stringent capital adequacy standards. This milestone cemented the Sacco's credibility and positioned it as a trustworthy, regulated financial institution for all members.",
-    highlight: "SASRA Deposit-Taking Sacco (DTS) — License secured",
+    body: "Chuna Sacco was registered by the Sacco Societies Regulatory Authority (SASRA) as a Deposit-Taking Sacco (DTS), meeting stringent capital adequacy standards. This milestone cemented the Sacco's credibility and positioned it as a trustworthy, regulated financial institution for all members.",
+    highlight: "SASRA Deposit-Taking Sacco (DTS) — Licence secured",
     icon: "✅",
     color: "green",
   },
   {
     year: "2014",
     title: "Capital Adequacy & Member Share Drive",
-    body: "In 2014, Chuna Sacco launched a concerted effort to meet SASRA's capital adequacy ratios through a member share-raising campaign. Members were encouraged to contribute additional shares, strengthening the Sacco's financial base and enabling it to extend even more credit to its growing membership.",
+    body: "In 2014, Chuna Sacco launched a concerted effort to meet SASRA's capital adequacy ratios through a member share-raising campaign. Members were encouraged to contribute additional shares, strengthening the Sacco's financial base and enabling it to extend even more credit.",
     highlight: "Capital adequacy target achieved with member support",
     icon: "💰",
     color: "gold",
@@ -71,7 +59,7 @@ const milestones = [
   {
     year: "2016",
     title: "Open Bond — Welcoming All Kenyans",
-    body: "Chuna Sacco transitioned to an open common bond, opening its membership to all Kenyan citizens regardless of their area of residence or employment. This transformational decision turned the Sacco from a university-exclusive institution into a national cooperative — available to every Kenyan seeking affordable financial services.",
+    body: "Chuna Sacco transitioned to an open common bond, opening its membership to all Kenyan citizens regardless of their area of residence or employment. This transformational decision turned the Sacco from a university-exclusive institution into a national cooperative.",
     highlight: "Open bond — any Kenyan can now join Chuna Sacco",
     icon: "🇰🇪",
     color: "green",
@@ -79,7 +67,7 @@ const milestones = [
   {
     year: "2018",
     title: "Mobile Banking via USSD *670#",
-    body: "Chuna Sacco launched its USSD mobile banking platform — dial *670# — enabling members to check balances, make transfers, apply for loans, and access financial services from any phone, on any network, anywhere in Kenya. A game-changer in the Sacco sector, aligned with Kenya's leadership in mobile money.",
+    body: "Chuna Sacco launched its USSD mobile banking platform — dial *670# — enabling members to check balances, make transfers, apply for loans, and access financial services from any phone, on any network, anywhere in Kenya. 24/7, no internet required.",
     highlight: "Dial *670# — banking for every Kenyan, every phone",
     icon: "📱",
     color: "red",
@@ -87,7 +75,7 @@ const milestones = [
   {
     year: "2019",
     title: "M-Pesa Paybill 561999",
-    body: "The introduction of M-Pesa Paybill number 561999 made depositing into FOSA and BOSA accounts seamless for all members. Members could now deposit savings and repay loans instantly from M-Pesa, 24 hours a day, 7 days a week — removing the need to visit a branch for routine transactions.",
+    body: "The introduction of M-Pesa Paybill number 561999 made depositing into FOSA and BOSA accounts seamless for all members. Members could now deposit savings and repay loans instantly from M-Pesa, 24 hours a day, 7 days a week.",
     highlight: "Paybill 561999 — deposit anytime via M-Pesa",
     icon: "💳",
     color: "gold",
@@ -95,7 +83,7 @@ const milestones = [
   {
     year: "2020",
     title: "Ksh 2.5 Billion Asset Base",
-    body: "Chuna Sacco's 2020 audited financial statements revealed an asset base exceeding Ksh 2.5 billion — a testament to decades of prudent financial management, growing membership, and member confidence. This milestone positioned the Sacco as a significant player in Kenya's cooperative financial sector.",
+    body: "Chuna Sacco's 2020 audited financial statements revealed an asset base exceeding Ksh 2.5 billion — a testament to decades of prudent financial management, growing membership, and sustained member confidence.",
     highlight: "Ksh 2.5B+ asset base — 2020 audited financials",
     icon: "📊",
     color: "green",
@@ -103,7 +91,7 @@ const milestones = [
   {
     year: "2022",
     title: "Digital Member Portal & Online Applications",
-    body: "Chuna Sacco launched its online member web portal at chunawebportal.chunasacco.co.ke, allowing members to access statements, apply for loans, and manage their accounts entirely online. Membership applications were also digitised — with SMS confirmation of membership numbers delivered within 5 minutes of online submission.",
+    body: "Chuna Sacco launched its online member web portal, allowing members to access statements, apply for loans, and manage their accounts entirely online. Membership applications were digitised — SMS confirmation delivered within 5 minutes.",
     highlight: "Online portal + instant membership processing",
     icon: "🌐",
     color: "red",
@@ -111,7 +99,7 @@ const milestones = [
   {
     year: "2024",
     title: "Mobile App — Full Service Banking on the Go",
-    body: "Chuna Sacco launched its dedicated mobile application, bringing the full suite of Sacco services to members' smartphones. The app offers loan applications, account management, savings tracking, and real-time notifications — completing Chuna's digital transformation journey and ensuring members are served wherever they are.",
+    body: "Chuna Sacco launched its dedicated mobile application, bringing the full suite of Sacco services to members' smartphones. Loan applications, account management, savings tracking, and real-time notifications — all from the palm of your hand.",
     highlight: "Mobile app live — 14+ products at your fingertips",
     icon: "🚀",
     color: "gold",
@@ -119,145 +107,383 @@ const milestones = [
   {
     year: "2025",
     title: "50 Years of Empowering Kenyans",
-    body: "As Chuna Sacco celebrates nearly five decades of service, the institution stands as a beacon of cooperative financial empowerment in Kenya. From a handful of University of Nairobi staff members to a nationwide open-bond Sacco serving thousands of Kenyans — the journey continues. Here's to 50 more years of walking with our members towards prosperity.",
-    highlight: "\"The University Sacco\" — serving all Kenyans since 1976",
+    body: "As Chuna Sacco celebrates nearly five decades of service, the institution stands as a beacon of cooperative financial empowerment in Kenya. From a handful of University of Nairobi staff members to a nationwide open-bond Sacco serving thousands of Kenyans — the journey continues.",
+    highlight: '"The University Sacco" — serving all Kenyans since 1976',
     icon: "🏆",
     color: "green",
   },
 ];
 
+// ─── 2. SLIDE DATA (hero slider) ──────────────────────
+const SLIDES = [
+  {
+    year: "1976",
+    image: "https://picsum.photos/seed/university1976/800/600",
+    icon: "🏛️",
+    photoBg: "linear-gradient(135deg,#0a2010,#1E6B2E)",
+    caption: "Chuna Sacco is founded at the University of Nairobi",
+    desc: "On 24th March 1976, Chuna Savings and Credit Co-operative Society was registered as CS/2466 — a small savings circle among University of Nairobi staff that would grow into Kenya's most trusted \"University Sacco\".",
+    thumbLabel: "1976 · Founded",
+  },
+  {
+    year: "2000s",
+    image: "https://picsum.photos/seed/banking2000/800/600",
+    icon: "🏦",
+    photoBg: "linear-gradient(135deg,#0f1f10,#1E6B2E)",
+    caption: "BOSA & FOSA dual-service banking model launched",
+    desc: "Chuna Sacco formalised its Back Office (BOSA) and Front Office (FOSA) operations, offering full salary processing, current accounts, and instant withdrawals — all under one roof at the University of Nairobi.",
+    thumbLabel: "2000s · Banking",
+  },
+  {
+    year: "2010",
+    image: "https://picsum.photos/seed/sasra2010/800/600",
+    icon: "✅",
+    photoBg: "linear-gradient(135deg,#0a1a0a,#1E6B2E)",
+    caption: "SASRA Deposit-Taking Sacco licence secured",
+    desc: "Chuna Sacco was registered by the Sacco Societies Regulatory Authority (SASRA) as a fully licenced Deposit-Taking Sacco — cementing its credibility and protecting member deposits under Kenya's regulatory framework.",
+    thumbLabel: "2010 · SASRA",
+  },
+  {
+    year: "2016",
+    image: "https://picsum.photos/seed/openbond2016/800/600",
+    icon: "🇰🇪",
+    photoBg: "linear-gradient(135deg,#102010,#2D8A3E)",
+    caption: "Open bond — membership opened to all Kenyans",
+    desc: "Chuna Sacco transitioned to an open common bond, welcoming all Kenyan citizens regardless of residence or employment. Any Kenyan could now access Chuna's growing portfolio of 14+ financial products.",
+    thumbLabel: "2016 · Open Bond",
+  },
+  {
+    year: "2018",
+    image: "https://picsum.photos/seed/ussd2018/800/600",
+    icon: "📱",
+    photoBg: "linear-gradient(135deg,#081808,#1E6B2E)",
+    caption: "USSD *670# mobile banking platform launched",
+    desc: "Chuna Sacco launched *670# USSD banking — enabling every Kenyan to check balances, transfer funds, and apply for loans from any phone on any network, anywhere in Kenya. 24/7, no internet required.",
+    thumbLabel: "2018 · USSD *670#",
+  },
+  {
+    year: "2019",
+    image: "https://picsum.photos/seed/mpesa2019/800/600",
+    icon: "💳",
+    photoBg: "linear-gradient(135deg,#0d220d,#2D8A3E)",
+    caption: "M-Pesa Paybill 561999 — deposit instantly from anywhere",
+    desc: "The introduction of M-Pesa Paybill 561999 made depositing into FOSA and BOSA accounts seamless — available 24 hours a day, 7 days a week, from anywhere in Kenya.",
+    thumbLabel: "2019 · M-Pesa",
+  },
+  {
+    year: "2020",
+    image: "https://picsum.photos/seed/assets2020/800/600",
+    icon: "📊",
+    photoBg: "linear-gradient(135deg,#0a1f0a,#1E6B2E)",
+    caption: "Asset base surpasses Ksh 2.5 billion",
+    desc: "Chuna Sacco's 2020 audited financials revealed an asset base exceeding Ksh 2.5 billion — decades of prudent financial management and the enduring trust of thousands of members across Kenya.",
+    thumbLabel: "2020 · Ksh 2.5B",
+  },
+  {
+    year: "2022",
+    image: "https://picsum.photos/seed/portal2022/800/600",
+    icon: "🌐",
+    photoBg: "linear-gradient(135deg,#0d1f0d,#2D8A3E)",
+    caption: "Online member portal launched",
+    desc: "Chuna Sacco launched its online member portal, enabling members to manage accounts, view statements, apply for loans and membership — all online, with SMS confirmation in under 5 minutes.",
+    thumbLabel: "2022 · Portal",
+  },
+  {
+    year: "2024",
+    image: "https://picsum.photos/seed/mobileapp2024/800/600",
+    icon: "🚀",
+    photoBg: "linear-gradient(135deg,#081808,#1E6B2E)",
+    caption: "Mobile app launched — full-service banking on the go",
+    desc: "Chuna Sacco launched its dedicated mobile application, bringing all 14+ Sacco products to members' smartphones. Apply for loans, check balances, manage accounts — all from the palm of your hand.",
+    thumbLabel: "2024 · Mobile App",
+  },
+  {
+    year: "2025",
+    image: "https://picsum.photos/seed/50years2025/800/600",
+    icon: "🏆",
+    photoBg: "linear-gradient(135deg,#0d2e14,#2D8A3E)",
+    caption: "Celebrating 50 years of empowering Kenyans",
+    desc: "As Chuna Sacco marks nearly five decades of service, it stands stronger than ever — an open-bond Sacco with Ksh 2.5B+ in assets, 14+ products, and a full suite of digital banking channels nationwide.",
+    thumbLabel: "2025 · 50 Years",
+  },
+];
+
+// ─── 3. COLOUR MAP ────────────────────────────────────
 const colorMap = {
   green: {
     bg: "bg-[#2D8A3E]",
-    bgLight: "bg-[#E8F5EB]",
-    border: "border-[#2D8A3E]",
-    text: "text-[#2D8A3E]",
     badge: "bg-[#2D8A3E] text-white",
-    dot: "bg-[#2D8A3E]",
-    ring: "ring-[#2D8A3E]",
     highlight: "bg-[#E8F5EB] border-l-4 border-[#2D8A3E] text-[#1E6B2E]",
   },
   red: {
     bg: "bg-[#C0392B]",
-    bgLight: "bg-red-50",
-    border: "border-[#C0392B]",
-    text: "text-[#C0392B]",
     badge: "bg-[#C0392B] text-white",
-    dot: "bg-[#C0392B]",
-    ring: "ring-[#C0392B]",
     highlight: "bg-red-50 border-l-4 border-[#C0392B] text-[#C0392B]",
   },
   gold: {
     bg: "bg-[#C9A800]",
-    bgLight: "bg-yellow-50",
-    border: "border-[#C9A800]",
-    text: "text-[#9A7F00]",
     badge: "bg-[#C9A800] text-white",
-    dot: "bg-[#C9A800]",
-    ring: "ring-[#C9A800]",
     highlight: "bg-yellow-50 border-l-4 border-[#C9A800] text-[#7A6000]",
   },
 };
 
+// ─────────────────────────────────────────────────────
+// 4. PHOTO PLACEHOLDER
+// ─────────────────────────────────────────────────────
+function PhotoPlaceholder({ slide }) {
+  return (
+    <div
+      className="w-full h-full flex flex-col items-center justify-center gap-4 select-none"
+      style={{ background: slide.photoBg }}
+    >
+      <span style={{ fontSize: 72, opacity: 0.25 }}>{slide.icon}</span>
+      <span
+        className="font-black text-white/10 leading-none tracking-tighter"
+        style={{ fontFamily: "Montserrat,sans-serif", fontSize: 56 }}
+      >
+        {slide.year}
+      </span>
+    </div>
+  );
+}
 
-/* ── HERO BANNER ─────────────────────────────────────── */
-const slides = [
-  { year: '1976', icon: '🏛️', color: '#0a2010', caption: 'Chuna Sacco is founded at the University of Nairobi', desc: 'On 24th March 1976, Chuna Sacco was registered as CS/2466 — a small savings circle that would grow into Kenya\'s trusted "University Sacco".', thumbLabel: '1976 · Founded' },
-  { year: '2010', icon: '✅', color: '#1a0f2e', caption: 'SASRA Deposit-Taking Sacco Licence secured', desc: 'Registered by SASRA as a fully licenced Deposit-Taking Sacco, cementing credibility and protecting member deposits.', thumbLabel: '2010 · SASRA' },
-  { year: '2016', icon: '🇰🇪', color: '#1a1a0a', caption: 'Open bond — membership opened to all Kenyans', desc: 'Any Kenyan regardless of residence or employment can now access Chuna\'s growing portfolio of 14+ financial products.', thumbLabel: '2016 · Open Bond' },
-  { year: '2018', icon: '📱', color: '#0a1a2e', caption: 'USSD *670# mobile banking platform launched', desc: 'Bank from any phone, any network — check balances, transfer funds, and apply for loans instantly via *670#.', thumbLabel: '2018 · USSD' },
-  { year: '2020', icon: '📊', color: '#0d2010', caption: 'Asset base surpasses Ksh 1.7 billion', desc: 'Audited financials confirm Ksh 1.7B+ in assets — decades of prudent management and member trust.', thumbLabel: '2020 · Ksh 1.7B' },
-  { year: '2025', icon: '🏆', color: '#0d1f0d', caption: 'Celebrating 50 years of empowering Kenyans', desc: 'Five decades of service — an open-bond Sacco with Ksh 1.7B+ in assets, 14+ products and a full digital banking platform.', thumbLabel: '2025 · 50 Years' },
-];
-
+// ─────────────────────────────────────────────────────
+// 5. HERO BANNER (slider)
+// ─────────────────────────────────────────────────────
 function HeroBanner() {
   const [current, setCurrent] = useState(0);
-  const s = slides[current];
-  const go = (dir) => setCurrent((current + dir + slides.length) % slides.length);
+  const [imgError, setImgError] = useState(false);
+
+  const go   = (dir) => { setCurrent((c) => (c + dir + SLIDES.length) % SLIDES.length); setImgError(false); };
+  const goTo = (i)   => { setCurrent(i); setImgError(false); };
 
   useEffect(() => {
-    const t = setInterval(() => setCurrent(c => (c + 1) % slides.length), 5000);
+    const t = setInterval(() => setCurrent((c) => (c + 1) % SLIDES.length), 5000);
     return () => clearInterval(t);
   }, []);
 
+  const s = SLIDES[current];
+  const thumbStart   = Math.max(0, Math.min(current, SLIDES.length - 3));
+  const visibleThumbs = SLIDES.slice(thumbStart, thumbStart + 3);
+
   return (
-    <section className="relative overflow-hidden flex flex-col" style={{ background: "linear-gradient(160deg,#0d2e14,#1a4f25,#1E6B2E)", minHeight: 540, marginTop: 80 }}>
+    <section
+      className="relative w-full flex flex-col overflow-hidden"
+      style={{ background: "linear-gradient(160deg,#052010 0%,#0f5a20 35%,#1E8A3A 75%,#28C44E 100%)", marginTop:100 }}
+    >
       {/* dot texture */}
-      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(white 1px,transparent 1px)", backgroundSize: "24px 24px" }} />
-      {/* gold divider */}
-      <div className="absolute left-0 right-0 top-1/2 h-px opacity-60" style={{ background: "linear-gradient(90deg,transparent,#C9A800 30%,#C9A800 70%,transparent)" }} />
-      <div className="absolute top-1/2 left-[55%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full z-10" style={{ background: "#C9A800", boxShadow: "0 0 16px rgba(201,168,0,0.6)" }} />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(rgba(255,255,255,0.055) 1px,transparent 1px)",
+          backgroundSize: "22px 22px",
+        }}
+      />
 
-      {/* arrows */}
-      <button onClick={() => go(-1)} className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/40 border border-white/15 text-white text-xl flex items-center justify-center hover:bg-yellow-600/30 transition-colors">‹</button>
-      <button onClick={() => go(1)}  className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/40 border border-white/15 text-white text-xl flex items-center justify-center hover:bg-yellow-600/30 transition-colors">›</button>
+      {/* gold divider line — desktop only */}
+      <div
+        className="absolute left-0 right-0 pointer-events-none hidden md:block"
+        style={{
+          top: "40%", height: "1.5px",
+          background: "linear-gradient(90deg,transparent 0%,#C9A800 20%,#C9A800 80%,transparent 100%)",
+          opacity: 0.55, zIndex: 2,
+        }}
+      />
 
-      {/* main grid */}
-      <div className="grid grid-cols-2 flex-1 relative z-10" style={{ minHeight: 480 }}>
-        {/* LEFT — photo */}
-        <div className="flex items-center p-10 pl-10">
-          <div className="w-full max-w-lg rounded-md overflow-hidden relative shadow-2xl aspect-[4/3]" style={{ background: `linear-gradient(135deg,${s.color},#1E6B2E)` }}>
-            <span className="absolute top-3 left-3 bg-[#C9A800] text-black text-xs font-black px-3 py-1 rounded">{s.thumbLabel}</span>
-            <div className="w-full h-full flex flex-col items-center justify-center gap-3">
-              <span className="text-6xl opacity-30">{s.icon}</span>
-              <span className="font-black text-white/10 text-5xl" style={{ fontFamily: "Montserrat,sans-serif" }}>{s.year}</span>
+      {/* gold dot on line — desktop only */}
+      <div
+        className="absolute pointer-events-none hidden md:block"
+        style={{
+          top: "40%", left: "58%",
+          transform: "translate(-50%,-50%)",
+          width: 14, height: 14, borderRadius: "50%",
+          background: "#C9A800",
+          boxShadow: "0 0 18px rgba(201,168,0,0.7)",
+          zIndex: 3,
+        }}
+      />
+
+      {/* left arrow */}
+      <button
+        onClick={() => go(-1)}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center text-white text-2xl"
+        style={{ width: 36, height: 52, background: "rgba(0,0,0,0.45)", border: "none", borderRight: "1px solid rgba(255,255,255,0.12)", cursor: "pointer" }}
+      >‹</button>
+
+      {/* right arrow */}
+      <button
+        onClick={() => go(1)}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center text-white text-2xl"
+        style={{ width: 36, height: 52, background: "rgba(0,0,0,0.45)", border: "none", borderLeft: "1px solid rgba(255,255,255,0.12)", cursor: "pointer" }}
+      >›</button>
+
+      {/* main grid — stacked on mobile, side-by-side on desktop */}
+      <div className="relative flex-1 flex flex-col md:grid md:grid-cols-[42%_58%] z-10">
+
+        {/* LEFT / TOP — photo */}
+        <div className="flex items-center justify-center px-10 md:pl-14 md:pr-0 pt-10 pb-6 md:py-10">
+          <div
+            className="relative overflow-hidden w-full rounded-md shadow-2xl"
+            style={{ maxWidth: 500, aspectRatio: "4/3" }}
+          >
+            {s.image && !imgError ? (
+              <img
+                key={s.image}
+                src={s.image}
+                alt={s.caption}
+                className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <PhotoPlaceholder slide={s} />
+            )}
+
+            {/* year tag */}
+            <span
+              className="absolute top-3 left-3 text-black font-black text-xs px-3 py-1 rounded"
+              style={{ background: "#C9A800", fontFamily: "Montserrat,sans-serif", letterSpacing: "0.06em" }}
+            >
+              {s.thumbLabel}
+            </span>
+
+            {/* caption overlay */}
+            <div
+              className="absolute bottom-0 left-0 right-0 text-white/85 text-xs"
+              style={{ background: "linear-gradient(to top,rgba(0,0,0,0.72),transparent)", padding: "28px 14px 12px" }}
+            >
+              {s.caption}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent text-white/85 text-xs p-3 pt-8">{s.caption}</div>
           </div>
         </div>
 
-        {/* RIGHT — year + desc */}
-        <div className="flex flex-col justify-between p-10 pl-12">
-          <div className="flex flex-col items-end text-right">
-           
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C9A800] inline-block" /> Our History · 1976–2025
+        {/* RIGHT / BOTTOM — year + desc + thumbs */}
+        <div className="flex flex-col justify-between px-8 md:pl-12 md:pr-14 pb-8 md:py-10 gap-4">
+
+          {/* big year */}
+          <div className="flex flex-col items-center md:items-end text-center md:text-right">
+            <div
+              className="font-black text-[#C9A800] leading-none"
+              style={{ fontFamily: "Montserrat,sans-serif", fontSize: "clamp(64px,14vw,150px)", letterSpacing: "-3px", lineHeight: 0.88, transition: "all 0.35s ease" }}
+            >
+              {s.year}
             </div>
-            <div className="font-black text-[#C9A800] leading-none tracking-[-4px]" style={{ fontFamily: "Montserrat,sans-serif", fontSize: "clamp(80px,13vw,150px)" }}>{s.year}</div>
           </div>
 
+          {/* description + thumbnails */}
           <div>
-            <p className="text-white/70 text-sm leading-relaxed mb-4 max-w-md">{s.desc}</p>
-            {/* thumbnails */}
-            <div className="flex gap-2 items-center">
-              <button onClick={() => go(-1)} className="w-7 h-7 bg-white/10 border border-white/20 text-white flex items-center justify-center text-sm flex-shrink-0 hover:bg-yellow-600/30 transition-colors">‹</button>
-              {slides.map((sl, i) => (
-                <div key={i} onClick={() => setCurrent(i)} className={`w-28 h-[72px] rounded flex-shrink-0 cursor-pointer relative overflow-hidden border-2 transition-all ${i === current ? "border-[#C9A800]" : "border-transparent hover:border-yellow-600/40"}`}
-                  style={{ background: `linear-gradient(135deg,${sl.color},#1E6B2E)` }}>
-                  <div className="w-full h-full flex items-center justify-center text-2xl">{sl.icon}</div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white/80 text-[8px] font-semibold text-center py-0.5">{sl.thumbLabel}</div>
-                </div>
-              ))}
-              <button onClick={() => go(1)} className="w-7 h-7 bg-white/10 border border-white/20 text-white flex items-center justify-center text-sm flex-shrink-0 hover:bg-yellow-600/30 transition-colors">›</button>
+            <p
+              className="text-white/75 leading-relaxed mb-5 text-center md:text-left"
+              style={{ fontSize: 14, maxWidth: 500, transition: "all 0.3s ease" }}
+            >
+              {s.desc}
+            </p>
+
+            {/* thumbnail strip — desktop only */}
+            <div className="hidden md:flex items-center gap-2">
+              <button
+                onClick={() => go(-1)}
+                className="flex-shrink-0 flex items-center justify-center text-white"
+                style={{ width: 28, height: 28, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", cursor: "pointer", fontSize: 15, borderRadius: 2 }}
+              >‹</button>
+
+              {visibleThumbs.map((sl, idx) => {
+                const realIdx = thumbStart + idx;
+                const isActive = realIdx === current;
+                return (
+                  <div
+                    key={realIdx}
+                    onClick={() => goTo(realIdx)}
+                    className="relative overflow-hidden flex-shrink-0 cursor-pointer rounded"
+                    style={{
+                      width: 120, height: 78,
+                      border: `2px solid ${isActive ? "#C9A800" : "transparent"}`,
+                      boxShadow: isActive ? "0 0 12px rgba(201,168,0,0.4)" : "0 2px 8px rgba(0,0,0,0.3)",
+                      transition: "all 0.2s",
+                    }}
+                  >
+                    {sl.image ? (
+                      <img
+                        key={sl.image}
+                        src={sl.image}
+                        alt={sl.thumbLabel}
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
+                      />
+                    ) : null}
+                    <div
+                      className="w-full h-full flex items-center justify-center"
+                      style={{ background: sl.photoBg, display: sl.image ? "none" : "flex" }}
+                    >
+                      <span style={{ fontSize: 20, opacity: 0.4 }}>{sl.icon}</span>
+                    </div>
+                    <div
+                      className="absolute bottom-0 left-0 right-0 text-center text-white/80"
+                      style={{ background: "rgba(0,0,0,0.6)", fontSize: 9, fontWeight: 600, letterSpacing: "0.04em", padding: "3px 4px" }}
+                    >
+                      {sl.thumbLabel}
+                    </div>
+                  </div>
+                );
+              })}
+
+              <button
+                onClick={() => go(1)}
+                className="flex-shrink-0 flex items-center justify-center text-white"
+                style={{ width: 28, height: 28, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", cursor: "pointer", fontSize: 15, borderRadius: 2 }}
+              >›</button>
             </div>
           </div>
         </div>
       </div>
 
       {/* dot pagination */}
-      <div className="flex justify-center gap-1.5 py-3 bg-black/20 relative z-10">
-        {slides.map((_, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className={`h-2 rounded-full transition-all ${i === current ? "bg-[#C9A800] w-5" : "bg-white/25 w-2 hover:bg-yellow-600/40"}`} />
+      <div
+        className="relative flex justify-center items-center gap-1.5 z-10"
+        style={{ padding: "12px 0 16px", background: "rgba(0,0,0,0.25)" }}
+      >
+        {SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            style={{
+              height: 8,
+              width: i === current ? 22 : 8,
+              borderRadius: i === current ? 4 : "50%",
+              background: i === current ? "#C9A800" : "rgba(255,255,255,0.25)",
+              border: "none", cursor: "pointer", padding: 0,
+              transition: "all 0.2s",
+            }}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-/* ── TIMELINE ITEM ──────────────────────────────────── */
+// ─────────────────────────────────────────────────────
+// 6. TIMELINE ITEM  ← must be BEFORE Timeline()
+// ─────────────────────────────────────────────────────
 function TimelineItem({ item, index }) {
   const isLeft = index % 2 === 0;
   const c = colorMap[item.color];
 
   return (
-    <div className={`relative flex items-start gap-0 md:gap-8 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"} flex-row mb-0`}>
+    <div
+      className={`relative flex items-start gap-0 md:gap-8 ${
+        isLeft ? "md:flex-row" : "md:flex-row-reverse"
+      } flex-row mb-0`}
+    >
+      {/* card */}
+      <div
+        className={`flex-1 pb-16 ${
+          isLeft ? "md:text-right md:pr-12" : "md:text-left md:pl-12"
+        } pl-10 md:pl-0`}
+      >
+        <div className="bg-white rounded-2xl p-7 shadow-md border border-gray-100 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 inline-block w-full">
 
-      {/* ── CARD ── */}
-      <div className={`flex-1 pb-16 ${isLeft ? "md:text-right md:pr-12" : "md:text-left md:pl-12"} pl-10 md:pl-0`}>
-        <div
-          className={`bg-white rounded-2xl p-7 shadow-md border border-gray-100 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 inline-block w-full`}
-        >
-          {/* icon + year badge */}
+          {/* year badge + icon */}
           <div className={`flex items-center gap-3 mb-4 ${isLeft ? "md:justify-end" : "justify-start"}`}>
             <span className={`${c.badge} text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full`}>
               {item.year}
@@ -265,8 +491,10 @@ function TimelineItem({ item, index }) {
             <span className="text-2xl">{item.icon}</span>
           </div>
 
-          <h3 className="font-black text-gray-900 text-lg md:text-xl mb-3 leading-snug"
-            style={{ fontFamily: "Montserrat, sans-serif" }}>
+          <h3
+            className="font-black text-gray-900 text-lg md:text-xl mb-3 leading-snug"
+            style={{ fontFamily: "Montserrat, sans-serif" }}
+          >
             {item.title}
           </h3>
 
@@ -279,38 +507,39 @@ function TimelineItem({ item, index }) {
         </div>
       </div>
 
-      {/* ── SPINE DOT (desktop only, hidden on mobile — line is on the left) ── */}
+      {/* spine dot — desktop only */}
       <div className="hidden md:flex flex-col items-center flex-shrink-0" style={{ width: 60 }}>
         <div
           className={`w-10 h-10 rounded-full ${c.bg} flex items-center justify-center text-white font-black text-xs ring-4 ring-white shadow-lg z-10 relative`}
           style={{ fontFamily: "Montserrat, sans-serif" }}
         >
-          {item.year.slice(-2)}
+          {/* {item.year.slice(-2)} */}
         </div>
       </div>
 
-      {/* ── SPACER (opposite side) ── */}
+      {/* spacer opposite side */}
       <div className="flex-1 hidden md:block" />
     </div>
   );
 }
 
-/* ── MOBILE DOT (left spine on small screens) ──────── */
-/* handled inline via absolute positioning */
-
-/* ── FULL TIMELINE SECTION ─────────────────────────── */
+// ─────────────────────────────────────────────────────
+// 7. TIMELINE SECTION  ← uses TimelineItem above
+// ─────────────────────────────────────────────────────
 function Timeline() {
   return (
     <section className="bg-[#F2FAF3] py-20 px-6">
       <div className="max-w-5xl mx-auto">
 
-        {/* section header */}
+        {/* header */}
         <div className="text-center mb-16">
           <span className="inline-flex items-center gap-2 bg-[#2D8A3E] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full">
             📅 Timeline
           </span>
-          <h2 className="font-black text-3xl md:text-4xl text-gray-900 mt-4"
-            style={{ fontFamily: "Montserrat, sans-serif" }}>
+          <h2
+            className="font-black text-3xl md:text-4xl text-gray-900 mt-4"
+            style={{ fontFamily: "Montserrat, sans-serif" }}
+          >
             Our Journey Through the Years
           </h2>
           <p className="text-gray-400 mt-3 max-w-lg mx-auto text-sm leading-relaxed">
@@ -318,18 +547,14 @@ function Timeline() {
           </p>
         </div>
 
-        {/* timeline wrapper */}
+        {/* spine + items */}
         <div className="relative">
 
-          {/* vertical centre spine (desktop) */}
-          <div
-            className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-gradient-to-b from-[#2D8A3E] via-[#C9A800] to-[#C0392B] opacity-30"
-          />
+          {/* desktop centre spine */}
+          <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-gradient-to-b from-[#2D8A3E] via-[#C9A800] to-[#C0392B] opacity-30" />
 
           {/* mobile left spine */}
-          <div
-            className="md:hidden absolute top-0 bottom-0 left-4 w-0.5 bg-gradient-to-b from-[#2D8A3E] via-[#C9A800] to-[#C0392B] opacity-30"
-          />
+          <div className="md:hidden absolute top-0 bottom-0 left-4 w-0.5 bg-gradient-to-b from-[#2D8A3E] via-[#C9A800] to-[#C0392B] opacity-30" />
 
           {milestones.map((item, i) => (
             <div key={item.year} className="relative">
@@ -355,7 +580,9 @@ function Timeline() {
   );
 }
 
-/* ── QUOTE BANNER ────────────────────────────────────── */
+// ─────────────────────────────────────────────────────
+// 8. QUOTE BANNER
+// ─────────────────────────────────────────────────────
 function QuoteBanner() {
   return (
     <section
@@ -374,7 +601,9 @@ function QuoteBanner() {
   );
 }
 
-/* ── NEXT 50 YEARS CTA ───────────────────────────────── */
+// ─────────────────────────────────────────────────────
+// 9. NEXT 50 YEARS
+// ─────────────────────────────────────────────────────
 function NextFifty() {
   return (
     <section className="bg-white py-20 px-6">
@@ -383,8 +612,10 @@ function NextFifty() {
           <span className="inline-flex items-center gap-2 bg-[#C9A800] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-4">
             🌟 The Next 50 Years
           </span>
-          <h2 className="font-black text-3xl md:text-4xl text-gray-900 mt-4 mb-6"
-            style={{ fontFamily: "Montserrat, sans-serif" }}>
+          <h2
+            className="font-black text-3xl md:text-4xl text-gray-900 mt-4 mb-6"
+            style={{ fontFamily: "Montserrat, sans-serif" }}
+          >
             Building a Brighter<br />
             <span className="text-[#2D8A3E]">Future Together</span>
           </h2>
@@ -423,14 +654,15 @@ function NextFifty() {
             </a>
           </div>
         </div>
+
         <div className="grid grid-cols-2 gap-5">
           {[
-            { val: "1976", lbl: "Year Founded", color: "bg-[#2D8A3E]" },
-            { val: "50+", lbl: "Years of Service", color: "bg-[#C0392B]" },
-            { val: "Ksh 2.5B+", lbl: "Asset Base (2020)", color: "bg-[#C9A800]" },
-            { val: "14+", lbl: "Financial Products", color: "bg-[#1E6B2E]" },
-            { val: "*670#", lbl: "USSD Banking Code", color: "bg-[#C0392B]" },
-            { val: "561999", lbl: "M-Pesa Paybill", color: "bg-[#2D8A3E]" },
+            { val: "1976",      lbl: "Year Founded",       color: "bg-[#2D8A3E]" },
+            { val: "50+",       lbl: "Years of Service",   color: "bg-[#C0392B]" },
+            { val: "Ksh 2.5B+", lbl: "Asset Base (2020)",  color: "bg-[#C9A800]" },
+            { val: "14+",       lbl: "Financial Products",  color: "bg-[#1E6B2E]" },
+            { val: "*670#",     lbl: "USSD Banking Code",   color: "bg-[#C0392B]" },
+            { val: "561999",    lbl: "M-Pesa Paybill",      color: "bg-[#2D8A3E]" },
           ].map(({ val, lbl, color }) => (
             <div
               key={lbl}
@@ -448,9 +680,9 @@ function NextFifty() {
   );
 }
 
-
-
-/* ── ROOT ────────────────────────────────────────────── */
+// ─────────────────────────────────────────────────────
+// 10. PAGE ROOT  ← one export default, at the bottom
+// ─────────────────────────────────────────────────────
 export default function TimelinePage() {
   return (
     <div style={{ fontFamily: "Inter, sans-serif" }}>
@@ -460,4 +692,4 @@ export default function TimelinePage() {
       <NextFifty />
     </div>
   );
-} 
+}

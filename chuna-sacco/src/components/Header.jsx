@@ -42,7 +42,8 @@ const Header = () => {
     { name: 'BOSA Products', path: '/bosaProducts' },
     { name: 'Insurance', path: '/insurance' },
     { name: 'Agency Banking', path: '/products/agency-banking' },
-    { name: 'Mchuna', path: '/mchuna' }
+    { name: 'Mchuna', path: '/mchuna' },
+    {name: 'Payment Moes', path: '/payment-modes'}
   ]
 
   const aboutUsItems = [
