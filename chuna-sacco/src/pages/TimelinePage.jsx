@@ -127,7 +127,7 @@ const SLIDES = [
   },
   {
     year: "2000s",
-    image: "https://picsum.photos/seed/banking2000/800/600",
+    image: "https://picsum.photos/seed/university1976/800/600",
     icon: "🏦",
     photoBg: "linear-gradient(135deg,#0f1f10,#1E6B2E)",
     caption: "BOSA & FOSA dual-service banking model launched",
@@ -136,7 +136,7 @@ const SLIDES = [
   },
   {
     year: "2010",
-    image: "https://picsum.photos/seed/sasra2010/800/600",
+    image: "https://picsum.photos/seed/university1976/800/600",
     icon: "✅",
     photoBg: "linear-gradient(135deg,#0a1a0a,#1E6B2E)",
     caption: "SASRA Deposit-Taking Sacco licence secured",
@@ -181,7 +181,7 @@ const SLIDES = [
   },
   {
     year: "2022",
-    image: "https://picsum.photos/seed/portal2022/800/600",
+    image: "https://picsum.photos/seed/university1976/800/600",
     icon: "🌐",
     photoBg: "linear-gradient(135deg,#0d1f0d,#2D8A3E)",
     caption: "Online member portal launched",
