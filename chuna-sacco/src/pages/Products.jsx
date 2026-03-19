@@ -329,7 +329,7 @@ export default function ProductsPage() {
         <CategorySection key={cat.id} category={cat} />
       ))}
       <WhyChuna />
-      <CTABanner />
+      
     </div>
   );
 }
