@@ -398,9 +398,7 @@ export default function ContactPage() {
 
         {/* ── HERO ── */}
         <div className="hero">
-          <div className="hero-watermark">CHUNA</div>
-          <div style={{ paddingBottom: 20, position: 'relative', paddingTop:55 }}>
-            <div className="hero-badge">Chuna Sacco · Support</div>
+          <div style={{ paddingBottom: 20, position: 'relative', paddingTop:55, marginTop: 55 }}>
             <h1 className="hero-h1">
               We're here to ease your <em>financial</em> obstacles.
             </h1>
