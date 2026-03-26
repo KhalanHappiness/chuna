@@ -39,7 +39,7 @@ const LatestUpdates = () => {
   ];
 
   const quickStats = [
-    { icon: Users, label: "Active Members", value: "4,000+" },
+    { icon: Users, label: "Active Members", value: "3,000+" },
     { icon: TrendingUp, label: "Total Savings", value: "KSh 2.5B" },
     { icon: Building2, label: "Loans Disbursed", value: "KSh 1.8B" },
     { icon: Heart, label: "Success Stories", value: "500+" }
