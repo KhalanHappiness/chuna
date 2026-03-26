@@ -30,7 +30,7 @@ const LatestUpdates = () => {
       id: 3,
       title: "Sacco update Dec 2024",
       summary: "",
-      image: "https://chunasacco.co.ke/sites/default/files/2024-12/r2.png",
+      image: "https://chunasacco.co.ke/sacco-update-dec-2024",
       category: "News",
       date: "Dec 18, 2024",
       readTime: "4 min read",

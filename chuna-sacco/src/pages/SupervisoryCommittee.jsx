@@ -263,11 +263,11 @@ const SupervisoryCommittee = () => {
               >
                 <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden">
                   {/* Image Container */}
-                  <div className="relative overflow-hidden bg-gradient-to-br from-green-100 to-emerald-100">
+                  <div className="relative overflow-hidden bg-gradient-to-br from-green-100 to-emerald-100 h-72">
                     <img
                       src={member.image.startsWith('http') ? member.image : `${FLASK_BASE_URL}${member.image}`}
                       alt={member.name}
-                      className="w-full h-82 object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-72 object-cover object-top transition-transform duration-500 group-hover:scale-105"
                       onError={(e) => {
                         e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&size=400&background=10b981&color=fff`;
                       }}
