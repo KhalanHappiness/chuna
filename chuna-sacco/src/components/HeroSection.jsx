@@ -8,9 +8,38 @@ const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentUpdate, setCurrentUpdate] = useState(0);
   const [slides, setSlides] = useState([]);
-  const [updates, setUpdates] = useState([]);
+  // const [updates, setUpdates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const updates = [
+  {
+    title: "Members Portal",
+    text: "Access your account, check balances, apply for loans and view statements online.",
+    link: "https://webportal.chunasacco.co.ke//#/auth/login"
+  },
+  {
+    title: "New Member Application",
+    text: "Join Chuna DT Sacco today and enjoy competitive savings and affordable loans.",
+    link: "https://applications.chunasacco.co.ke/index.php?r=new-membership"
+  },
+  {
+    title: "Online Loan Application",
+    text: "Apply for a loan from the comfort of your home. Fast processing and disbursement.",
+    link: "https://webportal.chunasacco.co.ke//#/auth/login"
+  },
+  {
+    title: "USSD Banking — *670#",
+    text: "Check balances, withdraw, send money and apply for loans via your phone. No internet needed.",
+    link: "#"
+  },
+  {
+    title: "Chuna @50 Celebrations",
+    text: "Join us as we celebrate 50 years of empowering the University of Nairobi community.",
+    link: "/timeline"
+  },
+];
+
 
   // Fetch data from API
   useEffect(() => {
@@ -52,16 +81,16 @@ const HeroSection = () => {
         }
         
         // Map news as updates
-        if (data.news && data.news.length > 0) {
-          const mappedUpdates = data.news.map(item => ({
-            title: item.title,
-            text: item.content || item.summary,
-            link: item.link || "#"
-          }));
-          setUpdates(mappedUpdates);
-        } else {
-          console.warn('No news/updates returned from API');
-        }
+        // if (data.news && data.news.length > 0) {
+        //   const mappedUpdates = data.news.map(item => ({
+        //     title: item.title,
+        //     text: item.content || item.summary,
+        //     link: item.link || "#"
+        //   }));
+        //   setUpdates(mappedUpdates);
+        // } else {
+        //   console.warn('No news/updates returned from API');
+        // }
         
         setError(null);
       } catch (err) {
