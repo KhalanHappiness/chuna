@@ -267,7 +267,7 @@ const News = () => {
             name="featured_image"
             onChange={handleInputChange}
             accept="image/*"
-            currentImage={editingNews?.featured_image ? `http://localhost:5000${editingNews.featured_image}` : null}
+            currentImage={editingNews?.featured_image ? editingNews.featured_image : null}
           />
 
           {/* Title */}
