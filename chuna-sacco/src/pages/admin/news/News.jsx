@@ -166,7 +166,7 @@ const News = () => {
                 <div className="md:w-64 flex-shrink-0">
                   {news.featured_image ? (
                     <img
-                      src={`http://localhost:5000${news.featured_image}`}
+                      src={news.photo_url}
                       alt={news.title}
                       className="w-full h-48 object-cover rounded-lg"
                     />
