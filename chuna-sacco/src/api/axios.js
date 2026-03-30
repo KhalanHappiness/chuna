@@ -140,6 +140,12 @@ export const adminAPI = {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
   deleteForm: (id) => api.delete(`/admin/forms/${id}`),
+
+  //gallery
+  getGallery: () => api.get('/admin/gallery'),
+  createGalleryItem: (data) => api.post('/admin/gallery', data, { headers: { 'Content-Type': 'multipart/form-data' }}),
+  updateGalleryItem: (id, data) => api.put(`/admin/gallery/${id}`, data, { headers: { 'Content-Type': 'multipart/form-data' }}),
+  deleteGalleryItem: (id) => api.delete(`/admin/gallery/${id}`),
   
   // About Content
   getAboutContent: () => api.get('/admin/about'),
