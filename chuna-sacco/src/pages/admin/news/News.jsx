@@ -6,6 +6,7 @@ import Button from '../../../components/common/Button';
 import Modal from '../../../components/common/Modal';
 import Input from '../../../components/common/Input';
 import FileUpload from '../../../components/common/FileUpload';
+import RichTextEditor from '../../../components/common/RichTextEditor';
 
 const News = () => {
   const [newsList, setNewsList] = useState([]);
@@ -341,16 +342,11 @@ const News = () => {
           {/* Content */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Content <span className="text-red-500">*</span>
+                Content <span className="text-red-500">*</span>
             </label>
-            <textarea
-              name="content"
-              value={formData.content}
-              onChange={handleInputChange}
-              rows={10}
-              required
-              className="block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder="Full article content"
+            <RichTextEditor
+                value={formData.content}
+                onChange={(val) => setFormData({ ...formData, content: val })}
             />
           </div>
 

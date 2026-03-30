@@ -94,6 +94,8 @@ export const adminAPI = {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
   deleteNews: (id) => api.delete(`/admin/news/${id}`),
+
+  uploadImage: (formData) => api.post('/admin/upload-image', formData),
   
   // Departments
   getDepartments: (includeStaff = false) => api.get(`/admin/departments?include_staff=${includeStaff}`),
@@ -168,6 +170,7 @@ export const adminAPI = {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
   deleteAward: (id) => api.delete(`/admin/awards/${id}`),
+
 };
 
 export default api;

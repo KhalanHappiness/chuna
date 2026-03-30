@@ -273,6 +273,17 @@ def delete_news(id):
         db.session.rollback()
         return jsonify({'message': 'Failed to delete news', 'error': str(e)}), 500
 
+@admin_api_bp.route("/upload-image", methods=["POST"])
+@jwt_required()
+def upload_image():
+    file = request.files.get("file")
+    if not file:
+        return jsonify({"error": "No file provided"}), 400
+    url = save_file(file, folder="news_content")
+    if not url:
+        return jsonify({"error": "Upload failed"}), 500
+    return jsonify({"url": url}), 200
+
 # ==================== ABOUT CONTENT MANAGEMENT ====================
 
 @admin_api_bp.route('/about', methods=['GET'])
