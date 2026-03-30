@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from server.models import (
     db, AdminUser, SliderImage, NewsUpdate, AboutContent, CoreValue, 
     Award, Department, StaffMember, BoardMember, ProductCategory, 
-    Product, ProductFeature, DownloadableForm
+    Product, ProductFeature, DownloadableForm, GalleryItem
 )
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -1094,3 +1094,39 @@ def track_form_download(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'message': 'Failed to track download', 'error': str(e)}), 500
+
+## ==================== GALLERY MANAGEMENT ====================
+@admin_api_bp.route('/gallery', methods=['GET'])
+@admin_required
+def get_gallery():
+    items = GalleryItem.query.order_by(GalleryItem.display_order).all()
+    return jsonify([i.to_dict() for i in items]), 200
+
+@admin_api_bp.route('/gallery', methods=['POST'])
+@admin_required
+def create_gallery_item():
+    data, image = request.form, request.files.get('image')
+    item = GalleryItem(title=data.get('title'), category=data.get('category'),
+        description=data.get('description'), display_order=data.get('display_order', 0),
+        is_active=data.get('is_active','true').lower()=='true',
+        image_url=save_file(image,'gallery') if image else None)
+    db.session.add(item); db.session.commit()
+    return jsonify(item.to_dict()), 201
+
+@admin_api_bp.route('/gallery/<int:id>', methods=['PUT'])
+@admin_required
+def update_gallery_item(id):
+    item = GalleryItem.query.get_or_404(id)
+    data, image = request.form, request.files.get('image')
+    if image: item.image_url = save_file(image, 'gallery')
+    item.title=data.get('title',item.title); item.category=data.get('category',item.category)
+    item.description=data.get('description',item.description)
+    item.is_active=data.get('is_active',str(item.is_active)).lower()=='true'
+    db.session.commit(); return jsonify(item.to_dict()), 200
+
+@admin_api_bp.route('/gallery/<int:id>', methods=['DELETE'])
+@admin_required
+def delete_gallery_item(id):
+    item = GalleryItem.query.get_or_404(id)
+    db.session.delete(item); db.session.commit()
+    return jsonify({'message': 'Deleted'}), 200

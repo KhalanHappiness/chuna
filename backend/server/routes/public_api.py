@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from server.models import (
     SliderImage, NewsUpdate, Department, StaffMember, BoardMember, 
-    Product, ProductCategory, DownloadableForm, AboutContent, CoreValue, Award, db
+    Product, ProductCategory, DownloadableForm, AboutContent, CoreValue, Award, GalleryItem, db
 )
 
 public_api_bp = Blueprint('public_api', __name__)
@@ -187,3 +187,8 @@ def news_detail(id):
     except Exception as e:
         print(f"Error in /news/{id}: {str(e)}")
         return jsonify({'error': str(e)}), 500
+    
+@public_api_bp.route('/gallery')
+def gallery():
+    items = GalleryItem.query.filter_by(is_active=True).order_by(GalleryItem.display_order).all()
+    return jsonify([i.to_dict() for i in items])
