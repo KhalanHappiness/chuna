@@ -29,6 +29,7 @@ import ProductsPage from './pages/Products'
 import PaymentModesPage from './pages/PaymentModesPage'
 import NewsPage from './pages/Newspage'
 import NewsDetailPage from './pages/Newsdetailpage' 
+import GalleryPage from './pages/Gallerypage'
 
 
 // Admin components
@@ -46,6 +47,7 @@ import Forms from './pages/admin/forms/Forms'
 import AboutContent from './pages/admin/about/AboutContent'
 import Values from './pages/admin/values/Values'
 import Awards from './pages/admin/awards/Awards'
+import Gallery from './pages/admin/gallery/gallery'
 
 
 
@@ -108,7 +110,6 @@ function App() {
         />
 
         <div className="min-h-screen bg-gray-50">
-          <CookieBanner />
           <PublicLayout>
             <Routes>
               {/* ============ PUBLIC ROUTES ============ */}
@@ -131,6 +132,7 @@ function App() {
               <Route path="/payment-modes" element={<PaymentModesPage/>}/>
               <Route path="/news" element={<NewsPage/>}/> 
               <Route path="/news/:id" element={<NewsDetailPage />} /> 
+              <Route path="/gallery" element={<GalleryPage />} /> 
 
               {/* ============ ADMIN LOGIN (No Auth Required) ============ */}
               <Route path="/admin/login" element={<Login />} />
@@ -156,6 +158,7 @@ function App() {
                 <Route path="about" element={<AboutContent />} />
                 <Route path="values" element={<Values />} />
                 <Route path="awards" element={<Awards />} />
+                <Route path="gallery" element={<Gallery />} />
               </Route>
 
               {/* ============ 404 - Catch All ============ */}

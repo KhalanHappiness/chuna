@@ -29,6 +29,7 @@ const Sidebar = () => {
     { name: 'Board Members', icon: UserSquare2, path: '/admin/board' },
     { name: 'Products', icon: Package, path: '/admin/products' },
     { name: 'Downloadable Forms', icon: FileText, path: '/admin/forms' },
+    {name: 'Gallery', icon: Image, path: '/admin/gallery' },
     { name: 'About Content', icon: Info, path: '/admin/about' },
     { name: 'Core Values', icon: Heart, path: '/admin/values' },
     { name: 'Awards', icon: Award, path: '/admin/awards' },
