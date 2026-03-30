@@ -27,6 +27,8 @@ import InnovationsPage from './pages/InnovationsPage'
 import TimelinePage from './pages/TimelinePage'
 import ProductsPage from './pages/Products'
 import PaymentModesPage from './pages/PaymentModesPage'
+import NewsPage from './pages/Newspage'
+import NewsDetailPage from './pages/Newsdetailpage' 
 
 
 // Admin components
@@ -127,6 +129,8 @@ function App() {
               <Route path="/timeline" element={<TimelinePage/>}/>
               <Route path="/products" element={<ProductsPage/>}/>
               <Route path="/payment-modes" element={<PaymentModesPage/>}/>
+              <Route path="/news" element={<NewsPage/>}/> 
+              <Route path="/news/:id" element={<NewsDetailPage />} /> 
 
               {/* ============ ADMIN LOGIN (No Auth Required) ============ */}
               <Route path="/admin/login" element={<Login />} />

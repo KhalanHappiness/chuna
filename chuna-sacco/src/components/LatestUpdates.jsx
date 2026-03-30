@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import {
   Calendar, Clock, ArrowRight, TrendingUp, Users, Heart,
   Building2, ChevronLeft, ChevronRight, X, User, Tag
@@ -20,192 +21,172 @@ const NewsModal = ({ newsId, onClose }) => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
- 
+
   useEffect(() => {
     const fetchArticle = async () => {
       try {
         const res = await fetch(`${API_BASE_URL}/news/${newsId}`);
         if (!res.ok) throw new Error('Failed to fetch article');
-        setArticle(await res.json());
+        const data = await res.json();
+        setArticle(data);
       } catch (err) {
         console.error(err);
-        setError('Could not load this article. Please try again.');
+        setError('Could not load article. Please try again.');
       } finally {
         setLoading(false);
       }
     };
     fetchArticle();
   }, [newsId]);
- 
+
   // Close on Escape
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
   }, [onClose]);
- 
-  // Lock body scroll while modal is open
+
+  // Lock background scroll
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
- 
-  const imageUrl = article?.featured_image
-    ? (article.featured_image.startsWith('http')
-        ? article.featured_image
-        : `${FLASK_BASE_URL}${article.featured_image}`)
-    : null;
- 
+
+  const imageUrl = buildImageUrl(article?.featured_image);
+
   const formattedDate = article?.publish_date
     ? new Date(article.publish_date).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric',
       })
     : '';
- 
-  // Generate initials from author name
-  const initials = article?.author
-    ? article.author.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
-    : '?';
- 
+
   return (
-    // Backdrop — the WHOLE backdrop scrolls so long articles are reachable
     <div
-      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      {/* Centering wrapper — grows with content */}
-      <div className="flex min-h-full items-start justify-center p-4 sm:p-8">
-        <div className="relative bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-auto">
- 
-          {/* ── Hero Image ───────────────────────── */}
-          {imageUrl ? (
-            <div className="relative h-52 sm:h-64 overflow-hidden bg-gray-200 flex-shrink-0">
-              <img
-                src={imageUrl}
-                alt={article?.title}
-                className="w-full h-full object-cover"
-                onError={(e) => { e.target.parentElement.style.display = 'none'; }}
-              />
-              {/* Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
- 
-              {/* Category pill */}
-              {article?.category && (
-                <div className="absolute bottom-4 left-5">
-                  <span className="bg-green-700 text-green-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide">
-                    {article.category}
-                  </span>
-                </div>
-              )}
- 
-              {/* Close button */}
-              <button
-                onClick={onClose}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-gray-600 hover:text-gray-900 flex items-center justify-center transition-colors duration-150 shadow"
-                aria-label="Close"
-              >
-                <X className="w-4 h-4" />
-              </button>
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
+
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-gray-100 text-gray-600 hover:text-gray-900 rounded-full p-2 shadow transition-all duration-200"
+          aria-label="Close"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Scrollable body */}
+        <div className="overflow-y-auto flex-1">
+
+          {loading && (
+            <div className="flex items-center justify-center h-64">
+              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-600" />
             </div>
-          ) : (
-            /* No image — floating close button */
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors duration-150"
-              aria-label="Close"
-            >
-              <X className="w-4 h-4" />
-            </button>
           )}
- 
-          {/* ── Body — no max-height, grows with content ── */}
-          <div>
-            {/* Loading */}
-            {loading && (
-              <div className="flex items-center justify-center h-48">
-                <div className="animate-spin rounded-full h-9 w-9 border-b-2 border-green-600" />
-              </div>
-            )}
- 
-            {/* Error */}
-            {!loading && error && (
-              <div className="text-center py-12 px-8">
-                <p className="text-red-500 mb-4 text-sm">{error}</p>
-                <button
-                  onClick={onClose}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700"
-                >
-                  Close
-                </button>
-              </div>
-            )}
- 
-            {/* Article */}
-            {!loading && article && (
-              <div className="px-6 sm:px-8 pt-6 pb-2">
- 
-                {/* Category badge (no image fallback) */}
-                {!imageUrl && article.category && (
-                  <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wide mb-4">
-                    {article.category}
-                  </span>
-                )}
- 
-                {/* Title */}
-                <h2 className="text-2xl font-bold text-gray-900 leading-snug mb-4">
-                  {article.title}
-                </h2>
- 
-                {/* Meta row */}
-                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-5 pb-5 border-b border-gray-100">
-                  <div className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center text-green-700 text-xs font-semibold flex-shrink-0">
-                    {initials}
-                  </div>
-                  <span className="font-medium text-gray-700">{article.author}</span>
-                  <span className="text-gray-300">·</span>
-                  <span>{formattedDate}</span>
-                  <span className="text-gray-300">·</span>
-                  <span>2 min read</span>
-                </div>
- 
-                {/* Excerpt pull-quote */}
-                {article.excerpt && (
-                  <p
-                    className="text-base italic text-gray-600 pl-4 mb-5 leading-relaxed"
-                    style={{ borderLeft: '3px solid #16a34a', borderRadius: 0 }}
-                  >
-                    {article.excerpt}
-                  </p>
-                )}
- 
-                {/* Full content — renders completely, no truncation */}
-                {article.content && (
-                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line pb-6">
-                    {article.content}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
- 
-          {/* ── Sticky-to-bottom Footer ───────────── */}
-          {!loading && article && (
-            <div className="flex items-center justify-between px-6 sm:px-8 py-3 bg-gray-50 border-t border-gray-100">
-              <span className="text-xs text-gray-400">Chuna DT Sacco · News</span>
+
+          {!loading && error && (
+            <div className="flex flex-col items-center justify-center h-64 text-center p-8">
+              <p className="text-red-500 mb-4">{error}</p>
               <button
                 onClick={onClose}
-                className="px-5 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors duration-150"
+                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
               >
                 Close
               </button>
             </div>
           )}
- 
+
+          {!loading && article && (
+            <>
+              {/* Hero image */}
+              {imageUrl && (
+                <div className="relative h-56 sm:h-72 overflow-hidden">
+                  <img
+                    src={imageUrl}
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                  <div className="absolute bottom-4 left-6">
+                    <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              <div className="p-6 sm:p-8">
+                {/* Category badge (no image fallback) */}
+                {!imageUrl && (
+                  <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide mb-4">
+                    <Tag className="w-3 h-3" />
+                    {article.category}
+                  </span>
+                )}
+
+                {/* Title */}
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 leading-snug">
+                  {article.title}
+                </h2>
+
+                {/* Meta */}
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100">
+                  {article.author && (
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center">
+                        <User className="w-4 h-4 text-green-600" />
+                      </div>
+                      <span className="font-medium text-gray-700">{article.author}</span>
+                    </div>
+                  )}
+                  {formattedDate && (
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4" />
+                      <span>{formattedDate}</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1.5">
+                    <Clock className="w-4 h-4" />
+                    <span>2 min read</span>
+                  </div>
+                </div>
+
+                {/* Excerpt pull-quote */}
+                {article.excerpt && (
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6 font-medium italic border-l-4 border-green-500 pl-4">
+                    {article.excerpt}
+                  </p>
+                )}
+
+                {/* Full content */}
+                {article.content && (
+                  <div className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
+                    {article.content}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
+
+        {/* Sticky footer */}
+        {!loading && article && (
+          <div className="px-6 sm:px-8 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between flex-shrink-0">
+            <span className="text-xs text-gray-400">Chuna DT Sacco News</span>
+            <button
+              onClick={onClose}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors duration-200"
+            >
+              Close
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
 // ─────────────────────────────────────────────
 // Main LatestUpdates Section
 // ─────────────────────────────────────────────
@@ -439,13 +420,13 @@ const LatestUpdates = () => {
 
           {/* Bottom CTA */}
           <div className="text-center">
-            <a
-              href="https://www.chunasacco.co.ke/latest-news"
+            <Link
+              to="/news"
               className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-500 font-semibold transition-all duration-300 hover:shadow-lg hover:-translate-y-1 inline-flex items-center gap-2 mx-auto"
             >
               View All News & Updates
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
