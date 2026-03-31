@@ -274,7 +274,7 @@ def delete_news(id):
         return jsonify({'message': 'Failed to delete news', 'error': str(e)}), 500
 
 @admin_api_bp.route("/upload-image", methods=["POST"])
-@jwt_required()
+@admin_required()
 def upload_image():
     file = request.files.get("file")
     if not file:
