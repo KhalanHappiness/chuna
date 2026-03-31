@@ -183,9 +183,26 @@ const NewsDetailPage = () => {
 
             {/* Full body */}
             {article.content && (
-              <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
-                {article.content}
-              </div>
+
+                <>
+                 <style>{`
+                    .article-content img {
+                        max-width: 100% !important;
+                        width: 100%  !important;
+                        max-height: 300px !important;
+                        height: auto !important;
+                        object-fit: cover !important;
+                        border-radius: 8px !important;
+                        margin: 1rem 0 !important;
+                        display: block !important;
+                    }
+                    `}</style>
+                
+              <div
+                className="text-gray-700 text-base leading-relaxed article-content w-full"
+                dangerouslySetInnerHTML={{ __html: article.content }}
+              />
+            </>
             )}
           </div>
 
