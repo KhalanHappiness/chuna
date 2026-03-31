@@ -94,8 +94,11 @@ export const adminAPI = {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
   deleteNews: (id) => api.delete(`/admin/news/${id}`),
-
-  uploadImage: (formData) => api.post('/admin/upload-image', formData),
+  
+  //Richtext Editor
+  uploadImage: (formData) => api.post('/admin/upload-image', formData{
+    headers: {'Content-Type': 'multipart/form-data'}
+  }),
   
   // Departments
   getDepartments: (includeStaff = false) => api.get(`/admin/departments?include_staff=${includeStaff}`),
