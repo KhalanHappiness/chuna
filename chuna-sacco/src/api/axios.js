@@ -96,7 +96,7 @@ export const adminAPI = {
   deleteNews: (id) => api.delete(`/admin/news/${id}`),
   
   //Richtext Editor
-  uploadImage: (formData) => api.post('/admin/upload-image', formData{
+  uploadImage: (formData) => api.post('/admin/upload-image', formData, {
     headers: {'Content-Type': 'multipart/form-data'}
   }),
   
