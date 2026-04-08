@@ -7,7 +7,7 @@ const TopHeaderBar = () => {
   const [isPaused, setIsPaused] = useState(false);
   
   const messages = [
-    "NEW IMPROVED PRODUCT ALERT (FCOSA EMERGENCY 20)",
+    "NEW IMPROVED PRODUCT ALERT (FOSA EMERGENCY 20)",
     "SPECIAL OFFER: 0% Interest on Student Loans for New Members!",
     "SAVE UP TO 25% on loan processing fees this month",
     "VOTED Best University Banking Partner 2024",

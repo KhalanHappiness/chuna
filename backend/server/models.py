@@ -463,32 +463,43 @@ class DownloadableForm(db.Model):
         return f'<DownloadableForm {self.title}>'
     
 
-
-class GalleryItem(db.Model):
-    __tablename__ = 'gallery_items'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(300), nullable=False)
-    image_url = db.Column(db.String(500), nullable=False)
-    category = db.Column(db.String(100))
-    description = db.Column(db.Text)
+class GalleryAlbum(db.Model):
+    id            = db.Column(db.Integer, primary_key=True)
+    title         = db.Column(db.String(200), nullable=False)
+    category      = db.Column(db.String(100))
+    description   = db.Column(db.Text)
+    cover_image   = db.Column(db.String(500))
     display_order = db.Column(db.Integer, default=0)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
+    is_active     = db.Column(db.Boolean, default=True)
+    created_at    = db.Column(db.DateTime, default=datetime.utcnow)
+    photos        = db.relationship('GalleryPhoto', backref='album', lazy=True, cascade='all, delete-orphan')
+
     def to_dict(self):
         return {
             'id': self.id,
             'title': self.title,
-            'image_url': self.image_url,
             'category': self.category,
             'description': self.description,
+            'cover_image': self.cover_image,
             'display_order': self.display_order,
             'is_active': self.is_active,
-            'created_at': self.created_at.isoformat() if self.created_at else None,
-            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+            'photo_count': len(self.photos),
+            'photos': [p.to_dict() for p in self.photos]
         }
+
+class GalleryPhoto(db.Model):
+    id           = db.Column(db.Integer, primary_key=True)
+    album_id     = db.Column(db.Integer, db.ForeignKey('gallery_album.id'), nullable=False)
+    image_url    = db.Column(db.String(500))
+    caption      = db.Column(db.String(300))
+    uploaded_at  = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'album_id': self.album_id,
+            'image_url': self.image_url,
+            'caption': self.caption
+        }
+
     
-    def __repr__(self):
-        return f'<GalleryItem {self.title}>'

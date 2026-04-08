@@ -10,7 +10,7 @@ export default function WhoWeAre() {
     {
       icon: Users,
       title: 'TEAMWORK',
-      description: 'Chuna Sacco shall closely collaborate with all stakeholders to ensure effective and efficient delivery of its products and services to members and customers.',
+      description: 'Chuna Sacco closely collaborates with all stakeholders to ensure effective and efficient delivery of its products and services to members and customers.',
       color: 'cyan',
       bgColor: 'bg-cyan-600',
       lightBg: 'bg-cyan-100',
@@ -20,7 +20,7 @@ export default function WhoWeAre() {
     {
       icon: Shield,
       title: 'ACCOUNTABILITY',
-      description: 'Chuna Sacco shall carry out its duties in an accountable manner by acknowledging and assuming responsibility for its products and services.',
+      description: 'Chuna Sacco carries out its duties in an accountable manner by acknowledging and assuming responsibility for its products and services.',
       color: 'green',
       bgColor: 'bg-green-600',
       lightBg: 'bg-green-100',
@@ -30,7 +30,7 @@ export default function WhoWeAre() {
     {
       icon: Lightbulb,
       title: 'CREATIVITY & INNOVATION',
-      description: 'The Sacco shall continuously and consistently develop new ideas, solutions, processes, products and services for the benefit of its members and customers.',
+      description: 'The Sacco continuously and consistently develops new ideas, solutions, processes, products and services for the benefit of its members and customers.',
       color: 'amber',
       bgColor: 'bg-amber-600',
       lightBg: 'bg-amber-100',
@@ -60,7 +60,7 @@ export default function WhoWeAre() {
     {
       icon: TrendingUp,
       title: 'EFFICIENCY',
-      description: 'Chuna Sacco will utilize resources optimally. The Society shall endeavor to conduct its operations in a manner that is efficient in providing diversified reliable, accessible and affordable financial products and services.',
+      description: 'Chuna Sacco utilizes resources optimally. The Society endeavors to conduct its operations in a manner that is efficient in providing diversified reliable, accessible and affordable financial products and services.',
       color: 'amber',
       bgColor: 'bg-amber-600',
       lightBg: 'bg-amber-100',
@@ -83,7 +83,7 @@ export default function WhoWeAre() {
       lightBg: 'from-green-50 to-green-100'
     },
     {
-      title: 'TECHNOLOGY - SECOND BEST IN TECHNOLOGY OPTIMIZATION TECHNOLOGY',
+      title: 'TECHNOLOGY - SECOND BEST IN TECHNOLOGY (OPTIMIZATION TECHNOLOGY)',
       color: 'amber',
       bgColor: 'bg-amber-600',
       lightBg: 'from-amber-50 to-amber-100'

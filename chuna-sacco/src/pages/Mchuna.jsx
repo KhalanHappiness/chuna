@@ -69,7 +69,7 @@ const Mchuna = () => {
             {/* Right Column - Content */}
             <div className="space-y-6">
               <p className="text-gray-600 leading-relaxed">
-                In an effort to serve you better, We have a mobile banking platform which Mobile banking 
+                In an effort to serve you better, We have a mobile banking platform which 
                 allows members to transact remotely using their mobile phones. To access the services, a 
                 member must fill and submit the Mobile Banking Application Form. The service can be 
                 accessed by dialing *670#.
