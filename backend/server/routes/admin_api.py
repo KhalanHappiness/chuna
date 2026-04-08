@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from server.models import (
     db, AdminUser, SliderImage, NewsUpdate, AboutContent, CoreValue, 
     Award, Department, StaffMember, BoardMember, ProductCategory, 
-    Product, ProductFeature, DownloadableForm, GalleryItem
+    Product, ProductFeature, DownloadableForm, GalleryAlbum, GalleryPhoto
 )
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -1106,38 +1106,77 @@ def track_form_download(id):
         db.session.rollback()
         return jsonify({'message': 'Failed to track download', 'error': str(e)}), 500
 
-## ==================== GALLERY MANAGEMENT ====================
-@admin_api_bp.route('/gallery', methods=['GET'])
+# ── Admin: Albums ────────────────────────────────────
+@admin_api_bp.route('/albums', methods=['GET'])
 @admin_required
-def get_gallery():
-    items = GalleryItem.query.order_by(GalleryItem.display_order).all()
-    return jsonify([i.to_dict() for i in items]), 200
+def get_albums():
+    albums = GalleryAlbum.query.order_by(GalleryAlbum.display_order).all()
+    return jsonify([a.to_dict() for a in albums]), 200
 
-@admin_api_bp.route('/gallery', methods=['POST'])
+@admin_api_bp.route('/albums', methods=['POST'])
 @admin_required
-def create_gallery_item():
-    data, image = request.form, request.files.get('image')
-    item = GalleryItem(title=data.get('title'), category=data.get('category'),
-        description=data.get('description'), display_order=data.get('display_order', 0),
-        is_active=data.get('is_active','true').lower()=='true',
-        image_url=save_file(image,'gallery') if image else None)
-    db.session.add(item); db.session.commit()
-    return jsonify(item.to_dict()), 201
+def create_album():
+    data  = request.form
+    cover = request.files.get('cover_image')
+    album = GalleryAlbum(
+        title=data.get('title'),
+        category=data.get('category'),
+        description=data.get('description'),
+        display_order=data.get('display_order', 0),
+        is_active=data.get('is_active', 'true').lower() == 'true',
+        cover_image=save_file(cover, 'gallery/covers') if cover else None
+    )
+    db.session.add(album)
+    db.session.commit()
+    return jsonify(album.to_dict()), 201
 
-@admin_api_bp.route('/gallery/<int:id>', methods=['PUT'])
+@admin_api_bp.route('/albums/<int:id>', methods=['PUT'])
 @admin_required
-def update_gallery_item(id):
-    item = GalleryItem.query.get_or_404(id)
-    data, image = request.form, request.files.get('image')
-    if image: item.image_url = save_file(image, 'gallery')
-    item.title=data.get('title',item.title); item.category=data.get('category',item.category)
-    item.description=data.get('description',item.description)
-    item.is_active=data.get('is_active',str(item.is_active)).lower()=='true'
-    db.session.commit(); return jsonify(item.to_dict()), 200
+def update_album(id):
+    album = GalleryAlbum.query.get_or_404(id)
+    data  = request.form
+    cover = request.files.get('cover_image')
+    if cover:
+        album.cover_image = save_file(cover, 'gallery/covers')
+    album.title       = data.get('title', album.title)
+    album.category    = data.get('category', album.category)
+    album.description = data.get('description', album.description)
+    album.is_active   = data.get('is_active', str(album.is_active)).lower() == 'true'
+    db.session.commit()
+    return jsonify(album.to_dict()), 200
 
-@admin_api_bp.route('/gallery/<int:id>', methods=['DELETE'])
+@admin_api_bp.route('/albums/<int:id>', methods=['DELETE'])
 @admin_required
-def delete_gallery_item(id):
-    item = GalleryItem.query.get_or_404(id)
-    db.session.delete(item); db.session.commit()
+def delete_album(id):
+    album = GalleryAlbum.query.get_or_404(id)
+    db.session.delete(album)
+    db.session.commit()
+    return jsonify({'message': 'Deleted'}), 200
+
+# ── Admin: Photos inside an album ───────────────────
+@admin_api_bp.route('/albums/<int:album_id>/photos', methods=['POST'])
+@admin_required
+def upload_photos(album_id):
+    GalleryAlbum.query.get_or_404(album_id)
+    files = request.files.getlist('photos')
+    saved = []
+    for f in files:
+        url = save_file(f, f'gallery/albums/{album_id}')
+        if url:
+            photo = GalleryPhoto(
+                album_id=album_id,
+                image_url=url,
+                caption=request.form.get('caption', '')
+            )
+            db.session.add(photo)
+            saved.append(photo)
+    db.session.commit()
+    return jsonify([p.to_dict() for p in saved]), 201
+
+@admin_api_bp.route('/albums/<int:album_id>/photos/<int:photo_id>', methods=['DELETE'])
+@admin_required
+def delete_photo(album_id, photo_id):
+    photo = GalleryPhoto.query.filter_by(id=photo_id, album_id=album_id).first_or_404()
+    db.session.delete(photo)
+    db.session.commit()
     return jsonify({'message': 'Deleted'}), 200
