@@ -47,8 +47,7 @@ import Forms from './pages/admin/forms/Forms'
 import AboutContent from './pages/admin/about/AboutContent'
 import Values from './pages/admin/values/Values'
 import Awards from './pages/admin/awards/Awards'
-import Gallery from './pages/admin/gallery/gallery'
-
+import GalleryAdmin from './pages/admin/gallery/GalleryAdmin'
 
 
 // Public Layout wrapper component
@@ -158,7 +157,7 @@ function App() {
                 <Route path="about" element={<AboutContent />} />
                 <Route path="values" element={<Values />} />
                 <Route path="awards" element={<Awards />} />
-                <Route path="gallery" element={<Gallery />} />
+                <Route path="gallery" element={<GalleryAdmin />} />
               </Route>
 
               {/* ============ 404 - Catch All ============ */}
