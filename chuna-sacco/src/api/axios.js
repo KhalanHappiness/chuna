@@ -146,11 +146,15 @@ export const adminAPI = {
   }),
   deleteForm: (id) => api.delete(`/admin/forms/${id}`),
 
-  //gallery
-  getGallery: () => api.get('/admin/gallery'),
-  createGalleryItem: (data) => api.post('/admin/gallery', data, { headers: { 'Content-Type': 'multipart/form-data' }}),
-  updateGalleryItem: (id, data) => api.put(`/admin/gallery/${id}`, data, { headers: { 'Content-Type': 'multipart/form-data' }}),
-  deleteGalleryItem: (id) => api.delete(`/admin/gallery/${id}`),
+    // Albums
+  getAlbums: ()=> api.get('/admin/albums'),
+  createAlbum:(data)=> api.post('/admin/albums', data),
+  updateAlbum:(id, data)=> api.put(`/admin/albums/${id}`, data),
+  deleteAlbum:(id)=> api.delete(`/admin/albums/${id}`),
+  
+  // Photos inside an album
+  uploadPhotos:(albumId, data)=> api.post(`/admin/albums/${albumId}/photos`, data),
+  deletePhoto:(albumId, photoId)=> api.delete(`/admin/albums/${albumId}/photos/${photoId}`),
   
   // About Content
   getAboutContent: () => api.get('/admin/about'),
