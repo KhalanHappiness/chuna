@@ -148,8 +148,12 @@ export const adminAPI = {
 
     // Albums
   getAlbums: ()=> api.get('/admin/albums'),
-  createAlbum:(data)=> api.post('/admin/albums', data),
-  updateAlbum:(id, data)=> api.put(`/admin/albums/${id}`, data),
+  createAlbum: (data) => api.post('/admin/albums', data, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }),
+  updateAlbum: (id, data) => api.put(`/admin/albums/${id}`, data, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    }),
   deleteAlbum:(id)=> api.delete(`/admin/albums/${id}`),
   
   // Photos inside an album
