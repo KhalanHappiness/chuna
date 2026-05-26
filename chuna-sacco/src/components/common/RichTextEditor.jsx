@@ -125,7 +125,7 @@ const RichTextEditor = ({ value, onChange }) => {
   // When editing, `value` arrives after the editor mounts (API fetch completes).
   // This effect detects that and loads the content into the editor.
   useEffect(() => {
-    if (!editor || !value) return
+    if (!editor || value === undefined) return
     // Avoid resetting if content is already the same (prevents cursor jumping while typing)
     if (editor.getHTML() === value) return
     editor.commands.setContent(value)
