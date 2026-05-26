@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Image from '@tiptap/extension-image'
 import Youtube from '@tiptap/extension-youtube'
+import Link from '@tiptap/extension-link'
 import { adminAPI } from '../../api/axios'
 
 const MenuBar = ({ editor }) => {
@@ -31,36 +32,63 @@ const MenuBar = ({ editor }) => {
     if (url) editor.chain().focus().setYoutubeVideo({ src: url }).run()
   }
 
+  const addLink = () => {
+    const previousUrl = editor.getAttributes('link').href
+    const url = window.prompt('Enter URL', previousUrl || 'https://')
+    // Cancelled
+    if (url === null) return
+    // Empty — remove link
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run()
+      return
+    }
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+  }
+
+  const btnClass = (active) =>
+    `px-2 py-1 rounded text-sm ${active ? 'bg-primary-500 text-white' : 'bg-white border'}`
+
   return (
     <div className="flex flex-wrap gap-1 p-2 border-b bg-gray-50">
       <button type="button" onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`px-2 py-1 rounded text-sm font-bold ${editor.isActive('bold') ? 'bg-primary-500 text-white' : 'bg-white border'}`}>
+        className={`${btnClass(editor.isActive('bold'))} font-bold`}>
         B
       </button>
       <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={`px-2 py-1 rounded text-sm italic ${editor.isActive('italic') ? 'bg-primary-500 text-white' : 'bg-white border'}`}>
+        className={`${btnClass(editor.isActive('italic'))} italic`}>
         I
       </button>
       <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={`px-2 py-1 rounded text-sm ${editor.isActive('heading', { level: 2 }) ? 'bg-primary-500 text-white' : 'bg-white border'}`}>
+        className={btnClass(editor.isActive('heading', { level: 2 }))}>
         H2
       </button>
       <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={`px-2 py-1 rounded text-sm ${editor.isActive('heading', { level: 3 }) ? 'bg-primary-500 text-white' : 'bg-white border'}`}>
+        className={btnClass(editor.isActive('heading', { level: 3 }))}>
         H3
       </button>
       <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`px-2 py-1 rounded text-sm ${editor.isActive('bulletList') ? 'bg-primary-500 text-white' : 'bg-white border'}`}>
+        className={btnClass(editor.isActive('bulletList'))}>
         • List
       </button>
       <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`px-2 py-1 rounded text-sm ${editor.isActive('orderedList') ? 'bg-primary-500 text-white' : 'bg-white border'}`}>
+        className={btnClass(editor.isActive('orderedList'))}>
         1. List
       </button>
       <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`px-2 py-1 rounded text-sm ${editor.isActive('blockquote') ? 'bg-primary-500 text-white' : 'bg-white border'}`}>
+        className={btnClass(editor.isActive('blockquote'))}>
         " Quote
       </button>
+      <button type="button" onClick={addLink}
+        className={btnClass(editor.isActive('link'))}>
+        🔗 Link
+      </button>
+      {editor.isActive('link') && (
+        <button type="button"
+          onClick={() => editor.chain().focus().unsetLink().run()}
+          className="px-2 py-1 rounded text-sm bg-red-100 border border-red-300 text-red-600">
+          ✕ Unlink
+        </button>
+      )}
       <button type="button" onClick={addImage}
         className="px-2 py-1 rounded text-sm bg-white border">
         🖼 Image
@@ -84,9 +112,28 @@ const MenuBar = ({ editor }) => {
 const RichTextEditor = ({ value, onChange }) => {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        bulletList: {
+          keepMarks: true,
+          keepAttributes: false,
+        },
+        orderedList: {
+          keepMarks: true,
+          keepAttributes: false,
+        },
+      }),
       Image,
       Youtube.configure({ controls: true }),
+      Link.configure({
+        openOnClick: false,        // Don't navigate on click in editor
+        autolink: true,            // Auto-detect URLs as you type
+        linkOnPaste: true,         // Convert pasted URLs to links
+        HTMLAttributes: {
+          class: 'text-primary-500 underline cursor-pointer',
+          rel: 'noopener noreferrer',
+          target: '_blank',
+        },
+      }),
     ],
     content: value,
     onUpdate: ({ editor }) => {
