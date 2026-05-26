@@ -345,6 +345,7 @@ const News = () => {
                 Content <span className="text-red-500">*</span>
             </label>
             <RichTextEditor
+                key={editingNews ?.id?? 'new'}
                 value={formData.content}
                 onChange={(val) => setFormData({ ...formData, content: val })}
             />
