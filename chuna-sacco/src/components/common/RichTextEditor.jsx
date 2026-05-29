@@ -117,6 +117,13 @@ const RichTextEditor = ({ value, onChange }) => {
       }),
     ],
     content: value || '',
+    onCreate: ({ editor }) => {
+      console.log('onCreate fired — value:', JSON.stringify(value))
+    // Runs once editor is fully ready — force-load content if it exists
+    if (value && editor.getHTML() !== value) {
+      editor.commands.setContent(value)
+       }
+     },
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML())
     },
@@ -125,6 +132,8 @@ const RichTextEditor = ({ value, onChange }) => {
   // When editing, `value` arrives after the editor mounts (API fetch completes).
   // This effect detects that and loads the content into the editor.
   useEffect(() => {
+      console.log('useEffect — value:', JSON.stringify(value), 'editor HTML:', editor?.getHTML())
+
     if (!editor || value === undefined) return
     // Avoid resetting if content is already the same (prevents cursor jumping while typing)
     if (editor.getHTML() === value) return

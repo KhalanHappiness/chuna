@@ -17,10 +17,18 @@ const buildImageUrl = (path) => {
 // ─────────────────────────────────────────────
 // News Detail Modal
 // ─────────────────────────────────────────────
+const calcReadTime = (html) => {
+  if (!html) return 1;
+  const text = html.replace(/<[^>]+>/g, '');
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+};
+
 const NewsModal = ({ newsId, onClose }) => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
+  const [copied, setCopied]   = useState(false);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -52,19 +60,75 @@ const NewsModal = ({ newsId, onClose }) => {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
-  const imageUrl = buildImageUrl(article?.featured_image);
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
+  const imageUrl      = buildImageUrl(article?.featured_image);
   const formattedDate = article?.publish_date
     ? new Date(article.publish_date).toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric',
       })
     : '';
+  const readTime = calcReadTime(article?.content);
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
+      {/* Styles for rendered HTML content */}
+      <style>{`
+        .modal-article-content p  { margin: 0.75rem 0 !important; }
+        .modal-article-content ul {
+          list-style-type: disc !important;
+          padding-left: 1.5rem !important;
+          margin: 0.75rem 0 !important;
+        }
+        .modal-article-content ol {
+          list-style-type: decimal !important;
+          padding-left: 1.5rem !important;
+          margin: 0.75rem 0 !important;
+        }
+        .modal-article-content li { margin: 0.25rem 0 !important; }
+        .modal-article-content a {
+          color: #16a34a !important;
+          text-decoration: underline !important;
+        }
+        .modal-article-content a:hover { color: #15803d !important; }
+        .modal-article-content strong { font-weight: 700 !important; }
+        .modal-article-content em    { font-style: italic !important; }
+        .modal-article-content h2 {
+          font-size: 1.4rem !important;
+          font-weight: 700 !important;
+          margin: 1.5rem 0 0.5rem !important;
+          color: #111827 !important;
+        }
+        .modal-article-content h3 {
+          font-size: 1.15rem !important;
+          font-weight: 600 !important;
+          margin: 1.25rem 0 0.5rem !important;
+          color: #111827 !important;
+        }
+        .modal-article-content blockquote {
+          border-left: 4px solid #16a34a !important;
+          padding-left: 1.25rem !important;
+          font-style: italic !important;
+          color: #4b5563 !important;
+          margin: 1rem 0 !important;
+        }
+        .modal-article-content img {
+          max-width: 100% !important;
+          height: auto !important;
+          border-radius: 8px !important;
+          margin: 1rem 0 !important;
+          display: block !important;
+        }
+      `}</style>
+
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
 
         {/* Close button */}
@@ -108,6 +172,7 @@ const NewsModal = ({ newsId, onClose }) => {
                     className="w-full h-full object-cover"
                     onError={(e) => { e.target.style.display = 'none'; }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <div className="absolute bottom-4 left-6">
                     <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide">
                       {article.category}
@@ -134,7 +199,7 @@ const NewsModal = ({ newsId, onClose }) => {
                 <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100">
                   {article.author && (
                     <div className="flex items-center gap-1.5">
-                      <div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center">
+                      <div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                         <User className="w-4 h-4 text-green-600" />
                       </div>
                       <span className="font-medium text-gray-700">{article.author}</span>
@@ -142,14 +207,21 @@ const NewsModal = ({ newsId, onClose }) => {
                   )}
                   {formattedDate && (
                     <div className="flex items-center gap-1.5">
-                      <Calendar className="w-4 h-4" />
+                      <Calendar className="w-4 h-4 flex-shrink-0" />
                       <span>{formattedDate}</span>
                     </div>
                   )}
                   <div className="flex items-center gap-1.5">
-                    <Clock className="w-4 h-4" />
-                    <span>2 min read</span>
+                    <Clock className="w-4 h-4 flex-shrink-0" />
+                    <span>{readTime} min read</span>
                   </div>
+                  <button
+                    onClick={handleShare}
+                    className="flex items-center gap-1.5 hover:text-green-600 transition-colors"
+                  >
+                    <Share2 className="w-4 h-4 flex-shrink-0" />
+                    <span>{copied ? 'Copied!' : 'Share'}</span>
+                  </button>
                 </div>
 
                 {/* Excerpt pull-quote */}
@@ -159,11 +231,12 @@ const NewsModal = ({ newsId, onClose }) => {
                   </p>
                 )}
 
-                {/* Full content */}
+                {/* Full content — rendered as HTML */}
                 {article.content && (
-                  <div className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
-                    {article.content}
-                  </div>
+                  <div
+                    className="text-gray-700 leading-relaxed text-base modal-article-content"
+                    dangerouslySetInnerHTML={{ __html: article.content }}
+                  />
                 )}
               </div>
             </>
@@ -186,7 +259,6 @@ const NewsModal = ({ newsId, onClose }) => {
     </div>
   );
 };
-
 // ─────────────────────────────────────────────
 // Main LatestUpdates Section
 // ─────────────────────────────────────────────
