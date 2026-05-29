@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import {
   Calendar, Clock, ArrowRight, TrendingUp, Users, Heart,
-  Building2, ChevronLeft, ChevronRight, X, User, Tag
+  Building2, ChevronLeft, ChevronRight, X, User, Tag, Share2
 } from "lucide-react";
 
 // ── Same pattern as StaffPage ──────────────────────────────────────────────
